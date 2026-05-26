@@ -1232,106 +1232,51 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
     <!-- TOS·SELECTOR (visibile solo per MHT transdermica/orale) -->
     <div id="tosSelectorWrap" style="display:none;">
       <div class="tos-wizard">
-        <div class="tos-wizard-title">💊 TOS·SELECTOR — Scelta del Farmaco</div>
-        <div class="tos-wizard-sub">Wizard guidato per la selezione della terapia ormonale: via estrogeno → progestinico → schema → prodotto</div>
-
-        <!-- Stepper tabs -->
+        <div class="tos-wizard-title">💊 TOS·SELECTOR — Algoritmo di Prescrizione</div>
+        <div class="tos-wizard-sub">Guida step-by-step alla scelta del farmaco, dosaggio iniziale e schema terapeutico</div>
         <div class="tos-stepper">
           <div class="tos-step-tab active" id="tstab1" onclick="tosGoStep(1)">1 · Via Estrogeno</div>
-          <div class="tos-step-tab pending" id="tstab2" onclick="tosGoStep(2)">2 · Progestinico</div>
-          <div class="tos-step-tab pending" id="tstab3" onclick="tosGoStep(3)">3 · Schema</div>
-          <div class="tos-step-tab pending" id="tstab4" onclick="tosGoStep(4)">4 · Farmaci</div>
+          <div class="tos-step-tab pending" id="tstab2" onclick="tosGoStep(2)">2 · Mestruazioni?</div>
+          <div class="tos-step-tab pending" id="tstab3" onclick="tosGoStep(3)">3 · Progestinico</div>
+          <div class="tos-step-tab pending" id="tstab4" onclick="tosGoStep(4)">4 · Prescrizione</div>
         </div>
-
         <!-- PANEL 1: Via Estrogeno -->
         <div class="tos-panel active" id="tsp1">
-          <div id="tosEstro_transdermica">
-            <div class="tos-options three" id="tosViaOptions">
-              <div class="tos-opt" onclick="tosSelect('viaEstro','cerotto',this)">
-                <div class="tos-opt-icon">🩹</div>
-                <div class="tos-opt-title">Cerotto</div>
-                <div class="tos-opt-desc">Rilascio continuo; cambio ogni 3-4 o 7 giorni secondo la formulazione. Livelli sierici stabili.</div>
-                <div class="tos-pro-con">
-                  <div class="tos-pro"><strong>✅ Pro</strong>Compliance alta · Livelli stabili · No first-pass · Nessun effetto su coagulazione</div>
-                  <div class="tos-con"><strong>⚠️ Contro</strong>Irritazione cutanea locale · Distacco in caso di sudorazione intensa</div>
-                </div>
-              </div>
-              <div class="tos-opt" onclick="tosSelect('viaEstro','gel',this)">
-                <div class="tos-opt-icon">🧴</div>
-                <div class="tos-opt-title">Gel transdermico</div>
-                <div class="tos-opt-desc">Applicazione quotidiana su gambe o braccia. Flessibilità di dosaggio pressione per pressione.</div>
-                <div class="tos-pro-con">
-                  <div class="tos-pro"><strong>✅ Pro</strong>Dosi facilmente regolabili · Buona tolleranza cutanea · No first-pass</div>
-                  <div class="tos-con"><strong>⚠️ Contro</strong>Applicazione quotidiana richiesta · Variabilità assorbitiva</div>
-                </div>
-              </div>
-              <div class="tos-opt" onclick="tosSelect('viaEstro','spray',this)">
-                <div class="tos-opt-icon">💨</div>
-                <div class="tos-opt-title">Spray cutaneo</div>
-                <div class="tos-opt-desc">Lenzetto® (0.5 mg/pressione). Applicazione su avambraccio interno, 1-3 pressioni/die.</div>
-                <div class="tos-pro-con">
-                  <div class="tos-pro"><strong>✅ Pro</strong>Veloce · Discreta da usare · No first-pass epatico</div>
-                  <div class="tos-con"><strong>⚠️ Contro</strong>Variabilità dose · Attesa per asciugatura · Unico prodotto</div>
-                </div>
-              </div>
-            </div>
-            <div id="tosEstroOrale_placeholder" style="display:none;">
-              <div class="tos-options two">
-                <div class="tos-opt" onclick="tosSelect('viaEstro','orale_E2',this)">
-                  <div class="tos-opt-icon">💊</div>
-                  <div class="tos-opt-title">Estradiolo orale</div>
-                  <div class="tos-opt-desc">Estradiolo valerato 1-2 mg. Prima scelta tra le formulazioni orali. Minor rischio rispetto a ECE.</div>
-                  <div class="tos-pro-con">
-                    <div class="tos-pro"><strong>✅ Pro</strong>Formulazioni combinate disponibili · Pratico · Fascia A</div>
-                    <div class="tos-con"><strong>⚠️ Contro</strong>First-pass epatico · Rischio TEV e ictus aumentato vs transdermica · Effetti lipidici</div>
-                  </div>
-                </div>
-                <div class="tos-opt" onclick="tosSelect('viaEstro','orale_ECE',this)">
-                  <div class="tos-opt-icon">💊</div>
-                  <div class="tos-opt-title">Estrogeni Coniugati Equini (ECE)</div>
-                  <div class="tos-opt-desc">ECE 0.45 mg. In combinazione con Dienogest (Paudien®) o Bazedoxifene (Duavive®).</div>
-                  <div class="tos-pro-con">
-                    <div class="tos-pro"><strong>✅ Pro</strong>Duavive: nessun progestinico obbligatorio · Opzione per utero presente</div>
-                    <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Profilo lipidico più sfavorevole · Meno evidenze di lungo termine vs E2</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div id="tosViaEstroContent"></div>
           <div class="tos-nav-row">
-            <div style="font-size:0.75rem;color:var(--muted);font-style:italic;" id="tosStep1Hint">Seleziona una via di somministrazione</div>
+            <div style="font-size:0.75rem;color:var(--muted);font-style:italic;">Seleziona la via di somministrazione preferita</div>
             <button class="tos-btn tos-btn-primary" onclick="tosNext(1)" id="tosNext1" disabled>Avanti →</button>
           </div>
         </div>
-
-        <!-- PANEL 2: Progestinico -->
+        <!-- PANEL 2: Mestruazioni -->
         <div class="tos-panel" id="tsp2">
-          <div id="tosProgArea"><!-- filled dynamically --></div>
+          <div id="tosMestrArea"></div>
           <div class="tos-nav-row">
             <button class="tos-btn tos-btn-outline" onclick="tosGoStep(1)">← Indietro</button>
             <button class="tos-btn tos-btn-primary" onclick="tosNext(2)" id="tosNext2" disabled>Avanti →</button>
           </div>
         </div>
-
-        <!-- PANEL 3: Schema -->
+        <!-- PANEL 3: Progestinico -->
         <div class="tos-panel" id="tsp3">
-          <div id="tosSchemaArea"><!-- filled dynamically --></div>
+          <div id="tosProgArea"></div>
           <div class="tos-nav-row">
             <button class="tos-btn tos-btn-outline" onclick="tosGoStep(2)">← Indietro</button>
-            <button class="tos-btn tos-btn-primary" onclick="tosNext(3)" id="tosNext3" disabled>Mostra Farmaci →</button>
+            <button class="tos-btn tos-btn-primary" onclick="tosNext(3)" id="tosNext3" disabled>Genera prescrizione →</button>
           </div>
         </div>
-
-        <!-- PANEL 4: Farmaci -->
+        <!-- PANEL 4: Prescrizione -->
         <div class="tos-panel" id="tsp4">
-          <div id="tosDrugResult"><!-- filled dynamically --></div>
-          <div class="tos-nav-row">
-            <button class="tos-btn tos-btn-outline" onclick="tosGoStep(3)">← Modifica schema</button>
-            <button class="tos-btn tos-btn-primary" onclick="tosReset()">🔄 Ricomincia selezione</button>
+          <div id="tosPrescResult"></div>
+          <div class="tos-nav-row" style="flex-wrap:wrap;gap:8px;">
+            <button class="tos-btn tos-btn-outline" onclick="tosGoStep(3)">← Modifica</button>
+            <button class="tos-btn tos-btn-primary" onclick="tosPrintCard()">🖨️ Stampa scheda paziente</button>
+            <button class="tos-btn tos-btn-outline" onclick="tosReset()">🔄 Ricomincia</button>
           </div>
         </div>
       </div>
     </div>
+    <!-- SCHEDA PAZIENTE solo stampa -->
+    <div id="tosPatientCard" style="display:none;"></div>
   </div>
 
   <!-- STILE DI VITA - SEMPRE VISIBILE -->
@@ -2219,413 +2164,459 @@ function selectTherapy(id,el) {
 }
 
 // ══════════════════════════════════════
-// TOS·SELECTOR WIZARD
+// TOS·SELECTOR WIZARD — Algoritmo clinico
 // ══════════════════════════════════════
 const TOS = {
-  track: null,   // 'transdermica' | 'orale'
-  viaEstro: null,
-  prog: null,
-  schema: null,
+  track: null,      // 'transdermica' | 'orale'
+  viaEstro: null,   // 'cerotto'|'gel'|'spray'|'orale_E2'|'orale_ECE'
+  vuoleMestr: null, // true|false|null (null se utero assente)
+  schema: null,     // 'sequenziale'|'continuo' (calcolato)
+  prog: null,       // 'P4'|'DYD'|'cerotto_comb'|'nessuno'
   currentStep: 1
 };
 
 function tosInit() {
-  TOS.viaEstro=null; TOS.prog=null; TOS.schema=null; TOS.currentStep=1;
-  // Mostra/nasconde opzioni correttamente
-  const isTD = TOS.track==='transdermica';
-  document.getElementById('tosEstro_transdermica').style.display = isTD ? 'block' : 'none';
-  document.getElementById('tosEstroOrale_placeholder').style.display = isTD ? 'none' : 'block';
-  // reset selezioni
+  TOS.viaEstro=null; TOS.vuoleMestr=null; TOS.schema=null; TOS.prog=null; TOS.currentStep=1;
   document.querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
-  ['tosNext1','tosNext2','tosNext3'].forEach(id=>{
-    const b=document.getElementById(id); if(b) b.disabled=true;
-  });
-  // step tabs
+  ['tosNext1','tosNext2','tosNext3'].forEach(id=>{ const b=document.getElementById(id); if(b) b.disabled=true; });
+  tosRenderViaPanel();
   tosUpdateTabs();
-  // Attiva panel 1
   document.querySelectorAll('.tos-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tsp1').classList.add('active');
 }
 
+function tosRenderViaPanel() {
+  const isTD = TOS.track === 'transdermica';
+  const mrsVaso = (S.mrsAreaScores && S.mrsAreaScores.vasomotori) || 0;
+  const sintomiSeveri = mrsVaso >= 8;
+  const bmi = S.bmi || 0;
+
+  let hint = '';
+  if(bmi >= 30) hint += '<div class="tos-warning" style="margin-bottom:12px;"><span>⚠️</span><div><strong>BMI ≥30:</strong> la via transdermica è obbligatoria — evita il primo passaggio epatico e il rischio TEV aggiuntivo della via orale.</div></div>';
+  if(sintomiSeveri) hint += '<div class="alert alert-purple" style="font-size:0.8rem;margin-bottom:12px;"><span class="ai">📊</span><div>MRS vasomotori elevato ('+mrsVaso+'/12) — sintomi significativi. Si parte comunque dalla dose minima con revisione a 6 settimane.</div></div>';
+
+  if(isTD) {
+    document.getElementById('tosViaEstroContent').innerHTML = hint + `
+    <div class="tos-options three">
+      <div class="tos-opt${bmi>=30?' selected':''}" onclick="tosSelect('viaEstro','cerotto',this)">
+        <div class="tos-opt-icon">🩹</div>
+        <div class="tos-opt-title">Cerotto</div>
+        <div class="tos-opt-desc">Rilascio continuo. Cambio ogni 3-4 gg (Dermestril®) o ogni 7 gg (Femseven®, Climara®). Livelli stabili, compliance alta.</div>
+        <div class="tos-pro-con">
+          <div class="tos-pro"><strong>✅ Pro</strong>No first-pass · Profilo TEV ottimale · Cambi infrequenti · Prima scelta BMI≥30</div>
+          <div class="tos-con"><strong>⚠️ Contro</strong>Irritazione locale nel 5-10% · Distacco con sudorazione intensa</div>
+        </div>
+      </div>
+      <div class="tos-opt" onclick="tosSelect('viaEstro','gel',this)">
+        <div class="tos-opt-icon">🧴</div>
+        <div class="tos-opt-title">Gel transdermico</div>
+        <div class="tos-opt-desc">Applicazione quotidiana su coscia o addome. Dose regolabile pressione per pressione (Sandrena®, Estrèva®).</div>
+        <div class="tos-pro-con">
+          <div class="tos-pro"><strong>✅ Pro</strong>Dosi facilmente regolabili · No irritazione locale · No first-pass</div>
+          <div class="tos-con"><strong>⚠️ Contro</strong>Applicazione quotidiana · Attesa 2-3 min per asciugatura</div>
+        </div>
+      </div>
+      <div class="tos-opt" onclick="tosSelect('viaEstro','spray',this)">
+        <div class="tos-opt-icon">💨</div>
+        <div class="tos-opt-title">Spray cutaneo</div>
+        <div class="tos-opt-desc">Lenzetto® 0.5 mg/pressione, avambraccio interno. Rapido, discreto.</div>
+        <div class="tos-pro-con">
+          <div class="tos-pro"><strong>✅ Pro</strong>Velocissimo · Discreto · No first-pass</div>
+          <div class="tos-con"><strong>⚠️ Contro</strong>Unico prodotto disponibile · Evitare contatto con altri</div>
+        </div>
+      </div>
+    </div>`;
+  } else {
+    document.getElementById('tosViaEstroContent').innerHTML = hint + `
+    <div class="tos-options two">
+      <div class="tos-opt" onclick="tosSelect('viaEstro','orale_E2',this)">
+        <div class="tos-opt-icon">💊</div>
+        <div class="tos-opt-title">Estradiolo valerato orale</div>
+        <div class="tos-opt-desc">E2 valerato 1 mg. Prima scelta tra le formulazioni orali. Disponibile in combinazioni precostituite (Femoston®).</div>
+        <div class="tos-pro-con">
+          <div class="tos-pro"><strong>✅ Pro</strong>Pratico · Formulazioni combinate · Fascia A</div>
+          <div class="tos-con"><strong>⚠️ Contro</strong>First-pass epatico · Rischio TEV aumentato · Evitare se BMI≥30</div>
+        </div>
+      </div>
+      <div class="tos-opt" onclick="tosSelect('viaEstro','orale_ECE',this)">
+        <div class="tos-opt-icon">💊</div>
+        <div class="tos-opt-title">ECE + Bazedoxifene (Duavive®)</div>
+        <div class="tos-opt-desc">ECE 0.45 mg + BZA 20 mg. Non richiede progestinico anche con utero presente.</div>
+        <div class="tos-pro-con">
+          <div class="tos-pro"><strong>✅ Pro</strong>Nessun progestinico · Utile se intolleranza al progestinico</div>
+          <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Dati a lungo termine limitati · No sanguinamento atteso</div>
+        </div>
+      </div>
+    </div>`;
+  }
+  // Se già selezionata una via, ri-applica la selezione
+  if(TOS.viaEstro) {
+    document.querySelectorAll('#tosViaEstroContent .tos-opt').forEach(o=>{
+      if(o.getAttribute('onclick') && o.getAttribute('onclick').includes("'"+TOS.viaEstro+"'")) o.classList.add('selected');
+    });
+    document.getElementById('tosNext1').disabled = false;
+  }
+}
+
 function tosGoStep(n) {
-  // Consente navigazione solo a step già completati
   if(n>1 && !TOS.viaEstro) return;
-  if(n>2 && !TOS.prog) return;
-  if(n>3 && !TOS.schema) return;
-  TOS.currentStep=n;
+  if(n>2 && TOS.vuoleMestr===null && document.getElementById('uteroPresente')?.checked) return;
+  if(n>3 && !TOS.prog) return;
+  TOS.currentStep = n;
   document.querySelectorAll('.tos-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tsp'+n).classList.add('active');
-  if(n===2) tosRenderProgPanel();
-  if(n===3) tosRenderSchemaPanel();
-  if(n===4) tosRenderResult();
+  if(n===2) tosRenderMestrPanel();
+  if(n===3) tosRenderProgPanel();
+  if(n===4) tosRenderPrescrizione();
   tosUpdateTabs();
 }
 
 function tosUpdateTabs() {
   [1,2,3,4].forEach(n=>{
-    const tab=document.getElementById('tstab'+n);
-    if(!tab) return;
+    const tab = document.getElementById('tstab'+n); if(!tab) return;
     tab.className='tos-step-tab';
     if(n===TOS.currentStep) tab.classList.add('active');
-    else if( (n===2&&TOS.viaEstro)||(n===3&&TOS.prog)||(n===4&&TOS.schema) ) tab.classList.add('done');
+    else if((n===2&&TOS.viaEstro)||(n===3&&TOS.schema)||(n===4&&TOS.prog)) tab.classList.add('done');
     else tab.classList.add('pending');
   });
 }
 
 function tosSelect(field, val, el) {
-  // Deseleziona tutte le opzioni nello stesso gruppo
-  el.closest('.tos-options,.tos-panel').querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
+  el.closest('.tos-options').querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
   el.classList.add('selected');
-  TOS[field]=val; saveState();
-  const nextMap={'viaEstro':'tosNext1','prog':'tosNext2','schema':'tosNext3'};
-  const btn=document.getElementById(nextMap[field]);
-  if(btn) btn.disabled=false;
+  TOS[field] = val;
+  const nextMap = {'viaEstro':'tosNext1','vuoleMestr':'tosNext2','prog':'tosNext3'};
+  const btn = document.getElementById(nextMap[field]);
+  if(btn) btn.disabled = false;
+  // Calcola schema automaticamente se campo mestruazioni
+  if(field==='vuoleMestr') {
+    const anni = S.anniMenopausa || 0;
+    TOS.schema = (val===true && anni < 2) ? 'sequenziale' : 'continuo';
+  }
+  saveState();
 }
 
-function tosNext(step) {
-  tosGoStep(step+1);
-}
+function tosNext(step) { tosGoStep(step+1); }
+function tosReset() { TOS.viaEstro=null; TOS.vuoleMestr=null; TOS.schema=null; TOS.prog=null; tosInit(); }
 
-function tosReset() {
-  TOS.viaEstro=null; TOS.prog=null; TOS.schema=null;
-  tosInit();
-}
-
-// ─── PANEL 2: Progestinico ───
-function tosRenderProgPanel() {
+// ─── PANEL 2: Mestruazioni ───
+function tosRenderMestrPanel() {
   const utero = document.getElementById('uteroPresente')?.checked;
-  const container=document.getElementById('tosProgArea');
+  const anni = S.anniMenopausa || 0;
 
   if(!utero) {
-    container.innerHTML=`<div class="alert alert-info" style="font-size:0.84rem;">
-      <span class="ai">ℹ️</span><div><strong>Utero assente (isterectomia)</strong> — il progestinico non è necessario. Si procede direttamente allo schema estrogenico puro.</div>
-    </div>
-    <div class="tos-opt selected" style="background:#f5f3ff;border-color:var(--secondary);padding:14px 16px;border-radius:var(--radius-sm);" onclick="tosSelect('prog','nessuno',this)">
-      <div class="tos-opt-icon">✅</div>
-      <div class="tos-opt-title">Nessun progestinico necessario</div>
-      <div class="tos-opt-desc">Donna isterectomizzata — solo terapia estrogenica</div>
-    </div>`;
-    TOS.prog='nessuno';
-    document.getElementById('tosNext2').disabled=false;
+    // Utero assente: skip automatico
+    TOS.vuoleMestr = false;
+    TOS.schema = 'continuo';
+    TOS.prog = 'nessuno';
+    document.getElementById('tosMestrArea').innerHTML = `
+      <div class="alert alert-success" style="font-size:0.84rem;">
+        <span class="ai">✅</span><div><strong>Utero assente (isterectomia)</strong> — nessun progestinico necessario. Schema estrogenico continuo. Procedo al passo 3.</div>
+      </div>`;
+    document.getElementById('tosNext2').disabled = false;
+    setTimeout(()=>tosGoStep(3), 800);
     return;
   }
 
-  const isTD=(TOS.track==='transdermica');
+  // Nota automatica basata sugli anni
+  const autoNote = anni < 2
+    ? '<div class="alert alert-purple" style="font-size:0.8rem;margin-bottom:12px;"><span class="ai">💡</span><div>Menopausa recente ('+anni+' anni) — lo schema sequenziale è preferibile se la paziente desidera il sanguinamento mestruale ciclico.</div></div>'
+    : '<div class="alert alert-purple" style="font-size:0.8rem;margin-bottom:12px;"><span class="ai">💡</span><div>Menopausa da '+anni+' anni — lo schema continuo-combinato è preferibile (amenorrea stabile, minore rischio di spotting irregolare).</div></div>';
 
-  container.innerHTML=`
-  <div style="font-size:0.82rem;color:var(--primary);font-weight:600;margin-bottom:14px;">Utero presente → progestinico obbligatorio per protezione endometriale</div>
+  document.getElementById('tosMestrArea').innerHTML = autoNote + `
+  <div style="font-weight:700;font-size:0.9rem;color:var(--primary);margin-bottom:14px;">La paziente desidera avere il sanguinamento mestruale mensile?</div>
+  <div class="tos-options two">
+    <div class="tos-opt" onclick="tosSelect('vuoleMestr',true,this)">
+      <div class="tos-opt-icon">📅</div>
+      <div class="tos-opt-title">Sì — Schema Sequenziale</div>
+      <div class="tos-opt-desc">Progestinico per 14 giorni/mese (gg 15-28). Sanguinamento mestruale ciclico atteso.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Rassicurante · Conferma assenza patologia endometriale · Consigliato nei primi 2 anni</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Sanguinamento mensile · Possibile SPM nel 10-15% dei casi</div>
+      </div>
+    </div>
+    <div class="tos-opt" onclick="tosSelect('vuoleMestr',false,this)">
+      <div class="tos-opt-icon">🔄</div>
+      <div class="tos-opt-title">No — Schema Continuo</div>
+      <div class="tos-opt-desc">Estrogeno + progestinico ogni giorno. Amenorrea stabile dopo 3-6 mesi di adattamento.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Amenorrea · Schema semplice · Preferito dopo 2+ anni di menopausa</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Spotting iniziale nei primi 3-6 mesi (normale, transitorio)</div>
+      </div>
+    </div>
+  </div>`;
+}
 
+// ─── PANEL 3: Progestinico ───
+function tosRenderProgPanel() {
+  const utero = document.getElementById('uteroPresente')?.checked;
+  if(TOS.prog === 'nessuno' || !utero) {
+    document.getElementById('tosProgArea').innerHTML = `
+      <div class="alert alert-success" style="font-size:0.84rem;"><span class="ai">✅</span><div>Donna isterectomizzata — nessun progestinico. Procedi alla prescrizione.</div></div>`;
+    if(!TOS.prog) TOS.prog = 'nessuno';
+    document.getElementById('tosNext3').disabled = false;
+    return;
+  }
+
+  const schema = TOS.schema;
+  const isCerotto = TOS.viaEstro === 'cerotto';
+  const schemaLabel = schema==='sequenziale' ? 'sequenziale (14 gg/mese)' : 'continuo-combinato (ogni giorno)';
+
+  document.getElementById('tosProgArea').innerHTML = `
+  <div class="alert alert-purple" style="font-size:0.8rem;margin-bottom:16px;">
+    <span class="ai">📋</span><div>Schema <strong>${schemaLabel}</strong> — scegli il progestinico da associare</div>
+  </div>
   <div class="tos-options two" id="tosProgOpts">
     <div class="tos-opt" onclick="tosSelect('prog','P4',this)">
       <div class="tos-opt-icon">🌙</div>
-      <div class="tos-opt-title">Progesterone micronizzato</div>
-      <div class="tos-opt-desc">Prometrium® / Progeffik® 100-200 mg. Molecola bioidentica al progesterone umano. <span class="tos-schema-badge">Fascia A</span></div>
+      <div class="tos-opt-title">Progesterone micronizzato <span class="tos-drug-badge badge-a" style="margin-left:6px;">Fascia A</span></div>
+      <div class="tos-opt-desc">Prometrium® / Progeffik® 100-200 mg. Molecola bioidentica. <strong>Prima scelta</strong> per profilo di sicurezza ottimale.</div>
       <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Profilo cardiovascolare neutro · Nessun effetto androgenico · Favorevole per sonno e ansia · Fascia A · Via vaginale disponibile</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Sonnolenza serale · Da assumere preferibilmente la sera · Non per pazienti con allergia alle arachidi (Prometrium)</div>
+        <div class="tos-pro"><strong>✅ Pro</strong>Profilo CV neutro · No effetti androgenici · Favorevole su sonno · Fascia A · Via vaginale alternativa</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Sonnolenza serale (beneficio in insonnia) · Prometrium: allergia arachidi (usa Progeffik)</div>
       </div>
     </div>
     <div class="tos-opt" onclick="tosSelect('prog','DYD',this)">
       <div class="tos-opt-icon">💊</div>
-      <div class="tos-opt-title">Diidrogesterone (DYD)</div>
-      <div class="tos-opt-desc">Dufaston® 10 mg. Progestinico retro-progesterone, strutturalmente vicino al progesterone. <span class="tos-schema-badge">Fascia C</span></div>
+      <div class="tos-opt-title">Diidrogesterone (DYD) <span class="tos-drug-badge badge-c" style="margin-left:6px;">Fascia C</span></div>
+      <div class="tos-opt-desc">Dufaston® 10 mg. Molecola retro-progesterone strutturalmente vicina al P4. Disponibile in Femoston®.</div>
       <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Profilo metabolico favorevole · No effetti androgenici · Buona tollerabilità · Disponibile in combinazione (Femoston)</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C (ticket) · Dati su K mammella simili a progesterone micronizzato ma meno consolidati</div>
+        <div class="tos-pro"><strong>✅ Pro</strong>No sonnolenza · Profilo metabolico favorevole · Combinazione Femoston pratica</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C (ticket) · Meno dati a lungo termine vs P4</div>
       </div>
     </div>
-    <div class="tos-opt" onclick="tosSelect('prog','NETA',this)">
-      <div class="tos-opt-icon">💊</div>
-      <div class="tos-opt-title">NETA / Noretisterone acetato</div>
-      <div class="tos-opt-desc">In combinazione transdermica: Activelle® (E2+NETA), Estalis-sequi®. Solo cerotti combinati.</div>
+    ${isCerotto ? `
+    <div class="tos-opt" onclick="tosSelect('prog','cerotto_comb',this)">
+      <div class="tos-opt-icon">🩹</div>
+      <div class="tos-opt-title">Cerotto combinato E2+P <span class="tos-drug-badge badge-a" style="margin-left:6px;">Fascia A</span></div>
+      <div class="tos-opt-desc">Tutto in uno: Combiseven®/Femity® (E2+LNG, continuo) o Estalis-sequi® (E2+NETA, sequenziale). Un solo prodotto.</div>
       <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Efficace protezione endometriale · Cerotto combinato pratico · Compliance alta</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Lieve attività androgenica · Possibile effetto sul K mammella superiore al P4 · Solo combinazione E+P in cerotto</div>
+        <div class="tos-pro"><strong>✅ Pro</strong>Massima semplicità · Un solo cerotto · Compliance ottimale</div>
+        <div class="tos-con"><strong>⚠️ Contre</strong>Progestinico sintetico (LNG/NETA) · Meno flessibilità nel dosaggio separato</div>
       </div>
-    </div>
-    <div class="tos-opt" onclick="tosSelect('prog','DRSP',this)">
-      <div class="tos-opt-icon">💊</div>
-      <div class="tos-opt-title">Drospirenone</div>
-      <div class="tos-opt-desc">Angeliq® (E2 1mg + DRSP 2mg). Attività antimineralcorticoide, favorevole su PA.</div>
-      <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Effetto favorevole su ritenzione idrica e PA · No effetti androgenici · Pratico (1 compressa)</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Monitorare kaliemia (effetto risparmiatore di potassio) · Solo formulazione orale E2+DRSP</div>
-      </div>
-    </div>
-    ${isTD?'':'<div class="tos-opt" onclick="tosSelect(\'prog\',\'MAP\',this)"><div class="tos-opt-icon">💊</div><div class="tos-opt-title">MAP / Medrossiprogesterone acetato</div><div class="tos-opt-desc">Farlutal® 10mg, Provera® 5mg. Progestinico sintetico classico. <span class="tos-schema-badge">Fascia A</span></div><div class="tos-pro-con"><div class="tos-pro"><strong>✅ Pro</strong>Costo basso · Fascia A · Lunga esperienza d\'uso · Efficace</div><div class="tos-con"><strong>⚠️ Contro</strong>Effetti gluco-androgeno-corticoidi · Profilo cardiovascolare meno favorevole · Studio WHI (MAP associato a rischio più elevato vs P4)</div></div></div>'}
-    <div class="tos-opt" onclick="tosSelect('prog','NOM',this)">
-      <div class="tos-opt-icon">💊</div>
-      <div class="tos-opt-title">Nomegestrolo acetato</div>
-      <div class="tos-opt-desc">Lutenyl® 5mg (P solo) · Naemis® (E2 1.5mg + NOM 3.75mg combinato). <span class="tos-schema-badge">Fascia C</span></div>
-      <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Selettivo · No attività androgenica o glucocorticoide · Combinazione monofasica con E2</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Meno dati su lungo termine rispetto a P4 e DYD</div>
-      </div>
-    </div>
+    </div>` : ''}
   </div>`;
 }
 
-// ─── PANEL 3: Schema ───
-function tosRenderSchemaPanel() {
-  const anni=S.anniMenopausa||0;
-  const sugg = anni<=2 ? 'sequenziale' : 'continuo';
-  document.getElementById('tosSchemaArea').innerHTML=`
-  <div class="alert alert-purple" style="font-size:0.82rem;margin-bottom:14px;">
-    <span class="ai">💡</span><div>
-    <strong>Suggerimento automatico:</strong> con ${anni||'?'} anni di menopausa, lo schema <strong>${sugg==='sequenziale'?'sequenziale':'continuo-combinato'}</strong> è in genere preferito.
-    ${anni<=2?'(<2 anni: probabile menopausa recente, schema sequenziale riduce spotting)':'(>2 anni: schema continuo elimina il sanguinamento da sospensione)'}
-    </div>
-  </div>
-  <div class="tos-options two" id="tosSchemaOpts">
-    <div class="tos-opt ${sugg==='sequenziale'?'selected':''}" onclick="tosSelect('schema','sequenziale',this)" id="tosSchSeq">
-      <div class="tos-opt-icon">📅</div>
-      <div class="tos-opt-title">Schema Sequenziale</div>
-      <div class="tos-opt-desc">Estrogeno continuo + progestinico per 10-14 giorni/mese. Produce un sanguinamento mensile ciclico.</div>
-      <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Preferito nei primi 1-2 anni dalla menopausa · Confirm. dell'assenza di patologia endometriale · Psicologicamente rassicurante</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Sanguinamento mensile atteso · Sintomi premestruali nel 10-15% · Meno pratico</div>
-      </div>
-    </div>
-    <div class="tos-opt ${sugg==='continuo'?'selected':''}" onclick="tosSelect('schema','continuo',this)" id="tosSchCont">
-      <div class="tos-opt-icon">🔄</div>
-      <div class="tos-opt-title">Schema Continuo-Combinato</div>
-      <div class="tos-opt-desc">Estrogeno + progestinico ogni giorno senza sospensione. Amenorrea nel lungo periodo.</div>
-      <div class="tos-pro-con">
-        <div class="tos-pro"><strong>✅ Pro</strong>Amenorrea stabile dopo 3-6 mesi · Semplicità di assunzione · Preferito dopo 2+ anni dalla menopausa</div>
-        <div class="tos-con"><strong>⚠️ Contro</strong>Spotting nei primi 3-6 mesi (fase di adattamento) · Non indicato in menopausa molto recente</div>
-      </div>
-    </div>
-  </div>`;
-  // Preset la selezione suggerita
-  if(!TOS.schema) {
-    TOS.schema=sugg;
-    document.getElementById('tosNext3').disabled=false;
+// ─── PANEL 4: Prescrizione algoritmica ───
+function tosRenderPrescrizione() {
+  const {track, viaEstro, prog, schema, vuoleMestr} = TOS;
+  const utero = document.getElementById('uteroPresente')?.checked;
+  const mrsVaso = (S.mrsAreaScores && S.mrsAreaScores.vasomotori) || 0;
+  const sintomiSeveri = mrsVaso >= 8;
+  const anni = S.anniMenopausa || 0;
+  const bmi = S.bmi || 0;
+
+  // ── Calcola prescrizione estrogeno ──
+  let eNome='', eDose='', eApplicazione='', eNote='', eFascia='A';
+  if(viaEstro==='cerotto') {
+    eNome = 'Dermestril® 25 mcg/24h';
+    eDose = '1 cerotto da 25 mcg/24h — dose iniziale standard';
+    eApplicazione = 'Applicare sulla cute asciutta e integra di gluteo o addome basso, in zona diversa ad ogni applicazione. Cambiare ogni <strong>3-4 giorni</strong>.';
+    eNote = sintomiSeveri ? '⚠️ Sintomi MRS elevati: se a 6 settimane la risposta è insufficiente, passare a 50 mcg/24h (Dermestril® 50 o Femseven® 50).' : 'Se a 6 settimane la risposta è insufficiente, aumentare a 50 mcg/24h.';
+  } else if(viaEstro==='gel') {
+    eNome = 'Sandrena® gel 0.5 mg';
+    eDose = '1 bustina da 0.5 mg/die — dose iniziale';
+    eApplicazione = 'Applicare ogni mattina su coscia o gamba (non sul seno). Lasciare asciugare 2-3 minuti prima di coprire.';
+    eNote = 'Se a 6 settimane la risposta è insufficiente, aumentare a 1 mg/die (1 bustina da 1 g o 2 bustine da 0.5 g).';
+  } else if(viaEstro==='spray') {
+    eNome = 'Lenzetto® spray 0.5 mg';
+    eDose = '1 pressione/die (0.5 mg) — dose iniziale';
+    eApplicazione = 'Spruzzare su avambraccio interno asciutto. Lasciare asciugare 2 minuti prima di coprire. Evitare il contatto con altri.';
+    eNote = 'Se a 6 settimane la risposta è insufficiente, aumentare a 2 pressioni/die (1 mg).';
+  } else if(viaEstro==='orale_E2') {
+    eNome = 'Estradiolo valerato 1 mg';
+    eDose = '1 compressa da 1 mg/die — dose iniziale';
+    eApplicazione = 'Assumere ogni sera dopo cena, alla stessa ora.';
+    eNote = 'Se a 6 settimane la risposta è insufficiente, aumentare a 2 mg/die. Disponibile anche in Femoston® (combinazione precostituita con DYD).';
+  } else if(viaEstro==='orale_ECE') {
+    eNome = 'Duavive® (ECE 0.45 mg + Bazedoxifene 20 mg)';
+    eDose = '1 compressa/die — nessun progestinico aggiuntivo necessario';
+    eApplicazione = 'Assumere ogni sera alla stessa ora. Non associare progestinico.';
+    eNote = 'Schema continuo. Non si aspetta sanguinamento.'; eFascia='C';
   }
-}
 
-// ─── PANEL 4: Risultato ───
-function tosRenderResult() {
-  const {track,viaEstro,prog,schema}=TOS;
-  const utero=document.getElementById('uteroPresente')?.checked;
-  const bmi=S.bmi||0;
-  const sm=S.sindMetabolica;
-  let html='';
+  // ── Calcola prescrizione progestinico ──
+  let pNome='', pDose='', pApplicazione='', pSchema='', pFascia='A';
+  if(utero && prog !== 'nessuno') {
+    if(prog==='P4') {
+      pFascia='A';
+      if(schema==='sequenziale') {
+        pNome='Prometrium® 200 mg (o Progeffik® 200 mg)';
+        pDose='200 mg/sera — giorni 15-28 del ciclo';
+        pApplicazione='Prendere la sera prima di coricarsi (effetto sedativo utile). Assumere dal giorno 15 al 28, poi sospendere per 14 giorni.';
+        pSchema='🗓️ Giorni 1-14: solo estrogeno · Giorni 15-28: estrogeno + progesterone · Poi sanguinamento da sospensione (2-5 giorni)';
+      } else {
+        pNome='Prometrium® 100 mg (o Progeffik® 100 mg)';
+        pDose='100 mg/sera — ogni giorno senza interruzione';
+        pApplicazione='Prendere la sera prima di coricarsi. Assumere ogni giorno senza interruzione.';
+        pSchema='🔄 Estrogeno + progesterone ogni giorno · Amenorrea attesa dopo 3-6 mesi · Spotting iniziale normale e transitorio';
+      }
+    } else if(prog==='DYD') {
+      pFascia='C';
+      if(schema==='sequenziale') {
+        pNome='Dufaston® 10 mg'; pDose='10 mg × 2/die — giorni 15-28';
+        pApplicazione='Una compressa mattina e una sera, dal giorno 15 al 28.';
+        pSchema='🗓️ Giorni 1-14: solo estrogeno · Giorni 15-28: estrogeno + Dufaston · Poi sanguinamento da sospensione';
+      } else {
+        pNome='Dufaston® 10 mg'; pDose='10 mg/die — ogni giorno';
+        pApplicazione='Una compressa ogni giorno alla stessa ora.';
+        pSchema='🔄 Estrogeno + Dufaston ogni giorno · Amenorrea attesa dopo 3-6 mesi';
+      }
+    } else if(prog==='cerotto_comb') {
+      pFascia='A';
+      if(schema==='sequenziale') {
+        pNome='Estalis-sequi® (E2 50 mcg + NETA 250 mcg)';
+        pDose='Schema in 2 fasi: prima 4 cerotti solo E2, poi 4 cerotti E2+NETA';
+        pApplicazione='Settimane 1-2: cerotto solo estrogeno (Estraderm MX 50) · Settimane 3-4: cerotto Estalis-sequi. Cambiare ogni 3-4 giorni.';
+        pSchema='🗓️ 2 settimane cerotto E2 → 2 settimane cerotto E2+NETA → sanguinamento da sospensione';
+      } else {
+        pNome='Combiseven® (E2 50 mcg + LNG 7 mcg)';
+        pDose='1 cerotto/settimana — cambio ogni 7 giorni';
+        pApplicazione='Applicare sulla cute di gluteo o addome, cambiare ogni 7 giorni sempre nello stesso giorno della settimana.';
+        pSchema='🔄 Cerotto combinato ogni giorno · Amenorrea attesa dopo 3-6 mesi';
+      }
+    }
+  }
 
-  // Warning se necessari
-  const warns=[];
-  if(bmi>=30) warns.push('BMI ≥30: la via transdermica riduce il rischio TEV rispetto all\'orale. Scelta ottimale.');
-  if(sm) warns.push('Sindrome metabolica: preferire progesterone micronizzato (effetto neutro su insulino-resistenza).');
-  if(prog==='MAP') warns.push('MAP (medrossiprogesterone acetato): dati dello studio WHI associano questo progestinico a profilo di rischio meno favorevole rispetto al progesterone micronizzato. Valutare alternativa se disponibile.');
-  if(prog==='NETA'&&track==='orale') warns.push('NETA disponibile principalmente in formulazioni transdermica-combinate. Per via orale si preferisce Activelle® (E2 1mg + NETA 0.5mg).');
+  // ── Femoston come alternativa se DYD+orale ──
+  const altFemoston = (prog==='DYD' && (viaEstro==='orale_E2')) ?
+    `<div class="tos-drug-card" style="margin-top:10px;background:#f9f7ff;">
+      <div class="tos-drug-name" style="font-size:0.85rem;">💊 Alternativa precostituita: Femoston® 1/10 <span class="tos-drug-badge badge-a">Fascia A</span></div>
+      <div class="tos-drug-dose" style="margin-top:6px;"><strong>Femoston 1/10:</strong> blister con 14 cp E2 1mg + 14 cp E2 1mg/DYD 10mg — una compressa/die in sequenza</div>
+      <div class="tos-drug-note">Equivale alla prescrizione separata E2 + Dufaston, ma in un blister unico. Più pratico per la paziente.</div>
+    </div>` : '';
 
-  warns.forEach(w=>{ html+=`<div class="tos-warning"><span>⚠️</span><div>${w}</div></div>`; });
+  const schemaNote = schema==='sequenziale'
+    ? 'La paziente deve aspettarsi un <strong>sanguinamento mestruale</strong> nei giorni successivi alla sospensione del progestinico. È normale e atteso.'
+    : 'La paziente non deve aspettarsi sanguinamento. Nei primi 3-6 mesi possono verificarsi piccole perdite (<em>spotting</em>) transitorie: è normale.';
 
-  html+=`<div class="tos-result-title">🎯 Schema raccomandato: ${_tosSchemaLabel(track,viaEstro,prog,schema)}</div>`;
+  let html = `
+  <!-- Riquadro prescrizione -->
+  <div class="tos-result" style="margin-bottom:16px;">
+    <div class="tos-result-title">✅ Schema Terapeutico Personalizzato</div>
 
-  // ─── ESTROGENI ───
-  html+=`<div class="tos-section-label">Estrogeno</div>`;
-  html+=_tosEstroCards(track,viaEstro,schema);
+    <div class="tos-section-label">Estrogeno</div>
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">${eNome} <span class="tos-drug-badge badge-${eFascia.toLowerCase()}"">Fascia ${eFascia}</span></div></div>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose iniziale:</strong> ${eDose}</div>
+      <div class="tos-drug-dose"><strong>Come usarlo:</strong> ${eApplicazione}</div>
+      <div class="tos-drug-note">📈 Rivalutazione: <strong>6 settimane</strong> — ${eNote}</div>
+    </div>`;
 
-  // ─── PROGESTINICO ───
-  if(utero && prog!=='nessuno') {
-    html+=`<div class="tos-section-label">Progestinico</div>`;
-    html+=_tosProgCards(prog,schema,track);
+  if(utero && prog !== 'nessuno') {
+    html += `
+    <div class="tos-section-label">Progestinico — ${schema==='sequenziale'?'Schema Sequenziale':'Schema Continuo-Combinato'}</div>
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">${pNome} <span class="tos-drug-badge badge-${pFascia.toLowerCase()}"">Fascia ${pFascia}</span></div></div>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose:</strong> ${pDose}</div>
+      <div class="tos-drug-dose"><strong>Come usarlo:</strong> ${pApplicazione}</div>
+      <div class="tos-drug-dose" style="background:#f5f3ff;">${pSchema}</div>
+    </div>
+    ${altFemoston}
+    <div class="tos-warning" style="margin-top:10px;"><span>ℹ️</span><div>${schemaNote}</div></div>`;
   } else if(!utero) {
-    html+=`<div class="alert alert-success" style="font-size:0.82rem;margin-top:12px;"><span class="ai">✅</span><div>Donna isterectomizzata — monoterapia estrogenica. Nessun progestinico necessario.</div></div>`;
+    html += `<div class="alert alert-success" style="font-size:0.82rem;margin-top:10px;"><span class="ai">✅</span><div>Donna isterectomizzata — monoterapia estrogenica continua. Nessun progestinico.</div></div>`;
   }
 
-  // ─── COMBINAZIONI PRECOSTITUITE ───
-  const comboHtml=_tosCombinazioni(track,viaEstro,prog,schema);
-  if(comboHtml) {
-    html+=`<div class="tos-section-label">Oppure: Combinazione Precostituita</div>`;
-    html+=`<div style="font-size:0.76rem;color:var(--muted);margin-bottom:8px;font-style:italic;">Alternativa pratica — estrogeno + progestinico in un'unica preparazione</div>`;
-    html+=comboHtml;
-  }
-
-  // ─── Monitoraggio ───
-  html+=`<div class="tos-section-label">Monitoraggio</div>
-  <div class="tos-drug-card" style="background:#f9f7ff;">
-    <div class="tos-drug-name" style="font-size:0.85rem;">📋 Follow-up raccomandato</div>
-    <div class="tos-drug-dose" style="margin-top:8px;">
-      <strong>Prima rivalutazione:</strong> 4-6 settimane (tollerabilità, sintomi breakthrough)<br>
-      <strong>A 3 mesi:</strong> PA, peso, eventuale spotting<br>
-      ${utero?'<strong>ETV:</strong> 3-6 mesi per spessore endometriale (soprattutto se schema sequenziale e sanguinamento anomalo)<br>':''}
-      <strong>Annuale:</strong> Mammografia (screening), profilo lipidico, glicemia
+  html += `
+    <div class="tos-section-label">Monitoraggio</div>
+    <div class="tos-drug-card" style="background:#f9f7ff;">
+      <div class="tos-drug-dose">
+        <strong>⏱ 6 settimane:</strong> Prima rivalutazione — tollerabilità, sintomi breakthrough, decisione sull'aumento di dose<br>
+        <strong>📅 3 mesi:</strong> PA, peso, eventuale spotting (schema continuo)<br>
+        ${utero?'<strong>🔬 6 mesi:</strong> ETV se sanguinamento anomalo o irregolare<br>':''}
+        <strong>📆 12 mesi:</strong> Mammografia (screening), profilo lipidico, glicemia
+      </div>
     </div>
   </div>`;
 
-  document.getElementById('tosDrugResult').innerHTML=html;
+  // Salva selezione per report
+  S.tosSelection = {track, viaEstro, prog, schema, eNome, eDose, pNome, pDose, pSchema}; saveState();
 
-  // Aggiorna anche lo stato globale
-  S.tosSelection={track,viaEstro,prog,schema}; saveState();
+  // ── Genera scheda paziente nascosta (per stampa) ──
+  _tosGeneraSchedaPaziente(eNome, eDose, eApplicazione, eNote, pNome, pDose, pApplicazione, pSchema, schemaNote, utero, prog, schema);
+
+  document.getElementById('tosPrescResult').innerHTML = html;
 }
 
-function _tosSchemaLabel(track,viaEstro,prog,schema) {
-  const via = track==='transdermica'
-    ? (viaEstro==='cerotto'?'Cerotto E2':viaEstro==='gel'?'Gel E2':'Spray E2')
-    : (viaEstro==='orale_ECE'?'ECE orale':'E2 orale');
-  const schemaLabel=schema==='sequenziale'?'Sequenziale':'Continuo-combinato';
-  const progLabel={'P4':'+ Progesterone micronizzato','DYD':'+ Diidrogesterone','NETA':'+ NETA','DRSP':'+ Drospirenone','MAP':'+ MAP','NOM':'+ Nomegestrolo','nessuno':'(monoterapia E)'}[prog]||'';
-  return `${via} ${progLabel} — ${schemaLabel}`;
-}
+function _tosGeneraSchedaPaziente(eNome, eDose, eApplicazione, eNote, pNome, pDose, pApplicazione, pSchema, schemaNote, utero, prog, schema) {
+  const eta = S.eta || '—';
+  const oggi = new Date().toLocaleDateString('it-IT');
+  const rivalutazione = new Date(Date.now() + 42*24*60*60*1000).toLocaleDateString('it-IT');
 
-function _tosEstroCards(track,viaEstro,schema) {
-  if(track==='transdermica' && viaEstro==='cerotto') {
-    return `
-    <div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">🩹 Dermestril® / Estraderm MX® <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Estradiolo 25-50 mcg/24h · cambio ogni 3-4 giorni</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Dose iniziale:</strong> 25 mcg/24h. Rivalutare a 4-6 settimane; incrementare a 50 mcg se risposta insufficiente</div>
-      <div class="tos-drug-note">Dermestril® e Dermestril Septem® (ogni 7gg) — Estraderm MX® ogni 3-4gg. Applicare su zona glutea o addome.</div>
+  let cardHtml = `
+  <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:700px;margin:0 auto;padding:30px;color:#1e1b4b;font-size:14px;line-height:1.6;">
+    <div style="text-align:center;border-bottom:3px solid #4c1d95;padding-bottom:16px;margin-bottom:24px;">
+      <div style="font-size:28px;margin-bottom:4px;">🌸</div>
+      <h1 style="font-family:Georgia,serif;font-size:22px;color:#4c1d95;margin:0;">Scheda Terapia Ormonale Sostitutiva</h1>
+      <p style="font-size:12px;color:#6b7280;margin:4px 0 0;">MenoPATH · Data: ${oggi} · Prossima visita: <strong>${rivalutazione}</strong></p>
     </div>
-    <div class="tos-drug-card">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">🩹 Climara® <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Estradiolo 50-100 mcg/24h · cambio ogni 7 giorni</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Dose:</strong> 50 mcg/7gg come dose standard; 100 mcg per sintomi severi o POI</div>
-      <div class="tos-drug-note">Cerotto settimanale (Climara, Femseven 50) — massima comodità, cambio una volta/settimana.</div>
-    </div>`;
-  }
-  if(track==='transdermica' && viaEstro==='gel') {
-    return `
-    <div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">🧴 Sandrena® gel 0.5-1 mg <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Bustina da 0.5 g (0.5 mg E2) o 1 g (1 mg E2) · 1 die</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Dose iniziale:</strong> 1 mg/die (1 bustina da 1g). Applicare su coscia o parte bassa addome. Assorbimento ottimale in pelle asciutta.</div>
-      <div class="tos-drug-note">Vantaggi del gel: dose facilmente modulabile, nessun rischio di distacco, ottima tolleranza cutanea.</div>
+
+    <div style="background:#f5f3ff;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <h2 style="font-size:15px;color:#4c1d95;margin:0 0 10px;">💊 La sua terapia estrogenica</h2>
+      <p style="margin:0 0 6px;"><strong>Farmaco:</strong> ${eNome}</p>
+      <p style="margin:0 0 6px;"><strong>Dose:</strong> ${eDose}</p>
+      <p style="margin:0;"><strong>Come usarlo:</strong> ${eApplicazione.replace(/<[^>]*>/g,'')}</p>
     </div>
-    <div class="tos-drug-card">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">🧴 Estrèva® gel / Lenzetto® spray <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Gel 0.5mg/pressione · Spray 0.5mg/pressione</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Estrèva gel:</strong> 1-2 pressioni/die su coscia<br><strong>Lenzetto spray:</strong> 1-3 sprays/die su avambraccio interno (lasciare asciugare 2 min)</div>
-      <div class="tos-drug-note">Lenzetto è pratico per donne attive. Attenzione al trasferimento cutaneo se contatto diretto con altri.</div>
-    </div>`;
-  }
-  if(track==='transdermica' && viaEstro==='spray') {
-    return `
-    <div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💨 Lenzetto® <small style="font-weight:400">(estradiolo spray)</small></div><div class="tos-drug-molecule">0.5 mg/pressione · Spray cutaneo avambraccio · 1 die</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Dose:</strong> 1-3 pressioni/die su avambraccio interno asciutto. Iniziare con 1 pressione; rivalutare a 4-6 settimane<br><strong>Assorbimento:</strong> lasciare asciugare 2 min. Evitare doccia per 1 ora.</div>
-      <div class="tos-drug-note">Unico spray estrogenico disponibile in Italia. Pratico per donne che non tollerano il cerotto. Evitare contatto con bambini/partner immediato dopo applicazione.</div>
-    </div>`;
-  }
-  if(track==='orale' && viaEstro==='orale_E2') {
-    return `
-    <div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 Estradiolo valerato 1-2 mg <small style="font-weight:400">(Femoston, Climen)</small></div><div class="tos-drug-molecule">Estradiolo valerato · compresse orali · 1 die</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Dose:</strong> 1-2 mg/die. Iniziare con 1 mg; incrementare se sintomi persistenti dopo 4-6 settimane<br><strong>Nota:</strong> disponibile in combinazione con progestinico nella famiglia Femoston</div>
-      <div class="tos-drug-note">Il primo passaggio epatico aumenta SHBG e CRP, con un lieve aumento del rischio tromboembolico rispetto alla via transdermica.</div>
-    </div>`;
-  }
-  if(track==='orale' && viaEstro==='orale_ECE') {
-    return `
-    <div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 ECE 0.45 mg <small style="font-weight:400">(Duavive®, Paudien®)</small></div><div class="tos-drug-molecule">Estrogeni coniugati equini · compresse orali</div></div>
-        <span class="tos-drug-badge badge-c">Fascia C</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Duavive® (ECE 0.45 + bazedoxifene 20 mg):</strong> 1 cp/die — non richiede progestinico con utero presente (SERM + estrogeno)<br><strong>Paudien® (ECE + dienogest 2 mg):</strong> 1 cp/die — schema combinato</div>
-      <div class="tos-drug-note">Duavive è l'unica preparazione approvata con SERM che evita il progestinico. Utile in donne che non tollerano i progestinici. Fascia C.</div>
-    </div>`;
-  }
-  return '';
+
+    ${utero && prog !== 'nessuno' ? `
+    <div style="background:#fce7f3;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <h2 style="font-size:15px;color:#4c1d95;margin:0 0 10px;">🌙 Progestinico (protezione uterina)</h2>
+      <p style="margin:0 0 6px;"><strong>Farmaco:</strong> ${pNome}</p>
+      <p style="margin:0 0 6px;"><strong>Dose:</strong> ${pDose}</p>
+      <p style="margin:0 0 6px;"><strong>Come usarlo:</strong> ${pApplicazione}</p>
+      <div style="background:white;border-radius:6px;padding:10px;margin-top:8px;font-size:13px;">${pSchema.replace(/<[^>]*>/g,'')}</div>
+    </div>
+    <div style="background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:12px;margin-bottom:20px;font-size:13px;">
+      ℹ️ ${schemaNote.replace(/<[^>]*>/g,'')}
+    </div>` : ''}
+
+    <div style="background:#ecfdf5;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <h2 style="font-size:15px;color:#065f46;margin:0 0 10px;">📋 Cosa aspettarsi nelle prime settimane</h2>
+      <ul style="margin:0;padding-left:18px;">
+        <li>I <strong>benefici</strong> (riduzione vampate, miglioramento sonno) compaiono entro 2-4 settimane</li>
+        <li>La risposta completa si valuta a <strong>6 settimane</strong> dalla prima assunzione</li>
+        ${schema==='continuo'?'<li>Possibili <strong>piccole perdite irregolari</strong> nei primi 3-6 mesi: sono normali e transitorie</li>':'<li>Aspettare <strong>sanguinamento mestruale</strong> dopo la sospensione del progestinico</li>'}
+        <li>Contattare il medico in caso di sanguinamento abbondante o anomalo</li>
+      </ul>
+    </div>
+
+    <div style="background:#f9f7ff;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <h2 style="font-size:15px;color:#4c1d95;margin:0 0 10px;">📈 Piano di rivalutazione</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tr><td style="padding:5px 0;"><strong>⏱ Prossima visita:</strong></td><td>${rivalutazione} (6 settimane)</td></tr>
+        <tr><td style="padding:5px 0;"><strong>📅 3 mesi:</strong></td><td>Controllo pressione arteriosa e peso</td></tr>
+        <tr><td style="padding:5px 0;"><strong>📆 12 mesi:</strong></td><td>Mammografia, esami ematici</td></tr>
+      </table>
+    </div>
+
+    <div style="border-top:2px solid #e9d5ff;padding-top:14px;font-size:11px;color:#6b7280;text-align:center;">
+      Documento generato da MenoPATH · GINOS Suite · Dr. Carlo Piscicelli<br>
+      Specialista in Ostetricia e Ginecologia · Fondazione Policlinico Universitario A. Gemelli IRCCS Roma<br>
+      <em>Questo documento non sostituisce la prescrizione medica ufficiale</em>
+    </div>
+  </div>`;
+
+  document.getElementById('tosPatientCard').innerHTML = cardHtml;
+  document.getElementById('tosPatientCard').setAttribute('data-ready','1');
 }
 
-function _tosProgCards(prog,schema,track) {
-  const schDose = schema==='sequenziale'
-    ? 'Regime <strong>sequenziale</strong>: aggiungere per 14 giorni/mese (gg 15-28)'
-    : 'Regime <strong>continuo-combinato</strong>: assumere ogni giorno';
-
-  const cards={
-    'P4':`<div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">🌙 Prometrium® / Progeffik® <small style="font-weight:400">(progesterone micronizzato)</small></div><div class="tos-drug-molecule">Progesterone 100-200 mg · capsule orali o vaginali</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose">${schDose}<br><strong>Schema sequenziale:</strong> 200 mg/sera per 14 gg<br><strong>Schema continuo:</strong> 100 mg/sera ogni giorno</div>
-      <div class="tos-drug-note">Prima scelta per profilo di sicurezza. Prometrium contiene olio di arachidi — alternative: Progeffik o via vaginale (Crinone gel). Effetto sedativo serale può essere benefico in caso di insonnia.</div>
-    </div>`,
-    'DYD':`<div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 Dufaston® <small style="font-weight:400">(diidrogesterone 10 mg)</small></div><div class="tos-drug-molecule">Diidrogesterone · compresse orali</div></div>
-        <span class="tos-drug-badge badge-c">Fascia C</span>
-      </div>
-      <div class="tos-drug-dose">${schDose}<br><strong>Schema sequenziale:</strong> 10 mg × 2/die per 14 gg<br><strong>Schema continuo:</strong> 5-10 mg/die ogni giorno</div>
-      <div class="tos-drug-note">Disponibile anche nelle combinazioni precostituite Femoston® (E2 + DYD). Profilo farmacologico vicino al progesterone naturale.</div>
-    </div>`,
-    'NETA':`<div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 NETA <small style="font-weight:400">(Noretisterone acetato)</small></div><div class="tos-drug-molecule">Disponibile in combinazione E2+NETA</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Activelle®</strong> (E2 1mg + NETA 0.5mg): 1 cp/die continuo<br><strong>Cerotto Estalis-sequi®:</strong> E2+NETA transdermico (schema sequenziale-continuo)</div>
-      <div class="tos-drug-note">Il NETA come principio attivo standalone non è disponibile in Italia; si usa in combinazioni precostituite.</div>
-    </div>`,
-    'DRSP':`<div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 Angeliq® <small style="font-weight:400">(E2 1mg + Drospirenone 2mg)</small></div><div class="tos-drug-molecule">Drospirenone · attività antimineralcorticoide</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose"><strong>Schema continuo-combinato:</strong> 1 compressa/die<br><strong>Indicazione specifica:</strong> donne con ipertensione lieve-moderata o ritenzione idrica</div>
-      <div class="tos-drug-note">Monitorare kaliemia nei primi 3 mesi (effetto di risparmio del potassio). Controindicato in insufficienza renale, epatica o surrenalica.</div>
-    </div>`,
-    'MAP':`<div class="tos-drug-card">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 Farlutal® 10mg / Provera® 5mg <small style="font-weight:400">(MAP)</small></div><div class="tos-drug-molecule">Medrossiprogesterone acetato · compresse</div></div>
-        <span class="tos-drug-badge badge-a">Fascia A</span>
-      </div>
-      <div class="tos-drug-dose">${schDose}<br><strong>Sequenziale:</strong> Farlutal 10mg/die per 14 gg<br><strong>Continuo:</strong> Provera 5mg/die</div>
-      <div class="tos-drug-note">⚠️ Seconda scelta: dati WHI associano MAP a profilo meno favorevole rispetto al progesterone micronizzato. Preferire P4 o DYD quando disponibili.</div>
-    </div>`,
-    'NOM':`<div class="tos-drug-card primo">
-      <div class="tos-drug-header">
-        <div><div class="tos-drug-name">💊 Lutenyl® 5mg <small style="font-weight:400">(nomegestrolo acetato)</small></div><div class="tos-drug-molecule">Nomegestrolo acetato · progestinico selettivo</div></div>
-        <span class="tos-drug-badge badge-c">Fascia C</span>
-      </div>
-      <div class="tos-drug-dose">${schDose}<br><strong>Sequenziale:</strong> 5mg/die per 14 gg/mese<br><strong>Combinazione:</strong> Naemis® (E2 1.5mg + NOM 3.75mg) — schema 24 giorni</div>
-      <div class="tos-drug-note">Progestinico con elevata selettività per il recettore del progesterone, senza attività androgenica, estrogenica o glucocorticoide.</div>
-    </div>`,
-  };
-  return cards[prog]||'';
-}
-
-function _tosCombinazioni(track,viaEstro,prog,schema) {
-  // Suggerisce combinazioni precostituite pertinenti
-  let out='';
-  if(track==='transdermica'&&viaEstro==='cerotto') {
-    if(prog==='NETA') {
-      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">🩹 Combiseven® / Femity® <small style="font-weight:400">(E2 + LNG)</small></div><div class="tos-drug-molecule">E2 50 mcg + Levonorgestrel 7 mcg · cerotto settimanale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Schema:</strong> continuo-combinato · 1 cerotto ogni 7 giorni</div><div class="tos-drug-note">Combinazione transdermica E2+LNG. Alternativa pratica al cerotto solo + progestinico orale.</div></div>`;
-      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">🩹 Estalis-sequi® <small style="font-weight:400">(E2 + NETA)</small></div><div class="tos-drug-molecule">4 cerotti E2 50mcg → 4 cerotti E2+NETA 250mcg · schema sequenziale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Schema sequenziale-continuo:</strong> prima 4 cerotti solo E2 (2 sett), poi 4 cerotti E2+NETA (2 sett)</div><div class="tos-drug-note">Unico cerotto combinato a schema sequenziale disponibile in Italia.</div></div>`;
-    }
+function tosPrintCard() {
+  const card = document.getElementById('tosPatientCard');
+  if(!card || card.getAttribute('data-ready')!=='1') {
+    alert('Completa prima tutti i passaggi del wizard per generare la scheda.'); return;
   }
-  if(track==='orale'||(track==='transdermica'&&viaEstro==='orale_E2')) {
-    if(prog==='DYD') {
-      out+=`<div class="tos-drug-card primo"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Femoston® 1/10 o 2/10 <small style="font-weight:400">(E2 + DYD)</small></div><div class="tos-drug-molecule">E2 1-2mg + Diidrogesterone 10mg · schema sequenziale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Femoston 1/10:</strong> 14 cp E2 1mg → 14 cp E2 1mg + DYD 10mg<br><strong>Femoston 2/10:</strong> 14 cp E2 2mg → 14 cp E2 2mg + DYD 10mg<br><strong>Femoston 1/5 conti:</strong> schema continuo (E2 1mg + DYD 5mg ogni giorno)</div><div class="tos-drug-note">Tra le combinazioni orali con miglior profilo di sicurezza. L'aggiunta di DYD non peggiora il rischio cardiovascolare rispetto alla sola E2.</div></div>`;
-    }
-    if(prog==='DRSP') {
-      out+=`<div class="tos-drug-card primo"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Angeliq® <small style="font-weight:400">(E2 1mg + DRSP 2mg)</small></div><div class="tos-drug-molecule">Schema continuo-combinato</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose">1 compressa/die in schema continuo-combinato</div><div class="tos-drug-note">Indicata in donne con componente di ritenzione idrica o lieve ipertensione. Monitorare kaliemia.</div></div>`;
-    }
-    if(prog==='NOM') {
-      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Naemis® <small style="font-weight:400">(E2 1.5mg + NOM 3.75mg)</small></div><div class="tos-drug-molecule">Schema 24/4 (24 gg attivi + 4 gg sospensione)</div></div><span class="tos-drug-badge badge-c">Fascia C</span></div><div class="tos-drug-dose">1 compressa/die per 24 giorni, poi pausa di 4 gg</div><div class="tos-drug-note">Schema a 24 giorni riduce la durata del sanguinamento da sospensione rispetto ai classici 21/7.</div></div>`;
-    }
-    if(prog==='NETA') {
-      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Activelle® <small style="font-weight:400">(E2 1mg + NETA 0.5mg)</small></div><div class="tos-drug-molecule">Schema continuo-combinato</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose">1 compressa/die — solo schema continuo-combinato</div><div class="tos-drug-note">Combinazione pratica a bassa dose di NETA. Non indicato per schema sequenziale.</div></div>`;
-    }
-  }
-  return out;
+  const w = window.open('','_blank','width=780,height=900');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Scheda TOS</title>
+  <style>body{margin:0;padding:0;background:white;}@media print{@page{margin:15mm;}}</style>
+  </head><body>${card.innerHTML}
+  <script>window.onload=function(){window.print();}<\/script></body></html>`);
+  w.document.close();
 }
 
 // ══════════════════════════════════════
