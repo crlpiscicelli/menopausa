@@ -2608,6 +2608,35 @@ function _tosGeneraSchedaPaziente(eNome, eDose, eApplicazione, eNote, pNome, pDo
     </div>
   </div>`;
 
+  // ── Aggiungi raccomandazioni stile di vita dalla pagina ──
+  const lifestyleEl = document.getElementById('lifestyleItems');
+  let lifestyleHtml = '';
+  if(lifestyleEl && lifestyleEl.children.length > 0) {
+    const items = Array.from(lifestyleEl.querySelectorAll('.lifestyle-item'));
+    if(items.length > 0) {
+      lifestyleHtml = `
+      <div style="background:#f0fdf4;border-radius:10px;padding:16px;margin-bottom:20px;">
+        <h2 style="font-size:15px;color:#065f46;margin:0 0 12px;">🌿 Raccomandazioni Stile di Vita</h2>
+        ${items.map(item => {
+          const icon = item.querySelector('.lifestyle-icon')?.textContent || '';
+          const textEl = item.querySelector('.lifestyle-text');
+          const title = textEl?.querySelector('strong')?.textContent || '';
+          const text = textEl ? textEl.textContent.replace(title,'').trim() : '';
+          return `<div style="margin-bottom:10px;padding:10px;background:white;border-radius:6px;border-left:3px solid #86efac;">
+            <div style="font-weight:700;font-size:13px;margin-bottom:3px;">${icon} ${title}</div>
+            <div style="font-size:12px;color:#374151;line-height:1.5;">${text}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }
+  }
+
+  // Inserisci lo stile di vita prima del footer
+  cardHtml = cardHtml.replace(
+    '<div style="border-top:2px solid #e9d5ff',
+    lifestyleHtml + '<div style="border-top:2px solid #e9d5ff'
+  );
+
   document.getElementById('tosPatientCard').innerHTML = cardHtml;
   document.getElementById('tosPatientCard').setAttribute('data-ready','1');
 }
