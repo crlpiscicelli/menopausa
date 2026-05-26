@@ -352,6 +352,7 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
 .tos-section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
 .tos-warning{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:var(--radius-sm);padding:11px 14px;font-size:0.78rem;color:#78350f;display:flex;gap:10px;line-height:1.5;margin-bottom:12px;}
 .tos-schema-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#ede9fe;color:var(--primary);margin-top:4px;}
+.tos-badge-bio{display:inline-flex;align-items:center;gap:3px;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:10px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;margin-left:5px;letter-spacing:0.3px;}
 .therapy-track.featured{border-color:var(--success);border-width:2px;}
 .therapy-track.featured::after{
   content:"★ CONSIGLIATO";position:absolute;top:0;right:20px;
@@ -2200,8 +2201,8 @@ function tosRenderViaPanel() {
     <div class="tos-options three">
       <div class="tos-opt${bmi>=30?' selected':''}" onclick="tosSelect('viaEstro','cerotto',this)">
         <div class="tos-opt-icon">🩹</div>
-        <div class="tos-opt-title">Cerotto</div>
-        <div class="tos-opt-desc">Rilascio continuo. Cambio ogni 3-4 gg (Dermestril®) o ogni 7 gg (Femseven®, Climara®). Livelli stabili, compliance alta.</div>
+        <div class="tos-opt-title">Cerotto <span class="tos-badge-bio">🌿 Bioidentico</span></div>
+        <div class="tos-opt-desc">17β-estradiolo — struttura identica all'estrogeno umano. Cambio ogni 3-4 gg (Dermestril®) o ogni 7 gg (Femseven®, Climara®). Livelli stabili, compliance alta.</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>No first-pass · Profilo TEV ottimale · Cambi infrequenti · Prima scelta BMI≥30</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>Irritazione locale nel 5-10% · Distacco con sudorazione intensa</div>
@@ -2209,8 +2210,8 @@ function tosRenderViaPanel() {
       </div>
       <div class="tos-opt" onclick="tosSelect('viaEstro','gel',this)">
         <div class="tos-opt-icon">🧴</div>
-        <div class="tos-opt-title">Gel transdermico</div>
-        <div class="tos-opt-desc">Applicazione quotidiana su coscia o addome. Dose regolabile pressione per pressione (Sandrena®, Estrèva®).</div>
+        <div class="tos-opt-title">Gel transdermico <span class="tos-badge-bio">🌿 Bioidentico</span></div>
+        <div class="tos-opt-desc">17β-estradiolo — struttura identica all'estrogeno umano. Applicazione quotidiana su coscia o addome. Dose regolabile (Sandrena®, Estrèva®).</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>Dosi facilmente regolabili · No irritazione locale · No first-pass</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>Applicazione quotidiana · Attesa 2-3 min per asciugatura</div>
@@ -2218,8 +2219,8 @@ function tosRenderViaPanel() {
       </div>
       <div class="tos-opt" onclick="tosSelect('viaEstro','spray',this)">
         <div class="tos-opt-icon">💨</div>
-        <div class="tos-opt-title">Spray cutaneo</div>
-        <div class="tos-opt-desc">Lenzetto® 0.5 mg/pressione, avambraccio interno. Rapido, discreto.</div>
+        <div class="tos-opt-title">Spray cutaneo <span class="tos-badge-bio">🌿 Bioidentico</span></div>
+        <div class="tos-opt-desc">17β-estradiolo — struttura identica all'estrogeno umano. Lenzetto® 0.5 mg/pressione, avambraccio interno. Rapido, discreto.</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>Velocissimo · Discreto · No first-pass</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>Unico prodotto disponibile · Evitare contatto con altri</div>
@@ -2231,8 +2232,8 @@ function tosRenderViaPanel() {
     <div class="tos-options two">
       <div class="tos-opt" onclick="tosSelect('viaEstro','orale_E2',this)">
         <div class="tos-opt-icon">💊</div>
-        <div class="tos-opt-title">Estradiolo valerato orale</div>
-        <div class="tos-opt-desc">E2 valerato 1 mg. Prima scelta tra le formulazioni orali. Disponibile in combinazioni precostituite (Femoston®).</div>
+        <div class="tos-opt-title">Estradiolo valerato orale <span class="tos-badge-bio">🌿 Bioidentico</span></div>
+        <div class="tos-opt-desc">Pro-drug del 17β-estradiolo (convertito in fegato). E2 valerato 1 mg, prima scelta tra le formulazioni orali. Disponibile in Femoston®.</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>Pratico · Formulazioni combinate · Fascia A</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>First-pass epatico · Rischio TEV aumentato · Evitare se BMI≥30</div>
@@ -2240,8 +2241,8 @@ function tosRenderViaPanel() {
       </div>
       <div class="tos-opt" onclick="tosSelect('viaEstro','orale_ECE',this)">
         <div class="tos-opt-icon">💊</div>
-        <div class="tos-opt-title">ECE + Bazedoxifene (Duavive®)</div>
-        <div class="tos-opt-desc">ECE 0.45 mg + BZA 20 mg. Non richiede progestinico anche con utero presente.</div>
+        <div class="tos-opt-title">ECE + Bazedoxifene (Duavive®) <span class="tos-schema-badge" style="margin-left:5px;">Non bioidentico</span></div>
+        <div class="tos-opt-desc">ECE = estrogeni equini (equilina ≠ ormone umano). ECE 0.45 mg + BZA 20 mg. Non richiede progestinico anche con utero presente.</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>Nessun progestinico · Utile se intolleranza al progestinico</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Dati a lungo termine limitati · No sanguinamento atteso</div>
@@ -2378,8 +2379,8 @@ function tosRenderProgPanel() {
     </div>
     <div class="tos-opt" onclick="tosSelect('prog','DYD',this)">
       <div class="tos-opt-icon">💊</div>
-      <div class="tos-opt-title">Diidrogesterone (DYD) <span class="tos-drug-badge badge-c" style="margin-left:6px;">Fascia C</span></div>
-      <div class="tos-opt-desc">Dufaston® 10 mg. Molecola retro-progesterone strutturalmente vicina al P4. Disponibile in Femoston®.</div>
+      <div class="tos-opt-title">Diidrogesterone (DYD) <span class="tos-drug-badge badge-c" style="margin-left:6px;">Fascia C</span> <span class="tos-schema-badge" style="margin-left:4px;background:#fef3c7;color:#92400e;">⚠️ Non bioidentico</span></div>
+      <div class="tos-opt-desc">Dufaston® 10 mg. Retro-progesterone (configurazione 9β,10α ≠ progesterone umano). Profilo metabolico favorevole. Disponibile in Femoston®.</div>
       <div class="tos-pro-con">
         <div class="tos-pro"><strong>✅ Pro</strong>No sonnolenza · Profilo metabolico favorevole · Combinazione Femoston pratica</div>
         <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C (ticket) · Meno dati a lungo termine vs P4</div>
@@ -2388,14 +2389,28 @@ function tosRenderProgPanel() {
     ${isCerotto ? `
     <div class="tos-opt" onclick="tosSelect('prog','cerotto_comb',this)">
       <div class="tos-opt-icon">🩹</div>
-      <div class="tos-opt-title">Cerotto combinato E2+P <span class="tos-drug-badge badge-a" style="margin-left:6px;">Fascia A</span></div>
-      <div class="tos-opt-desc">Tutto in uno: Combiseven®/Femity® (E2+LNG, continuo) o Estalis-sequi® (E2+NETA, sequenziale). Un solo prodotto.</div>
+      <div class="tos-opt-title">Cerotto combinato E2+P <span class="tos-drug-badge badge-a" style="margin-left:6px;">Fascia A</span> <span class="tos-schema-badge" style="margin-left:4px;background:#fef3c7;color:#92400e;">⚠️ P sintetico</span></div>
+      <div class="tos-opt-desc">E2 bioidentico + progestinico sintetico (LNG o NETA). Combiseven®/Femity® (continuo) o Estalis-sequi® (sequenziale). Un solo prodotto.</div>
       <div class="tos-pro-con">
         <div class="tos-pro"><strong>✅ Pro</strong>Massima semplicità · Un solo cerotto · Compliance ottimale</div>
         <div class="tos-con"><strong>⚠️ Contre</strong>Progestinico sintetico (LNG/NETA) · Meno flessibilità nel dosaggio separato</div>
       </div>
     </div>` : ''}
-  </div>`;
+  </div>
+  ${schema==='continuo' ? `
+  <div class="alert alert-purple" style="font-size:0.8rem;margin-top:14px;">
+    <span class="ai">🌿</span>
+    <div><strong>Bijuva® — Combinazione 100% Bioidentica</strong> (solo schema continuo)<br>
+    E2 emiidrato 1 mg + Progesterone micronizzato 100 mg in un unica capsula sera. Unica combinazione precostituita completamente bioidentica in Italia. Ideale per pazienti che richiedono espressamente ormoni bioidentici.<br>
+    <span style="font-size:0.72rem;color:var(--muted);">Theramex Italy · RR · solo schema continuo-combinato · almeno 12 mesi dalla menopausa</span></div>
+  </div>
+  ` : `
+  <div class="alert alert-warning" style="font-size:0.8rem;margin-top:14px;">
+    <span class="ai">ℹ️</span>
+    <div><strong>Schema sequenziale + bioidentici:</strong> non esiste combinazione precostituita 100% bioidentica per lo schema sequenziale. La scelta ottimale è: cerotto o gel E2 (bioidentico) + Prometrium® o Progeffik® 200 mg/sera per 14 giorni (bioidentico).</div>
+  </div>
+  `}
+  `;
 }
 
 // ─── PANEL 4: Prescrizione algoritmica ───
