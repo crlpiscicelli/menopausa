@@ -2408,8 +2408,13 @@ function tosRenderPrescrizione() {
   const bmi = S.bmi || 0;
 
   // ── Calcola prescrizione estrogeno ──
+  // Se cerotto combinato continuo → Combiseven contiene già E2: nessun cerotto E2 separato
+  const isCombinato = (prog === 'cerotto_comb' && schema === 'continuo');
   let eNome='', eDose='', eApplicazione='', eNote='', eFascia='A';
-  if(viaEstro==='cerotto') {
+  if(viaEstro==='cerotto' && isCombinato) {
+    // Combiseven è la terapia completa, non serve E2 separato
+    eNome = ''; eDose=''; eApplicazione=''; eNote='';
+  } else if(viaEstro==='cerotto') {
     eNome = 'Dermestril® 25 mcg/24h';
     eDose = '1 cerotto da 25 mcg/24h — dose iniziale standard';
     eApplicazione = 'Applicare sulla cute asciutta e integra di gluteo o addome basso, in zona diversa ad ogni applicazione. Cambiare ogni <strong>3-4 giorni</strong>.';
@@ -2466,15 +2471,15 @@ function tosRenderPrescrizione() {
     } else if(prog==='cerotto_comb') {
       pFascia='A';
       if(schema==='sequenziale') {
-        pNome='Estalis-sequi® (E2 50 mcg + NETA 250 mcg)';
-        pDose='Schema in 2 fasi: prima 4 cerotti solo E2, poi 4 cerotti E2+NETA';
-        pApplicazione='Settimane 1-2: cerotto solo estrogeno (Estraderm MX 50) · Settimane 3-4: cerotto Estalis-sequi. Cambiare ogni 3-4 giorni.';
-        pSchema='🗓️ 2 settimane cerotto E2 → 2 settimane cerotto E2+NETA → sanguinamento da sospensione';
+        pNome='Estalis-sequi® (E2 50 mcg + NETA 250 mcg) + Estraderm MX® 50 mcg';
+        pDose='Schema in 2 fasi — 2 prodotti necessari';
+        pApplicazione='Fase 1 (gg 1-14): cerotto Estraderm MX 50 mcg, cambio ogni 3-4 gg · Fase 2 (gg 15-28): cerotto Estalis-sequi E2+NETA, cambio ogni 3-4 gg';
+        pSchema='🗓️ Gg 1-14: Estraderm MX 50 mcg (solo E2) → Gg 15-28: Estalis-sequi (E2+NETA) → sanguinamento da sospensione atteso';
       } else {
-        pNome='Combiseven® (E2 50 mcg + LNG 7 mcg)';
-        pDose='1 cerotto/settimana — cambio ogni 7 giorni';
-        pApplicazione='Applicare sulla cute di gluteo o addome, cambiare ogni 7 giorni sempre nello stesso giorno della settimana.';
-        pSchema='🔄 Cerotto combinato ogni giorno · Amenorrea attesa dopo 3-6 mesi';
+        pNome='Combiseven® (E2 50 mcg + LNG 7 mcg) — terapia completa';
+        pDose='1 cerotto/settimana — unico prodotto, contiene già E2 + progestinico';
+        pApplicazione='Applicare sulla cute asciutta di gluteo o addome basso. Cambiare ogni 7 giorni sempre nello stesso giorno. Ruotare le sedi di applicazione.';
+        pSchema='🔄 Un solo cerotto ogni settimana — contiene estrogeno e progestinico · Amenorrea attesa dopo 3-6 mesi · Spotting iniziale normale';
       }
     }
   }
@@ -2496,22 +2501,23 @@ function tosRenderPrescrizione() {
   <div class="tos-result" style="margin-bottom:16px;">
     <div class="tos-result-title">✅ Schema Terapeutico Personalizzato</div>
 
+    ${!isCombinato ? `
     <div class="tos-section-label">Estrogeno</div>
     <div class="tos-drug-card primo">
       <div class="tos-drug-header">
-        <div><div class="tos-drug-name">${eNome} <span class="tos-drug-badge badge-${eFascia.toLowerCase()}"">Fascia ${eFascia}</span></div></div>
+        <div><div class="tos-drug-name">${eNome} <span class="tos-drug-badge badge-${eFascia.toLowerCase()}">Fascia ${eFascia}</span></div></div>
       </div>
       <div class="tos-drug-dose"><strong>Dose iniziale:</strong> ${eDose}</div>
       <div class="tos-drug-dose"><strong>Come usarlo:</strong> ${eApplicazione}</div>
       <div class="tos-drug-note">📈 Rivalutazione: <strong>6 settimane</strong> — ${eNote}</div>
-    </div>`;
+    </div>` : ''}`;
 
   if(utero && prog !== 'nessuno') {
     html += `
-    <div class="tos-section-label">Progestinico — ${schema==='sequenziale'?'Schema Sequenziale':'Schema Continuo-Combinato'}</div>
+    <div class="tos-section-label">${isCombinato ? 'Terapia Completa (E2 + Progestinico in un cerotto)' : 'Progestinico — ' + (schema==='sequenziale'?'Schema Sequenziale':'Schema Continuo-Combinato')}</div>
     <div class="tos-drug-card primo">
       <div class="tos-drug-header">
-        <div><div class="tos-drug-name">${pNome} <span class="tos-drug-badge badge-${pFascia.toLowerCase()}"">Fascia ${pFascia}</span></div></div>
+        <div><div class="tos-drug-name">${pNome} <span class="tos-drug-badge badge-${pFascia.toLowerCase()}">Fascia ${pFascia}</span></div></div>
       </div>
       <div class="tos-drug-dose"><strong>Dose:</strong> ${pDose}</div>
       <div class="tos-drug-dose"><strong>Come usarlo:</strong> ${pApplicazione}</div>
