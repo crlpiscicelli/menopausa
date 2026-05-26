@@ -353,6 +353,31 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
 .tos-warning{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:var(--radius-sm);padding:11px 14px;font-size:0.78rem;color:#78350f;display:flex;gap:10px;line-height:1.5;margin-bottom:12px;}
 .tos-schema-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#ede9fe;color:var(--primary);margin-top:4px;}
 .tos-badge-bio{display:inline-flex;align-items:center;gap:3px;font-size:0.68rem;font-weight:800;padding:2px 9px;border-radius:10px;background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;margin-left:5px;letter-spacing:0.3px;}
+.tos-bio-pref-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1.5px solid #6ee7b7;border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:16px;flex-wrap:wrap;}
+.tos-bio-pref-label{font-size:0.84rem;font-weight:700;color:#065f46;display:flex;align-items:center;gap:8px;}
+.tos-bio-pref-hint{font-size:0.72rem;color:#047857;margin-top:2px;}
+.tos-bio-toggle{display:flex;gap:6px;}
+.tos-bio-btn{padding:5px 16px;border-radius:20px;font-size:0.76rem;font-weight:700;cursor:pointer;border:2px solid #6ee7b7;background:white;color:#065f46;font-family:'Inter',sans-serif;transition:var(--transition);}
+.tos-bio-btn.active{background:#059669;color:white;border-color:#059669;}
+.tos-bio-btn:hover{background:#d1fae5;}
+.tos-bio-info-btn{background:none;border:1.5px solid #6ee7b7;border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;color:#047857;cursor:pointer;flex-shrink:0;}
+.tos-bio-alert{background:#fef9c3;border:1.5px solid #fbbf24;border-radius:var(--radius-sm);padding:12px 16px;margin-top:12px;font-size:0.8rem;color:#78350f;display:flex;gap:10px;line-height:1.6;}
+/* Modal bioidentici */
+#bioInfoModal{position:fixed;inset:0;background:rgba(30,27,75,0.7);backdrop-filter:blur(4px);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
+#bioInfoModal.open{display:flex;}
+.bio-modal-box{background:white;border-radius:20px;max-width:680px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 25px 80px rgba(76,29,149,0.3);}
+.bio-modal-header{background:linear-gradient(135deg,#065f46,#059669);color:white;padding:20px 26px;border-radius:20px 20px 0 0;display:flex;justify-content:space-between;align-items:center;}
+.bio-modal-header h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;margin:0;}
+.bio-modal-close{background:rgba(255,255,255,0.2);border:none;color:white;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.bio-modal-body{padding:24px 28px;font-size:0.84rem;line-height:1.8;color:var(--text);}
+.bio-modal-body h4{color:#065f46;font-weight:700;font-size:0.9rem;margin:18px 0 6px;padding-bottom:4px;border-bottom:2px solid #d1fae5;}
+.bio-modal-body h4:first-child{margin-top:0;}
+.bio-modal-body ul{padding-left:18px;margin:6px 0;}
+.bio-modal-body li{margin-bottom:5px;}
+.bio-modal-body .bio-warn{background:#fef2f2;border-left:4px solid #dc2626;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:0.82rem;color:#7f1d1d;}
+.bio-modal-body .bio-ok{background:#ecfdf5;border-left:4px solid #059669;border-radius:4px;padding:10px 14px;margin:10px 0;font-size:0.82rem;color:#065f46;}
+.bio-modal-footer{padding:16px 28px;border-top:1px solid #d1fae5;display:flex;justify-content:flex-end;}
+.bio-modal-footer button{padding:9px 24px;background:#059669;color:white;border:none;border-radius:var(--radius-sm);font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;font-size:0.84rem;}
 .therapy-track.featured{border-color:var(--success);border-width:2px;}
 .therapy-track.featured::after{
   content:"★ CONSIGLIATO";position:absolute;top:0;right:20px;
@@ -1235,6 +1260,21 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
       <div class="tos-wizard">
         <div class="tos-wizard-title">💊 TOS·SELECTOR — Algoritmo di Prescrizione</div>
         <div class="tos-wizard-sub">Guida step-by-step alla scelta del farmaco, dosaggio iniziale e schema terapeutico</div>
+
+        <!-- Preferenza bioidentici -->
+        <div class="tos-bio-pref-bar">
+          <div>
+            <div class="tos-bio-pref-label">
+              🌿 La paziente preferisce ormoni bioidentici?
+              <button class="tos-bio-info-btn" onclick="openBioModal()" title="Cosa sono gli ormoni bioidentici?">ℹ</button>
+            </div>
+            <div class="tos-bio-pref-hint">L'algoritmo segnala se la scelta effettuata non include ormoni bioidentici</div>
+          </div>
+          <div class="tos-bio-toggle">
+            <button class="tos-bio-btn" id="bioPrefNo" onclick="setBioPref(false)">No</button>
+            <button class="tos-bio-btn" id="bioPrefSi" onclick="setBioPref(true)">Sì 🌿</button>
+          </div>
+        </div>
         <div class="tos-stepper">
           <div class="tos-step-tab active" id="tstab1" onclick="tosGoStep(1)">1 · Via Estrogeno</div>
           <div class="tos-step-tab pending" id="tstab2" onclick="tosGoStep(2)">2 · Mestruazioni?</div>
@@ -2173,11 +2213,25 @@ const TOS = {
   vuoleMestr: null, // true|false|null (null se utero assente)
   schema: null,     // 'sequenziale'|'continuo' (calcolato)
   prog: null,       // 'P4'|'DYD'|'cerotto_comb'|'nessuno'
+  preferisceBio: false,
   currentStep: 1
 };
 
+function setBioPref(val) {
+  TOS.preferisceBio = val;
+  document.getElementById('bioPrefSi').classList.toggle('active', val===true);
+  document.getElementById('bioPrefNo').classList.toggle('active', val===false);
+  // Se è già al panel 4, ricalcola per aggiornare gli alert
+  if(TOS.currentStep===4 && TOS.prog) tosRenderPrescrizione();
+}
+function openBioModal() { document.getElementById('bioInfoModal').classList.add('open'); }
+function closeBioModal() { document.getElementById('bioInfoModal').classList.remove('open'); }
+
 function tosInit() {
   TOS.viaEstro=null; TOS.vuoleMestr=null; TOS.schema=null; TOS.prog=null; TOS.currentStep=1;
+  // Ripristina UI badge preferenza bio
+  document.getElementById('bioPrefSi').classList.toggle('active', TOS.preferisceBio===true);
+  document.getElementById('bioPrefNo').classList.toggle('active', TOS.preferisceBio===false);
   document.querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
   ['tosNext1','tosNext2','tosNext3'].forEach(id=>{ const b=document.getElementById(id); if(b) b.disabled=true; });
   tosRenderViaPanel();
@@ -2556,8 +2610,44 @@ function tosRenderPrescrizione() {
     </div>
   </div>`;
 
+  // ── Alert bioidentici se preferenza attiva ──
+  const isBioEstro = ['cerotto','gel','spray','orale_E2'].includes(viaEstro);
+  const isBioProg = (prog === 'P4' || prog === 'nessuno');
+  const isTotallyBio = isBioEstro && isBioProg;
+  const isPartiallyBio = isBioEstro && !isBioProg;
+
+  if(TOS.preferisceBio) {
+    if(isTotallyBio) {
+      html += `<div class="tos-drug-card" style="background:#ecfdf5;border-color:#6ee7b7;margin-top:10px;">
+        <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:#065f46;font-size:0.88rem;">
+          <span>✅</span> Schema 100% Bioidentico
+        </div>
+        <div style="font-size:0.78rem;color:#047857;margin-top:6px;">
+          ${viaEstro==='orale_E2' && prog==='P4' ? 'Bijuva® (E2 + P4 micronizzato in un'unica capsula) è l'alternativa combinata 100% bioidentica per schema continuo.' : '17β-estradiolo + Progesterone micronizzato — entrambe le molecole sono bioidentiche agli ormoni umani.'}
+          <br><span style="font-style:italic;">Ricorda: bioidentico non significa privo di rischi. Valgono le stesse indicazioni e controindicazioni della TOS standard.</span>
+        </div>
+      </div>`;
+    } else if(isPartiallyBio) {
+      html += `<div class="tos-bio-alert" style="margin-top:10px;">
+        <span>⚠️</span>
+        <div><strong>Attenzione — Schema parzialmente bioidentico:</strong><br>
+        L'estrogeno scelto (${eNome}) è bioidentico ✅, ma il progestinico <strong>${pNome}</strong> non è bioidentico.<br>
+        ${prog==='DYD' ? 'Il diidrogesterone (Dufaston®) è un retro-progesterone con struttura diversa dal progesterone umano.' : 
+          prog==='cerotto_comb' ? 'Il cerotto combinato contiene LNG o NETA, progestinici sintetici.' : ''}
+        <br><strong>Alternativa bioidentica:</strong> sostituire con Prometrium® o Progeffik® (progesterone micronizzato).</div>
+      </div>`;
+    } else {
+      html += `<div class="tos-bio-alert" style="margin-top:10px;">
+        <span>🚫</span>
+        <div><strong>Schema non bioidentico:</strong><br>
+        ${viaEstro==='orale_ECE' ? 'Gli estrogeni coniugati equini (ECE/Duavive®) non sono bioidentici — l'equilina non è un ormone umano.' : ''}
+        Per una terapia completamente bioidentica considerare: cerotto o gel 17β-estradiolo + Prometrium® / Progeffik®.</div>
+      </div>`;
+    }
+  }
+
   // Salva selezione per report
-  S.tosSelection = {track, viaEstro, prog, schema, eNome, eDose, pNome, pDose, pSchema}; saveState();
+  S.tosSelection = {track, viaEstro, prog, schema, eNome, eDose, pNome, pDose, pSchema, preferisceBio: TOS.preferisceBio}; saveState();
 
   // ── Genera scheda paziente nascosta (per stampa) ──
   _tosGeneraSchedaPaziente(eNome, eDose, eApplicazione, eNote, pNome, pDose, pApplicazione, pSchema, schemaNote, utero, prog, schema);
@@ -3117,6 +3207,68 @@ document.addEventListener('DOMContentLoaded', function() {
   buildMRS();
   updateMRS();
 });
+<!-- MODAL BIOIDENTICI -->
+<div id="bioInfoModal">
+  <div class="bio-modal-box">
+    <div class="bio-modal-header">
+      <h3>🌿 Ormoni Bioidentici — Guida Clinica</h3>
+      <button class="bio-modal-close" onclick="closeBioModal()">✕</button>
+    </div>
+    <div class="bio-modal-body">
+
+      <h4>Definizione</h4>
+      <p>Un ormone è definito <strong>bioidentico</strong> quando la sua struttura molecolare è chimicamente identica a quella degli ormoni prodotti fisiologicamente dall'organismo femminile. I principali ormoni bioidentici utilizzati nella TOS sono il <strong>17β-estradiolo</strong> e il <strong>progesterone micronizzato</strong>.</p>
+
+      <h4>Come vengono prodotti</h4>
+      <p>Contrariamente alla percezione comune, gli ormoni bioidentici <strong>non sono ormoni naturali estratti dall'organismo</strong>. Vengono prodotti industrialmente a partire da precursori vegetali (diosgenina dalla soia o dall'igname selvatico) attraverso processi di sintesi chimica in laboratorio. Sono quindi molecole di sintesi con struttura bioidentica — non estratti naturali.</p>
+      <p>Esistono due categorie:</p>
+      <ul>
+        <li><strong>Farmaci registrati</strong> (AIFA/EMA): Prometrium®, Progeffik®, tutti i cerotti e gel a base di E2, Bijuva® — sottoposti a rigorosi controlli di qualità e sicurezza, con dati di efficacia e sicurezza provati da studi clinici.</li>
+        <li><strong>Preparazioni galeniche</strong>: formulate su misura in farmacia (creme, gel personalizzati con DHEA, estriolo, testosterone) — utili per esigenze specifiche ma con minore standardizzazione e assenza di studi clinici di supporto.</li>
+      </ul>
+
+      <h4>⚠️ Cosa i bioidentici NON sono</h4>
+      <div class="bio-warn">
+        <strong>Attenzione alle aspettative errate:</strong>
+        <ul style="margin:6px 0 0;padding-left:16px;">
+          <li>Bioidentico <strong>non significa privo di effetti collaterali</strong> — il 17β-estradiolo e il progesterone micronizzato hanno gli stessi potenziali rischi della TOS convenzionale</li>
+          <li>Bioidentico <strong>non significa sicuro in presenza di controindicazioni</strong> — carcinoma mammario, TEV, patologie estrogenodipendenti rimangono controindicazioni assolute</li>
+          <li>Bioidentico <strong>non significa durata illimitata</strong> — il principio della dose minima per il tempo più breve si applica ugualmente</li>
+          <li>Bioidentico <strong>non significa non prescrivibile</strong> — richiede sempre valutazione specialistica e prescrizione medica</li>
+          <li>Le preparazioni galeniche bioidentiche <strong>non sono equivalenti ai farmaci registrati</strong> in termini di controllo qualità, standardizzazione del dosaggio e dati di sicurezza</li>
+        </ul>
+      </div>
+
+      <h4>Vantaggi documentati rispetto ai progestinici sintetici</h4>
+      <div class="bio-ok">
+        <ul style="margin:0;padding-left:16px;">
+          <li><strong>Progesterone micronizzato vs progestinici sintetici:</strong> studi osservazionali (E3N, ESTHER) suggeriscono un profilo di rischio mammario più favorevole rispetto a MAP e MPA — ma i dati derivano principalmente da studi osservazionali, non RCT</li>
+          <li><strong>Profilo cardiovascolare:</strong> il progesterone micronizzato ha effetti neutrali su lipidi, pressione arteriosa e metabolismo glucidico</li>
+          <li><strong>17β-estradiolo transdermico:</strong> non incrementa il rischio TEV (diversamente dall'estradiolo orale che attraversa il fegato)</li>
+          <li><strong>Effetti sul SNC:</strong> il progesterone micronizzato ha effetti positivi su sonno e ansia per azione sui recettori GABA-A</li>
+        </ul>
+      </div>
+
+      <h4>Farmaci bioidentici registrati in Italia</h4>
+      <table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-top:6px;">
+        <tr style="background:#d1fae5;"><td style="padding:6px 10px;font-weight:700;">Farmaco</td><td style="padding:6px 10px;font-weight:700;">Molecola</td><td style="padding:6px 10px;font-weight:700;">Via</td><td style="padding:6px 10px;font-weight:700;">Fascia</td></tr>
+        <tr style="border-bottom:1px solid #d1fae5;"><td style="padding:5px 10px;">Dermestril®, Femseven®, Climara®</td><td style="padding:5px 10px;">17β-estradiolo</td><td style="padding:5px 10px;">Cerotto</td><td style="padding:5px 10px;">A</td></tr>
+        <tr style="border-bottom:1px solid #d1fae5;background:#f0fdf4;"><td style="padding:5px 10px;">Sandrena®, Estrèva®</td><td style="padding:5px 10px;">17β-estradiolo</td><td style="padding:5px 10px;">Gel</td><td style="padding:5px 10px;">A</td></tr>
+        <tr style="border-bottom:1px solid #d1fae5;"><td style="padding:5px 10px;">Lenzetto®</td><td style="padding:5px 10px;">17β-estradiolo</td><td style="padding:5px 10px;">Spray</td><td style="padding:5px 10px;">A</td></tr>
+        <tr style="border-bottom:1px solid #d1fae5;background:#f0fdf4;"><td style="padding:5px 10px;">Femoston® (E2)</td><td style="padding:5px 10px;">E2 valerato → 17β-E2</td><td style="padding:5px 10px;">Orale</td><td style="padding:5px 10px;">A</td></tr>
+        <tr style="border-bottom:1px solid #d1fae5;"><td style="padding:5px 10px;">Prometrium®, Progeffik®</td><td style="padding:5px 10px;">Progesterone micronizzato</td><td style="padding:5px 10px;">Orale/vaginale</td><td style="padding:5px 10px;">A</td></tr>
+        <tr style="background:#f0fdf4;"><td style="padding:5px 10px;font-weight:700;">Bijuva®</td><td style="padding:5px 10px;font-weight:700;">E2 + P4 micronizzato</td><td style="padding:5px 10px;font-weight:700;">Orale combinata</td><td style="padding:5px 10px;font-weight:700;">—</td></tr>
+      </table>
+
+      <h4>Linee guida internazionali</h4>
+      <p>IMS 2024, EMAS 2023 e NICE 2024 riconoscono i vantaggi del progesterone micronizzato rispetto ai progestinici sintetici, in particolare per il profilo di rischio mammario. Non esistono tuttavia RCT di grandi dimensioni che confrontino direttamente tutti i bioidentici vs sintetici per tutti gli outcome. Il livello di evidenza per i bioidentici registrati è <strong>Livello II-III</strong> per la maggior parte degli outcome.</p>
+
+    </div>
+    <div class="bio-modal-footer">
+      <button onclick="closeBioModal()">Ho capito</button>
+    </div>
+  </div>
+</div>
 </script>
 </body>
 </html>
