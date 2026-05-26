@@ -2296,7 +2296,7 @@ function tosRenderViaPanel() {
       <div class="tos-opt" onclick="tosSelect('viaEstro','orale_ECE',this)">
         <div class="tos-opt-icon">💊</div>
         <div class="tos-opt-title">ECE + Bazedoxifene (Duavive®) <span class="tos-schema-badge" style="margin-left:5px;">Non bioidentico</span></div>
-        <div class="tos-opt-desc">ECE = estrogeni equini (equilina ≠ ormone umano). ECE 0.45 mg + BZA 20 mg. Non richiede progestinico anche con utero presente.</div>
+        <div class="tos-opt-desc">ECE = estrogeni equini (equilina, non un ormone umano). ECE 0.45 mg + BZA 20 mg. Non richiede progestinico anche con utero presente.</div>
         <div class="tos-pro-con">
           <div class="tos-pro"><strong>✅ Pro</strong>Nessun progestinico · Utile se intolleranza al progestinico</div>
           <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Dati a lungo termine limitati · No sanguinamento atteso</div>
@@ -2455,7 +2455,7 @@ function tosRenderProgPanel() {
   <div class="alert alert-purple" style="font-size:0.8rem;margin-top:14px;">
     <span class="ai">🌿</span>
     <div><strong>Bijuva® — Combinazione 100% Bioidentica</strong> (solo schema continuo)<br>
-    E2 emiidrato 1 mg + Progesterone micronizzato 100 mg in un unica capsula sera. Unica combinazione precostituita completamente bioidentica in Italia. Ideale per pazienti che richiedono espressamente ormoni bioidentici.<br>
+    E2 emiidrato 1 mg + Progesterone micronizzato 100 mg in una capsula unica serale. Unica combinazione precostituita completamente bioidentica in Italia. Ideale per pazienti che richiedono espressamente ormoni bioidentici.<br>
     <span style="font-size:0.72rem;color:var(--muted);">Theramex Italy · RR · solo schema continuo-combinato · almeno 12 mesi dalla menopausa</span></div>
   </div>
   ` : `
@@ -2617,32 +2617,34 @@ function tosRenderPrescrizione() {
   const isPartiallyBio = isBioEstro && !isBioProg;
 
   if(TOS.preferisceBio) {
+    var bioProgNote = '';
+    if(prog==='DYD') bioProgNote = 'Il diidrogesterone (Dufaston) ha configurazione molecolare diversa dal progesterone umano.';
+    else if(prog==='cerotto_comb') bioProgNote = 'Il cerotto combinato contiene LNG o NETA, progestinici sintetici non bioidentici.';
+    var bioECEnote = (viaEstro==='orale_ECE') ? 'Gli estrogeni coniugati equini (ECE/Duavive) non sono bioidentici: equilina e equilenina non sono ormoni umani.' : '';
+    var bioDisclaimer = 'Bioidentico non significa privo di rischi. Valgono le stesse indicazioni e controindicazioni della TOS standard.';
+    var bioAlt = 'Alternativa bioidentica: sostituire con Prometrium o Progeffik (progesterone micronizzato).';
     if(isTotallyBio) {
-      html += `<div class="tos-drug-card" style="background:#ecfdf5;border-color:#6ee7b7;margin-top:10px;">
-        <div style="display:flex;align-items:center;gap:8px;font-weight:700;color:#065f46;font-size:0.88rem;">
-          <span>✅</span> Schema 100% Bioidentico
-        </div>
-        <div style="font-size:0.78rem;color:#047857;margin-top:6px;">
-          ${viaEstro==='orale_E2' && prog==='P4' ? 'Bijuva® (E2 + P4 micronizzato in un'unica capsula) è l'alternativa combinata 100% bioidentica per schema continuo.' : '17β-estradiolo + Progesterone micronizzato — entrambe le molecole sono bioidentiche agli ormoni umani.'}
-          <br><span style="font-style:italic;">Ricorda: bioidentico non significa privo di rischi. Valgono le stesse indicazioni e controindicazioni della TOS standard.</span>
-        </div>
-      </div>`;
+      html += '<div class="tos-drug-card" style="background:#ecfdf5;border-color:#6ee7b7;margin-top:10px;">'
+            + '<div style="display:flex;align-items:center;gap:8px;font-weight:700;color:#065f46;font-size:0.88rem;"><span>&#x2705;</span> Schema 100% Bioidentico</div>'
+            + '<div style="font-size:0.78rem;color:#047857;margin-top:6px;">'
+            + '17&#946;-estradiolo + Progesterone micronizzato: entrambe le molecole sono bioidentiche agli ormoni umani.'
+            + (schema==='continuo' ? ' Per schema continuo, Bijuva (E2+P4 in capsula unica serale) e la combinazione precostituita.' : '')
+            + '<br><em>' + bioDisclaimer + '</em>'
+            + '</div></div>';
     } else if(isPartiallyBio) {
-      html += `<div class="tos-bio-alert" style="margin-top:10px;">
-        <span>⚠️</span>
-        <div><strong>Attenzione — Schema parzialmente bioidentico:</strong><br>
-        L'estrogeno scelto (${eNome}) è bioidentico ✅, ma il progestinico <strong>${pNome}</strong> non è bioidentico.<br>
-        ${prog==='DYD' ? 'Il diidrogesterone (Dufaston®) è un retro-progesterone con struttura diversa dal progesterone umano.' : 
-          prog==='cerotto_comb' ? 'Il cerotto combinato contiene LNG o NETA, progestinici sintetici.' : ''}
-        <br><strong>Alternativa bioidentica:</strong> sostituire con Prometrium® o Progeffik® (progesterone micronizzato).</div>
-      </div>`;
+      html += '<div class="tos-bio-alert" style="margin-top:10px;">'
+            + '<span>&#x26A0;&#xFE0F;</span>'
+            + '<div><strong>Schema parzialmente bioidentico:</strong><br>'
+            + 'Estrogeno ' + eNome + ' (bioidentico &#x2705;) — Progestinico ' + pNome + ' (non bioidentico &#x274C;).<br>'
+            + bioProgNote + '<br><strong>' + bioAlt + '</strong></div>'
+            + '</div>';
     } else {
-      html += `<div class="tos-bio-alert" style="margin-top:10px;">
-        <span>🚫</span>
-        <div><strong>Schema non bioidentico:</strong><br>
-        ${viaEstro==='orale_ECE' ? 'Gli estrogeni coniugati equini (ECE/Duavive®) non sono bioidentici — l'equilina non è un ormone umano.' : ''}
-        Per una terapia completamente bioidentica considerare: cerotto o gel 17β-estradiolo + Prometrium® / Progeffik®.</div>
-      </div>`;
+      html += '<div class="tos-bio-alert" style="margin-top:10px;">'
+            + '<span>&#x1F6AB;</span>'
+            + '<div><strong>Schema non bioidentico.</strong><br>'
+            + bioECEnote
+            + ' Per una terapia bioidentica: cerotto/gel 17&#946;-estradiolo + Prometrium/Progeffik.</div>'
+            + '</div>';
     }
   }
 
@@ -3207,6 +3209,7 @@ document.addEventListener('DOMContentLoaded', function() {
   buildMRS();
   updateMRS();
 });
+</script>
 <!-- MODAL BIOIDENTICI -->
 <div id="bioInfoModal">
   <div class="bio-modal-box">
@@ -3269,6 +3272,5 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </div>
-</script>
 </body>
 </html>
