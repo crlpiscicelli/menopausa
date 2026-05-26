@@ -1,0 +1,3081 @@
+<!DOCTYPE html>
+<html lang="it" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="it">
+<title>MenoPATH — Percorso Integrato Menopausa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #4c1d95;
+  --secondary: #7c3aed;
+  --accent: #c4b5fd;
+  --pink: #ec4899;
+  --pink-light: #fce7f3;
+  --bg: #faf5ff;
+  --bg2: #f3f0ff;
+  --white: #ffffff;
+  --border: #e9d5ff;
+  --border2: #ede9fe;
+  --text: #1e1b4b;
+  --text2: #4c1d95;
+  --muted: #6b7280;
+  --success: #059669;
+  --success-bg: #ecfdf5;
+  --warning: #d97706;
+  --warning-bg: #fffbeb;
+  --danger: #dc2626;
+  --danger-bg: #fef2f2;
+  --info: #2563eb;
+  --info-bg: #eff6ff;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 4px 24px rgba(76,29,149,0.08);
+  --shadow-lg: 0 8px 40px rgba(76,29,149,0.14);
+  --transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:var(--text);
+  font-size:15px;
+}
+
+/* ── MODAL ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(30,27,75,0.7);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:white;border-radius:20px;max-width:660px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 25px 80px rgba(76,29,149,0.3);}
+.modal-header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;padding:24px 28px;border-radius:20px 20px 0 0;}
+.modal-header h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;}
+.modal-body{padding:28px;font-size:0.88rem;line-height:1.8;}
+.modal-body h4{color:var(--primary);font-weight:600;margin:16px 0 6px;font-size:0.9rem;}
+.modal-body ul{padding-left:20px;}
+.modal-body li{margin-bottom:6px;}
+.modal-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:12px;}
+
+/* ── HEADER ── */
+.app-header{
+  background:linear-gradient(160deg,#0f0720 0%,#1a0a3d 50%,#0f0720 100%);
+  padding:12px 48px;
+  position:relative;overflow:hidden;
+}
+.app-header::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(196,181,253,0.12) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 50%,rgba(236,72,153,0.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.header-inner{
+  display:flex;align-items:center;gap:24px;
+  max-width:1300px;margin:0 auto;position:relative;z-index:1;
+}
+.header-logo{
+  width:160px;height:160px;object-fit:contain;flex-shrink:0;
+  filter:drop-shadow(0 0 30px rgba(196,181,253,0.7)) drop-shadow(0 0 10px rgba(236,72,153,0.4));
+  transition:filter 0.3s;
+}
+.header-logo:hover{filter:drop-shadow(0 0 40px rgba(196,181,253,0.9)) drop-shadow(0 0 15px rgba(236,72,153,0.6));}
+.header-text h1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:700;letter-spacing:-1px;
+  background:linear-gradient(135deg,#e879f9,#c4b5fd,#67e8f9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:4px;
+}
+.header-text p{font-size:0.82rem;color:rgba(255,255,255,0.55);letter-spacing:0.3px;}
+.header-links{display:flex;gap:10px;margin-top:10px;}
+.hbtn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 16px;border-radius:20px;font-size:0.75rem;font-weight:600;
+  border:none;cursor:pointer;font-family:'Inter',sans-serif;
+  text-decoration:none;transition:var(--transition);
+}
+.hbtn-guide{background:rgba(196,181,253,0.15);color:rgba(255,255,255,0.85);border:1px solid rgba(196,181,253,0.25);}
+.hbtn-guide:hover{background:rgba(196,181,253,0.28);}
+.hbtn-disc{background:rgba(236,72,153,0.15);color:#f9a8d4;border:1px solid rgba(236,72,153,0.3);}
+.hbtn-disc:hover{background:rgba(236,72,153,0.28);}
+
+/* ── CONTAINER ── */
+.container{max-width:1280px;margin:0 auto;padding:28px 32px 60px;}
+
+/* ── PROGRESS ── */
+.progress-wrap{
+  background:white;border-radius:var(--radius);
+  padding:20px 28px;margin-bottom:24px;
+  box-shadow:var(--shadow);border:1px solid var(--border2);
+}
+.step-labels{display:flex;justify-content:space-between;margin-bottom:10px;}
+.step-label{
+  font-size:0.72rem;font-weight:600;color:var(--muted);
+  text-align:center;flex:1;transition:color 0.3s;letter-spacing:0.3px;
+}
+.step-label.active{color:var(--secondary);}
+.step-label.done{color:var(--success);}
+.progress-bar-track{height:5px;background:#f3f0ff;border-radius:3px;overflow:hidden;position:relative;}
+.progress-bar-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--primary),var(--secondary),var(--pink));
+  border-radius:3px;transition:width 0.5s cubic-bezier(0.4,0,0.2,1);
+  box-shadow:0 0 8px rgba(124,58,237,0.4);
+}
+.step-dots{display:flex;justify-content:space-between;margin-top:8px;}
+.step-dot{
+  width:26px;height:26px;border-radius:50%;
+  background:#e9d5ff;display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;font-weight:800;color:var(--secondary);
+  transition:var(--transition);
+}
+.step-dot.active{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;transform:scale(1.2);
+  box-shadow:0 0 12px rgba(124,58,237,0.5);
+}
+.step-dot.done{background:var(--success);color:white;}
+
+/* ── PANELS ── */
+.step-panel{display:none;animation:fadeIn 0.3s ease;}
+.step-panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── CARDS ── */
+.card{
+  background:white;border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:28px 32px;
+  margin-bottom:20px;border:1px solid var(--border2);
+  transition:var(--transition);
+}
+.card:hover{box-shadow:var(--shadow-lg);border-color:var(--accent);}
+.card-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:600;color:var(--primary);
+  margin-bottom:18px;padding-bottom:12px;
+  border-bottom:2px solid var(--bg2);
+  display:flex;align-items:center;gap:10px;
+}
+
+/* ── TWO-COL LAYOUT ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.four-col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;}
+
+/* ── FORM ── */
+.field-group{margin-bottom:16px;}
+label.fl{
+  display:block;font-size:0.78rem;font-weight:600;
+  color:var(--primary);margin-bottom:5px;letter-spacing:0.2px;
+}
+.auto-badge{
+  display:inline-block;background:var(--bg2);color:var(--secondary);
+  font-size:0.65rem;font-weight:700;padding:1px 8px;border-radius:10px;
+  margin-left:6px;letter-spacing:0.5px;
+}
+input[type="number"],input[type="text"],select,textarea{
+  width:100%;padding:10px 14px;
+  border:2px solid var(--border2);border-radius:var(--radius-sm);
+  font-size:0.88rem;font-family:'Inter',sans-serif;
+  transition:var(--transition);background:#fdfcff;color:var(--text);
+}
+input:focus,select:focus,textarea:focus{
+  outline:none;border-color:var(--secondary);
+  box-shadow:0 0 0 4px rgba(124,58,237,0.1);background:white;
+}
+input[readonly]{background:#f5f3ff;color:var(--muted);cursor:default;}
+input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!important;}
+
+/* ── RADIO / CHECK CARDS ── */
+.radio-card,.check-card{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 16px;border:2px solid var(--border2);
+  border-radius:var(--radius-sm);cursor:pointer;
+  transition:var(--transition);background:#fdfcff;
+  margin-bottom:8px;
+}
+.radio-card:hover,.check-card:hover{border-color:var(--secondary);background:#f5f3ff;}
+.radio-card.selected{border-color:var(--secondary);background:#f5f3ff;box-shadow:0 0 0 3px rgba(124,58,237,0.1);}
+.radio-card input,.check-card input{
+  width:auto;margin-top:3px;flex-shrink:0;
+  accent-color:var(--secondary);transform:scale(1.2);
+}
+.rlm{font-size:0.88rem;font-weight:600;color:var(--text);}
+.rls{font-size:0.76rem;color:var(--muted);margin-top:2px;}
+
+/* ── ALERTS ── */
+.alert{
+  border-radius:var(--radius-sm);padding:13px 16px;
+  font-size:0.84rem;margin-bottom:14px;
+  display:flex;gap:10px;align-items:flex-start;line-height:1.55;
+}
+.ai{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.alert-danger{background:var(--danger-bg);border-left:4px solid var(--danger);color:#7f1d1d;}
+.alert-warning{background:var(--warning-bg);border-left:4px solid var(--warning);color:#78350f;}
+.alert-success{background:var(--success-bg);border-left:4px solid var(--success);color:#064e3b;}
+.alert-info{background:var(--info-bg);border-left:4px solid var(--info);color:#1e3a8a;}
+.alert-purple{background:#f5f3ff;border-left:4px solid var(--secondary);color:var(--primary);}
+
+/* ── DIVIDER ── */
+.sdiv{
+  font-size:0.7rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.2px;
+  margin:20px 0 10px;display:flex;align-items:center;gap:10px;
+}
+.sdiv::after{content:"";flex:1;height:1px;background:var(--border2);}
+
+/* ── MRS TABLE ── */
+.mrs-table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+.mrs-table th{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;padding:9px 10px;text-align:center;font-weight:600;
+}
+.mrs-table th:first-child{text-align:left;padding-left:14px;border-radius:8px 0 0 0;}
+.mrs-table th:last-child{border-radius:0 8px 0 0;}
+.mrs-table td{padding:7px 8px;border-bottom:1px solid var(--border2);text-align:center;}
+.mrs-table td:first-child{text-align:left;font-weight:500;padding-left:14px;}
+.mrs-table tr:nth-child(even) td{background:#fdfcff;}
+.mrs-table tr:hover td{background:#f5f3ff;}
+.mrs-score-display{
+  margin-top:14px;padding:14px 18px;border-radius:var(--radius-sm);text-align:center;
+}
+
+/* ── RISK MODULES ── */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.risk-module{
+  border:2px solid var(--border2);border-radius:var(--radius);
+  padding:20px;transition:var(--transition);background:white;
+}
+.risk-module.completed{border-color:var(--success);background:var(--success-bg);}
+.risk-module-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.risk-module-icon{font-size:2rem;}
+.risk-module-title{font-weight:700;font-size:0.95rem;color:var(--primary);}
+.risk-module-subtitle{font-size:0.75rem;color:var(--muted);margin-top:2px;}
+.risk-status{
+  margin-left:auto;font-size:0.72rem;font-weight:700;
+  padding:3px 12px;border-radius:12px;white-space:nowrap;
+}
+.risk-status.done{background:#d1fae5;color:#065f46;}
+.risk-status.pending{background:#fef3c7;color:#92400e;}
+.risk-status.optional{background:var(--bg2);color:var(--muted);}
+.risk-result-preview{
+  font-size:0.82rem;background:#f9f7ff;border-radius:8px;
+  padding:9px 12px;margin:8px 0;color:var(--text);border:1px solid var(--border2);
+}
+.risk-action-btn{
+  width:100%;padding:9px;border-radius:var(--radius-sm);
+  border:2px solid var(--secondary);background:white;
+  color:var(--secondary);font-weight:700;cursor:pointer;
+  font-size:0.82rem;font-family:'Inter',sans-serif;
+  transition:var(--transition);margin-top:6px;
+}
+.risk-action-btn:hover{background:var(--secondary);color:white;}
+.inline-risk{
+  background:#f9f7ff;border:1px solid var(--border2);
+  border-radius:var(--radius-sm);padding:16px;
+  margin-top:10px;display:none;
+}
+.inline-risk.open{display:block;}
+
+/* ── THERAPY TRACKS ── */
+.therapy-track{
+  border:2px solid var(--border2);border-radius:var(--radius);
+  padding:20px 22px;margin-bottom:12px;cursor:pointer;
+  transition:var(--transition);background:white;
+  position:relative;overflow:hidden;
+}
+.therapy-track::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:transparent;transition:var(--transition);
+}
+.therapy-track:hover{
+  border-color:var(--secondary);
+  box-shadow:var(--shadow-lg);transform:translateY(-2px);
+}
+.therapy-track:hover::before{background:var(--secondary);}
+.therapy-track.selected{
+  border-color:var(--secondary);background:#f5f3ff;
+  box-shadow:0 0 0 3px rgba(124,58,237,0.15);
+}
+.therapy-track.selected::before{background:var(--secondary);}
+
+/* ── TOS·SELECTOR WIZARD ── */
+.tos-wizard{background:white;border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;border:2px solid var(--border2);box-shadow:var(--shadow);}
+.tos-wizard-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:700;color:var(--primary);margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.tos-wizard-sub{font-size:0.78rem;color:var(--muted);margin-bottom:20px;}
+.tos-stepper{display:flex;gap:0;margin-bottom:22px;border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border2);}
+.tos-step-tab{flex:1;padding:9px 6px;text-align:center;font-size:0.72rem;font-weight:700;color:var(--muted);background:#f9f7ff;cursor:pointer;transition:var(--transition);border-right:1px solid var(--border2);letter-spacing:0.3px;}
+.tos-step-tab:last-child{border-right:none;}
+.tos-step-tab.active{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;}
+.tos-step-tab.done{background:#d1fae5;color:#065f46;}
+.tos-step-tab.pending{background:#f9f7ff;color:var(--muted);}
+.tos-panel{display:none;}
+.tos-panel.active{display:block;animation:fadeIn 0.25s ease;}
+.tos-options{display:grid;gap:10px;margin-bottom:16px;}
+.tos-options.two{grid-template-columns:1fr 1fr;}
+.tos-options.three{grid-template-columns:1fr 1fr 1fr;}
+.tos-opt{border:2px solid var(--border2);border-radius:var(--radius-sm);padding:14px 16px;cursor:pointer;transition:var(--transition);background:#fdfcff;position:relative;overflow:hidden;}
+.tos-opt::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:var(--transition);}
+.tos-opt:hover{border-color:var(--secondary);background:#f5f3ff;transform:translateY(-1px);}
+.tos-opt:hover::before{background:var(--secondary);}
+.tos-opt.selected{border-color:var(--secondary);background:#f5f3ff;box-shadow:0 0 0 3px rgba(124,58,237,0.12);}
+.tos-opt.selected::before{background:var(--secondary);}
+.tos-opt-icon{font-size:1.6rem;margin-bottom:6px;}
+.tos-opt-title{font-weight:700;font-size:0.9rem;color:var(--text);margin-bottom:4px;}
+.tos-opt-desc{font-size:0.76rem;color:var(--muted);line-height:1.5;}
+.tos-pro-con{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;}
+.tos-pro{background:#ecfdf5;border-radius:6px;padding:7px 10px;font-size:0.72rem;color:#065f46;line-height:1.45;}
+.tos-con{background:#fef2f2;border-radius:6px;padding:7px 10px;font-size:0.72rem;color:#991b1b;line-height:1.45;}
+.tos-pro strong,.tos-con strong{display:block;margin-bottom:3px;font-size:0.7rem;text-transform:uppercase;letter-spacing:0.5px;}
+.tos-nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;gap:10px;}
+.tos-btn{padding:9px 22px;border-radius:var(--radius-sm);font-size:0.82rem;font-weight:700;cursor:pointer;border:2px solid var(--secondary);transition:var(--transition);font-family:'Inter',sans-serif;}
+.tos-btn-primary{background:var(--secondary);color:white;}
+.tos-btn-primary:hover{background:var(--primary);}
+.tos-btn-outline{background:white;color:var(--secondary);}
+.tos-btn-outline:hover{background:#f5f3ff;}
+.tos-result{background:linear-gradient(135deg,#f5f3ff,#fce7f3);border:2px solid var(--accent);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;}
+.tos-result-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:700;color:var(--primary);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.tos-drug-card{background:white;border:1.5px solid var(--border2);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;transition:var(--transition);}
+.tos-drug-card.primo{border-color:var(--secondary);border-width:2px;}
+.tos-drug-card:hover{box-shadow:var(--shadow);}
+.tos-drug-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+.tos-drug-name{font-weight:800;font-size:0.92rem;color:var(--primary);}
+.tos-drug-molecule{font-size:0.74rem;color:var(--muted);margin-top:2px;}
+.tos-drug-badge{font-size:0.65rem;font-weight:800;padding:3px 10px;border-radius:10px;white-space:nowrap;}
+.badge-a{background:#d1fae5;color:#065f46;}
+.badge-c{background:#fef3c7;color:#92400e;}
+.badge-primo{background:linear-gradient(135deg,var(--primary),var(--secondary));color:white;}
+.tos-drug-dose{font-size:0.78rem;background:#f9f7ff;border-radius:6px;padding:7px 10px;margin-bottom:8px;border:1px solid var(--border2);}
+.tos-drug-dose strong{color:var(--primary);}
+.tos-drug-note{font-size:0.74rem;color:var(--muted);line-height:1.5;font-style:italic;}
+.tos-section-label{font-size:0.72rem;font-weight:800;color:var(--secondary);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px;display:flex;align-items:center;gap:8px;}
+.tos-section-label::after{content:'';flex:1;height:1px;background:var(--border2);}
+.tos-warning{background:#fffbeb;border:1.5px solid #fcd34d;border-radius:var(--radius-sm);padding:11px 14px;font-size:0.78rem;color:#78350f;display:flex;gap:10px;line-height:1.5;margin-bottom:12px;}
+.tos-schema-badge{display:inline-block;font-size:0.7rem;font-weight:700;padding:2px 10px;border-radius:10px;background:#ede9fe;color:var(--primary);margin-top:4px;}
+.therapy-track.featured{border-color:var(--success);border-width:2px;}
+.therapy-track.featured::after{
+  content:"★ CONSIGLIATO";position:absolute;top:0;right:20px;
+  background:linear-gradient(135deg,var(--success),#10b981);
+  color:white;font-size:0.6rem;font-weight:800;
+  padding:3px 12px;border-radius:0 0 8px 8px;letter-spacing:1px;
+}
+.therapy-track.contraindicated{
+  border-color:#fca5a5;background:var(--danger-bg);
+  cursor:not-allowed;opacity:0.65;
+}
+.therapy-track h3{font-size:1rem;font-weight:700;margin-bottom:5px;color:var(--text);}
+.therapy-track p{font-size:0.82rem;color:var(--muted);line-height:1.5;}
+
+/* ── LIFESTYLE BOX ── */
+.lifestyle-default{
+  background:linear-gradient(135deg,#ecfdf5,#d1fae5);
+  border:2px solid #6ee7b7;border-radius:var(--radius);
+  padding:20px 24px;margin-bottom:16px;
+}
+.lifestyle-default h4{
+  color:#065f46;font-size:0.95rem;font-weight:700;
+  margin-bottom:12px;display:flex;align-items:center;gap:8px;
+}
+.lifestyle-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lifestyle-item{
+  background:white;border-radius:var(--radius-sm);padding:12px 14px;
+  display:flex;gap:10px;align-items:flex-start;
+  border:1px solid #a7f3d0;
+}
+.lifestyle-icon{font-size:1.2rem;flex-shrink:0;}
+.lifestyle-text{font-size:0.8rem;color:#065f46;}
+.lifestyle-text strong{display:block;font-size:0.82rem;margin-bottom:2px;}
+
+/* ── RELAZIONE PRINT ── */
+.report-wrap{background:white;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
+.report-header-bar{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;padding:20px 28px;
+  display:flex;align-items:center;gap:16px;
+}
+.report-header-bar img{width:60px;height:60px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(255,255,255,0.4));}
+.report-header-bar h2{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;}
+.report-header-bar p{font-size:0.78rem;opacity:0.8;margin-top:3px;}
+.report-disclaimer{
+  background:#fffbeb;border-bottom:1px solid #fde68a;
+  padding:10px 24px;font-size:0.78rem;color:#92400e;
+  display:flex;align-items:center;gap:8px;
+}
+.report-body{padding:28px 32px;}
+.report-output{
+  font-size:0.9rem;line-height:1.9;white-space:pre-wrap;
+  color:var(--text);min-height:200px;
+}
+.report-signature{
+  margin-top:32px;padding-top:20px;border-top:2px solid var(--border2);
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;
+}
+.sig-field label{
+  display:block;font-size:0.75rem;font-weight:600;
+  color:var(--muted);margin-bottom:6px;letter-spacing:0.5px;text-transform:uppercase;
+}
+.sig-field input{
+  border:none;border-bottom:2px solid var(--border2);
+  border-radius:0;background:transparent;
+  font-family:'Cormorant Garamond',serif;font-size:1rem;
+  padding:4px 2px;width:100%;
+}
+.sig-field input:focus{
+  outline:none;border-bottom-color:var(--secondary);
+  box-shadow:none;background:transparent;
+}
+.report-loading{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:48px;color:var(--muted);
+}
+
+/* ── API KEY ── */
+.api-key-wrap{display:flex;gap:10px;margin-bottom:16px;}
+.api-key-wrap input{flex:1;font-family:monospace;font-size:0.82rem;}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;justify-content:space-between;margin-top:28px;gap:14px;align-items:center;}
+.btn{
+  padding:12px 28px;border-radius:10px;
+  font-size:0.88rem;font-weight:700;border:none;cursor:pointer;
+  transition:var(--transition);font-family:'Inter',sans-serif;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:white;box-shadow:0 4px 16px rgba(76,29,149,0.35);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(76,29,149,0.45);}
+.btn-outline{background:white;color:var(--primary);border:2px solid var(--border2);}
+.btn-outline:hover{border-color:var(--secondary);color:var(--secondary);}
+.btn-success{background:linear-gradient(135deg,#059669,#10b981);color:white;box-shadow:0 4px 16px rgba(5,150,105,0.3);}
+.btn-success:hover{transform:translateY(-2px);}
+.btn-pink{background:linear-gradient(135deg,var(--pink),#db2777);color:white;}
+
+/* ── ACCORDION ── */
+.acc-h{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 16px;cursor:pointer;
+  background:#f9f7ff;border:1px solid var(--border2);
+  border-radius:var(--radius-sm);font-weight:600;font-size:0.85rem;
+  user-select:none;transition:var(--transition);color:var(--primary);
+}
+.acc-h:hover{background:#f0ebff;}
+.acc-b{
+  display:none;padding:14px 16px;
+  border:1px solid var(--border2);border-top:none;
+  border-radius:0 0 var(--radius-sm) var(--radius-sm);
+  font-size:0.83rem;background:white;
+}
+.acc-b.open{display:block;}
+
+/* ── SPINNER ── */
+@keyframes spin{to{transform:rotate(360deg);}}
+.spinner{
+  width:36px;height:36px;border:3px solid var(--border2);
+  border-top-color:var(--secondary);border-radius:50%;
+  animation:spin 0.8s linear infinite;margin:0 auto 14px;
+}
+
+/* ── FOOTER ── */
+.app-footer{
+  background:white;border-top:3px solid var(--primary);
+  padding:14px 32px;text-align:center;
+  font-size:0.77rem;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+
+/* ── TOOLTIP ── */
+.tip-wrap{position:relative;display:inline-flex;align-items:center;gap:4px;}
+.tip-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--accent);color:var(--primary);
+  font-size:0.6rem;font-weight:800;cursor:help;flex-shrink:0;
+  line-height:1;
+}
+.tip-icon:hover + .tip-box, .tip-icon:focus + .tip-box{display:block;}
+.tip-box{
+  display:none;position:absolute;bottom:calc(100% + 6px);left:50%;
+  transform:translateX(-50%);
+  background:#1e1b4b;color:#e9d5ff;
+  font-size:0.72rem;line-height:1.5;font-weight:400;
+  padding:8px 12px;border-radius:8px;white-space:normal;
+  width:240px;z-index:999;pointer-events:none;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+}
+.tip-box::after{
+  content:"";position:absolute;top:100%;left:50%;
+  transform:translateX(-50%);
+  border:5px solid transparent;border-top-color:#1e1b4b;
+}
+
+.derived-flag{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 12px;border-radius:20px;font-size:0.74rem;font-weight:600;margin:3px;
+}
+.flag-warn{background:#fef3c7;color:#92400e;border:1px solid #fde68a;}
+.flag-good{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7;}
+.flag-red{background:var(--danger-bg);color:#7f1d1d;border:1px solid #fca5a5;}
+
+/* ── PRINT ── */
+@media print{
+  body{background:white!important;font-size:11pt;}
+  .app-header,.progress-wrap,.btn-row,.step-panel:not(#step5),.app-footer{display:none!important;}
+  #step5{display:block!important;}
+  .report-wrap{box-shadow:none;border:none;}
+  .report-output{font-size:11pt;line-height:1.7;white-space:normal!important;}
+  .report-loading,.api-key-wrap,#reportActions{display:none!important;}
+  /* Eliminare spazi eccessivi su h2/h3/h4 generati dal renderer markdown */
+  .report-output h2{margin:8px 0 4px!important;padding-bottom:3px!important;font-size:13pt!important;}
+  .report-output h3{margin:6px 0 3px!important;padding-bottom:2px!important;font-size:12pt!important;}
+  .report-output h4{margin:4px 0 2px!important;font-size:11pt!important;}
+  .report-output p{margin-bottom:4px!important;}
+  .report-output table{margin:4px 0!important;page-break-inside:avoid;}
+  .report-output table td{padding:4px 8px!important;}
+  .report-output hr{margin:6px 0!important;}
+  @page{margin:1.5cm 2cm;size:A4;}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .container{padding:16px;}
+  .two-col,.three-col,.four-col,.risk-grid{grid-template-columns:1fr;}
+  .app-header{padding:12px 20px;}
+  .header-text h1{font-size:2rem;}
+  .header-logo{width:100px;height:100px;}
+  .lifestyle-grid{grid-template-columns:1fr;}
+  .report-signature{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER MODAL -->
+<div class="modal-overlay" id="disclaimerModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2>⚠️ Informazioni Importanti — Leggere Prima di Procedere</h2>
+    </div>
+    <div class="modal-body">
+      <h4>Natura dello strumento</h4>
+      <p>MenoPATH è un sistema di <strong>supporto decisionale clinico (CDSS)</strong> destinato esclusivamente a medici specialisti. Non è un dispositivo medico certificato e non sostituisce la valutazione clinica individualizzata, gli esami diagnostici né il giudizio professionale del medico.</p>
+      <h4>Limitazioni</h4>
+      <ul>
+        <li>Raccomandazioni basate su linee guida internazionali (IMS 2024, NAMS 2024, ESHRE 2023)</li>
+        <li>I rischi quantificati sono stime di popolazione — non previsioni individuali</li>
+        <li>La relazione generata da AI è un supporto redazionale e deve essere rivista dal medico prima dell'uso clinico</li>
+        <li>Condizioni non contemplate dal software possono modificare radicalmente l'approccio terapeutico</li>
+      </ul>
+      <h4>Privacy</h4>
+      <p>I dati sono elaborati localmente nel browser. La relazione finale invia dati anonimizzati ad Anthropic AI. Nessun nome/cognome paziente viene trasmesso.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="window.open('guida.html','_blank')">📖 Guida</button>
+      <button class="btn btn-primary" onclick="closeDisclaimer()">✓ Ho letto — Procedi</button>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="header-inner">
+    <span style="font-size:2.5rem;filter:drop-shadow(0 0 12px rgba(220,100,255,0.8))">🌸</span>
+    <div class="header-text">
+      <h1>MenoPATH</h1>
+      <p>Percorso Integrato per la Gestione della Menopausa · Supporto Decisionale Clinico Evidence-Based</p>
+      <div class="header-links">
+        <a href="guida.html" target="_blank" class="hbtn hbtn-guide">📖 Guida all'uso</a>
+        <button class="hbtn hbtn-disc" onclick="document.getElementById('disclaimerModal').style.display='flex'">⚠️ Disclaimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="step-labels">
+    <span class="step-label active" id="lbl1" onclick="goStepNav(1)" style="cursor:pointer;">1. Anagrafica</span>
+    <span class="step-label" id="lbl2" onclick="goStepNav(2)" style="cursor:pointer;">2. Sintomi</span>
+    <span class="step-label" id="lbl3" onclick="goStepNav(3)" style="cursor:pointer;">3. Valut. Rischi</span>
+    <span class="step-label" id="lbl4" onclick="goStepNav(4)" style="cursor:pointer;">4. Terapia</span>
+    <span class="step-label" id="lbl5" onclick="goStepNav(5)" style="cursor:pointer;">5. Relazione</span>
+  </div>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progressFill" style="width:20%"></div>
+  </div>
+  <div class="step-dots">
+    <div class="step-dot active" id="dot1" onclick="goStepNav(1)" style="cursor:pointer;" title="Anagrafica">1</div>
+    <div class="step-dot" id="dot2" onclick="goStepNav(2)" style="cursor:pointer;" title="Sintomi">2</div>
+    <div class="step-dot" id="dot3" onclick="goStepNav(3)" style="cursor:pointer;" title="Valut. Rischi">3</div>
+    <div class="step-dot" id="dot4" onclick="goStepNav(4)" style="cursor:pointer;" title="Terapia">4</div>
+    <div class="step-dot" id="dot5" onclick="goStepNav(5)" style="cursor:pointer;" title="Relazione">5</div>
+  </div>
+</div>
+
+<!-- ═══ STEP 1: ANAGRAFICA ═══ -->
+<div class="step-panel active" id="step1">
+  <div class="card">
+    <div class="card-title">👤 Dati Anagrafici e Tipo di Menopausa</div>
+    <div class="three-col" style="margin-bottom:16px;">
+      <div class="field-group">
+        <label class="fl">Età attuale (anni) *</label>
+        <input type="number" id="eta" min="30" max="90" placeholder="es. 54" oninput="onEtaChange()">
+      </div>
+      <div class="field-group">
+        <label class="fl">Età alla menopausa (anni) *</label>
+        <input type="number" id="etaMenopausa" min="20" max="65" placeholder="es. 51" oninput="onEtaMenopausaChange()">
+      </div>
+      <div class="field-group">
+        <label class="fl">Anni dalla menopausa <span class="auto-badge">AUTO</span></label>
+        <input type="number" id="anniMenopausa" readonly placeholder="calcolato" tabindex="-1">
+      </div>
+    </div>
+    <div id="derivedFlags" style="margin-bottom:14px;display:flex;flex-wrap:wrap;gap:6px;"></div>
+
+    <div class="sdiv">Tipo di Menopausa</div>
+    <div class="two-col">
+      <label class="radio-card" onclick="selRad(this,'tipoMenopausa','naturale')">
+        <input type="radio" name="tipoMenopausa" value="naturale" checked>
+        <div><div class="rlm">🌿 Menopausa Naturale</div><div class="rls">Cessazione spontanea — 12 mesi amenorrea</div></div>
+      </label>
+      <label class="radio-card" onclick="selRad(this,'tipoMenopausa','chirurgica-totale');setUtero(false)">
+        <input type="radio" name="tipoMenopausa" value="chirurgica-totale">
+        <div><div class="rlm">🔪 Chirurgica — Isterectomia + Annessiectomia bil.</div><div class="rls">Menopausa immediata · Utero assente</div></div>
+      </label>
+      <label class="radio-card" onclick="selRad(this,'tipoMenopausa','chirurgica-ovaie');setUtero(true)">
+        <input type="radio" name="tipoMenopausa" value="chirurgica-ovaie">
+        <div><div class="rlm">🔪 Chirurgica — Sola Annessiectomia bilaterale</div><div class="rls">Menopausa immediata · Utero presente</div></div>
+      </label>
+      <label class="radio-card" onclick="selRad(this,'tipoMenopausa','chirurgica-conserv');setUtero(false)">
+        <input type="radio" name="tipoMenopausa" value="chirurgica-conserv">
+        <div><div class="rlm">🔪 Chirurgica — Isterectomia con conservaz. annessi</div><div class="rls">Datare con inizio sintomi · Utero assente</div></div>
+      </label>
+    </div>
+    <div style="margin-top:10px;display:flex;align-items:center;gap:10px;">
+      <input type="checkbox" id="uteroPresente" checked style="width:auto;accent-color:var(--secondary);transform:scale(1.2);">
+      <label class="fl" style="margin:0;cursor:pointer;" for="uteroPresente">Utero presente (richiede progestinico)</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚖️ Antropometria</div>
+    <div class="four-col">
+      <div class="field-group">
+        <label class="fl">Peso (kg)</label>
+        <input type="number" id="peso" min="25" max="250" step="0.1" placeholder="es. 63" oninput="calcBMI()">
+      </div>
+      <div class="field-group">
+        <label class="fl">Altezza (cm)</label>
+        <input type="number" id="altezza" min="130" max="220" placeholder="es. 162" oninput="calcBMI()">
+      </div>
+      <div class="field-group">
+        <label class="fl">BMI (kg/m²) <span class="auto-badge">AUTO</span></label>
+        <input type="number" id="bmi" step="0.1" placeholder="calcolato" readonly tabindex="-1" style="background:#f5f3ff;">
+      </div>
+      <div class="field-group">
+        <label class="fl">Classe BMI <span class="auto-badge">AUTO</span></label>
+        <input type="text" id="bmiClasse" readonly placeholder="—" tabindex="-1">
+      </div>
+    </div>
+    <div id="bmiAlert"></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👨‍👩‍👧 Anamnesi Familiare</div>
+    <div class="two-col">
+      <div>
+        <div class="sdiv">Padre</div>
+        <div class="two-col" style="margin-bottom:10px;">
+          <div class="field-group"><label class="fl">Età / età al decesso</label><input type="number" id="etaPadre" min="40" max="130" placeholder="es. 78" oninput="checkLongevita()"></div>
+          <div class="field-group"><label class="fl">Stato</label><select id="statoPadre" onchange="checkLongevita()"><option value="vivo">In vita</option><option value="deceduto">Deceduto</option></select></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreCVD"><span class="rlm" style="margin-left:8px;">CVD</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreDM"><span class="rlm" style="margin-left:8px;">Diabete</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreIctus"><span class="rlm" style="margin-left:8px;">Ictus precoce</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreOsteo"><span class="rlm" style="margin-left:8px;">Osteoporosi</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreTumori"><span class="rlm" style="margin-left:8px;">Tumori</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="padreLongevita"><span class="rlm" style="margin-left:8px;">Longevità &gt;85aa</span></label>
+        </div>
+      </div>
+      <div>
+        <div class="sdiv">Madre</div>
+        <div class="two-col" style="margin-bottom:10px;">
+          <div class="field-group"><label class="fl">Età / età al decesso</label><input type="number" id="etaMadre" min="40" max="130" placeholder="es. 82" oninput="checkLongevita()"></div>
+          <div class="field-group"><label class="fl">Stato</label><select id="stataMadre" onchange="checkLongevita()"><option value="viva">In vita</option><option value="deceduta">Deceduta</option></select></div>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreCVD"><span class="rlm" style="margin-left:8px;">CVD</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreDM"><span class="rlm" style="margin-left:8px;">Diabete</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreIctus"><span class="rlm" style="margin-left:8px;">Ictus precoce</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreOsteo"><span class="rlm" style="margin-left:8px;">Osteoporosi</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreTumori"><span class="rlm" style="margin-left:8px;">Tumori</span></label>
+          <label class="check-card" style="flex:1;min-width:140px;padding:8px 12px;"><input type="checkbox" id="madreLongevita"><span class="rlm" style="margin-left:8px;">Longevità &gt;85aa</span></label>
+        </div>
+      </div>
+    </div>
+    <div id="famigliaritaNote" class="alert alert-purple" style="display:none;margin-top:12px;">
+      <span class="ai">👨‍👩‍👧</span><div id="famigliaritaText"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔬 Fattori Clinici e Rischio Vascolare</div>
+    <div class="three-col" style="margin-bottom:14px;">
+      <div class="field-group"><label class="fl">Fumo</label>
+        <select id="fumo" onchange="syncCVfromStep1();calcScore2()">
+          <option value="no">Non fumatore</option>
+          <option value="ex">Ex fumatore</option>
+          <option value="si">Fumatore attivo</option>
+        </select>
+      </div>
+      <div class="field-group"><label class="fl">PA sistolica (mmHg)</label>
+        <input type="number" id="paSistolica" min="60" max="250" placeholder="es. 125" oninput="checkSindMetabolica();syncCVfromStep1();calcScore2()">
+      </div>
+      <div class="field-group"><label class="fl">PA diastolica (mmHg)</label>
+        <input type="number" id="paDiastolica" min="40" max="160" placeholder="es. 80">
+      </div>
+    </div>
+    <div class="four-col" style="margin-bottom:14px;">
+      <div class="field-group"><label class="fl">Glicemia a digiuno (mg/dL)</label>
+        <input type="number" id="glicemia" min="30" max="600" placeholder="es. 95" oninput="checkSindMetabolica()">
+      </div>
+      <div class="field-group"><label class="fl">Trigliceridi (mg/dL)</label>
+        <input type="number" id="trigliceridi" min="20" max="2000" placeholder="es. 130" oninput="checkSindMetabolica()">
+      </div>
+      <div class="field-group"><label class="fl">HDL (mg/dL)</label>
+        <input type="number" id="hdl" min="5" max="200" placeholder="es. 58" oninput="checkSindMetabolica();syncCVfromStep1();calcScore2()">
+      </div>
+      <div class="field-group"><label class="fl">Circonf. vita (cm)</label>
+        <input type="number" id="vitaCirc" min="40" max="200" placeholder="es. 88" oninput="checkSindMetabolica()">
+      </div>
+    </div>
+    <div class="three-col" style="margin-bottom:14px;">
+      <div class="field-group"><label class="fl">Colesterolo totale (mg/dL) <span class="auto-badge">SCORE2</span></label>
+        <input type="number" id="colesteroloTotale" min="100" max="500" placeholder="es. 210" oninput="syncColToCV();calcScore2()">
+      </div>
+      <div class="field-group"><label class="fl">LDL (mg/dL) <span style="font-size:0.65rem;color:var(--muted);font-weight:400;">opzionale</span></label>
+        <input type="number" id="ldl" min="30" max="400" placeholder="es. 130">
+      </div>
+      <div class="field-group" style="display:flex;align-items:flex-end;">
+        <div id="score2preview" style="width:100%;padding:10px 14px;background:#f5f3ff;border-radius:var(--radius-sm);font-size:0.8rem;color:var(--muted);min-height:42px;">SCORE2: inserire PA + colesterolo</div>
+      </div>
+    </div>
+    <div id="sindMetabolicaAlert"></div>
+  </div>
+
+  <div class="btn-row">
+    <span></span>
+    <button class="btn btn-primary" onclick="goStep(2)">Prossimo: Sintomi MRS →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 2: SINTOMI ═══ -->
+<div class="step-panel" id="step2">
+  <div class="card">
+    <div class="card-title">📊 Menopause Rating Scale (MRS)</div>
+    <div class="alert alert-info">
+      <span class="ai">ℹ️</span>
+      <div>Strumento validato per quantificare i sintomi menopausali. Per ogni sintomo usa il cursore: 0=assente → 4=molto severo. Max: 44 punti. <em>Heinemann K, et al. Health Qual Life Outcomes 2004;2:67.</em></div>
+    </div>
+
+    <!-- MRS SLIDERS -->
+    <div id="mrsSliders">
+      <div class="sdiv">🔥 Vasomotori</div>
+      <div id="mrs-area-vasomotori"></div>
+      <div class="sdiv">🧠 Psicosomatici</div>
+      <div id="mrs-area-psico"></div>
+      <div class="sdiv">💜 Urogenitali</div>
+      <div id="mrs-area-urogenitali"></div>
+      <div class="sdiv">💪 Somatici</div>
+      <div id="mrs-area-somatici"></div>
+    </div>
+
+    <!-- SCORE DISPLAY -->
+    <div class="mrs-score-display" id="mrsDisplay" style="background:#f9f7ff;margin-top:16px;">
+      <span id="mrsScoreText">Compila i cursori per il punteggio MRS</span>
+    </div>
+
+    <!-- RADAR CHART -->
+    <div style="margin-top:20px;">
+      <div class="sdiv">Profilo Sintomatologico per Area</div>
+      <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;">
+        <div style="flex:0 0 280px;">
+          <canvas id="mrsRadar" width="280" height="280"></canvas>
+        </div>
+        <div style="flex:1;min-width:180px;" id="mrsAreaScores"></div>
+      </div>
+    </div>
+
+    <!-- MRS CLASSIFICATION -->
+    <div style="margin-top:14px;">
+      <div class="acc-h" onclick="togAcc(this)">📋 Schema di classificazione MRS <span>▼</span></div>
+      <div class="acc-b">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px;">
+          <div style="background:#d1fae5;border-radius:8px;padding:10px;text-align:center;"><div style="font-weight:700;color:#065f46;">Lieve</div><div style="font-size:0.8rem;color:#065f46;">1–8 punti</div></div>
+          <div style="background:#fef3c7;border-radius:8px;padding:10px;text-align:center;"><div style="font-weight:700;color:#78350f;">Moderato</div><div style="font-size:0.8rem;color:#78350f;">9–16 punti</div></div>
+          <div style="background:var(--danger-bg);border-radius:8px;padding:10px;text-align:center;"><div style="font-weight:700;color:#7f1d1d;">Severo</div><div style="font-size:0.8rem;color:#7f1d1d;">17–24 punti</div></div>
+          <div style="background:#fdf4ff;border-radius:8px;padding:10px;text-align:center;"><div style="font-weight:700;color:#6b21a8;">Molto severo</div><div style="font-size:0.8rem;color:#6b21a8;">25–44 punti</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="card">
+    <div class="card-title">🫀 Funzione Intestinale</div>
+    <div class="alert alert-purple"><span class="ai">💡</span><div>La carenza estrogenica riduce la motilità intestinale. La disbiosi intestinale può influenzare il microbioma vaginale e vescicale (GSM).</div></div>
+    <div class="two-col">
+      <label class="radio-card" onclick="selRad(this,'intestino','normale')"><input type="radio" name="intestino" value="normale" checked><div><div class="rlm">✅ Funzione intestinale normale</div></div></label>
+      <label class="radio-card" onclick="selRad(this,'intestino','stipsi')"><input type="radio" name="intestino" value="stipsi"><div><div class="rlm">⚠️ Stipsi</div><div class="rls">&lt;3 evacuazioni/settimana</div></div></label>
+      <label class="radio-card" onclick="selRad(this,'intestino','meteorismo')"><input type="radio" name="intestino" value="meteorismo"><div><div class="rlm">⚠️ Meteorismo / gonfiore</div><div class="rls">Marker di disbiosi intestinale</div></div></label>
+      <label class="radio-card" onclick="selRad(this,'intestino','entrambi')"><input type="radio" name="intestino" value="entrambi"><div><div class="rlm">⚠️ Stipsi + meteorismo</div></div></label>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goStep(1)">← Indietro</button>
+    <button class="btn btn-primary" onclick="goStep(3)">Prossimo: Valutazione Rischi →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 3: RISCHI ═══ -->
+<div class="step-panel" id="step3">
+  <div class="alert alert-purple" style="margin-bottom:20px;">
+    <span class="ai">🔬</span>
+    <div>I moduli di valutazione del rischio sono precompilati con i dati già inseriti. Completa quelli rilevanti — i risultati guidano automaticamente la scelta terapeutica.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚫 Controindicazioni Assolute alla MHT</div>
+    <div class="two-col">
+      <label class="check-card"><input type="checkbox" class="ci-ass" id="ciMammella"><div><div class="rlm">Carcinoma mammella (attuale o pregresso)</div></div></label>
+      <label class="check-card"><input type="checkbox" class="ci-ass" id="ciEndometrio"><div><div class="rlm">Carcinoma endometriale (attuale o pregresso)</div></div></label>
+      <label class="check-card"><input type="checkbox" class="ci-ass" id="ciSanguinamento"><div><div class="rlm">Sanguinamento vaginale non diagnosticato</div></div></label>
+      <label class="check-card"><input type="checkbox" class="ci-ass" id="ciEpatopatia"><div><div class="rlm">Epatopatia severa o neoplasia epatica</div></div></label>
+      <label class="check-card"><input type="checkbox" class="ci-ass" id="ciTEVattivo"><div><div class="rlm">TEV in fase attiva</div></div></label>
+    </div>
+    <div id="ciAlert" class="alert alert-danger" style="display:none;margin-top:12px;">
+      <span class="ai">⛔</span><div><strong>MHT CONTROINDICATA.</strong> Considerare alternative non ormonali.</div>
+    </div>
+  </div>
+
+  <div class="risk-grid" style="margin-bottom:20px;">
+    <div class="risk-module" id="mod-moc">
+      <div class="risk-module-header">
+        <span class="risk-module-icon">🦴</span>
+        <div><div class="risk-module-title">Rischio Osteoporosi</div><div class="risk-module-subtitle">MOC-Consult · FRAX · DeFRACALC79</div></div>
+        <span class="risk-status pending" id="moc-status">Da completare</span>
+      </div>
+      <div class="risk-result-preview" id="moc-preview">Non ancora valutato</div>
+      <button class="risk-action-btn" style="border-color:var(--secondary);color:var(--secondary);" onclick="openMOC()">🔗 Apri MOC-Consult</button>
+      <div class="inline-risk" id="moc-input">
+        <div class="two-col" style="margin-bottom:10px;">
+          <div class="field-group"><label class="fl">T-score peggiore</label><input type="number" id="moc-tscore" step="0.1" placeholder="es. -2.5" min="-6" max="3"></div>
+          <div class="field-group"><label class="fl">Categoria WHO</label>
+            <select id="moc-categoria">
+              <option value="">— seleziona —</option>
+              <option value="normale">Normale (T≥-1.0)</option>
+              <option value="osteopenia">Osteopenia (-2.5 &lt; T &lt; -1.0)</option>
+              <option value="osteoporosi">Osteoporosi (T≤-2.5)</option>
+              <option value="severa">Osteoporosi severa + frattura</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:10px;">
+          <div class="field-group"><label class="fl">FRAX fratture maggiori (%)</label><input type="number" id="moc-fraxmaj" step="0.1" placeholder="es. 12.5" min="0" max="100"></div>
+          <div class="field-group"><label class="fl">FRAX femore (%)</label><input type="number" id="moc-fraxhip" step="0.1" placeholder="es. 3.2" min="0" max="100"></div>
+        </div>
+        <div class="field-group"><label class="fl">Nota 79 AIFA</label>
+          <select id="moc-nota79"><option value="">—</option><option value="eleggibile">Eleggibile</option><option value="non-eleggibile">Non eleggibile</option><option value="non-valutata">Non valutata</option></select>
+        </div>
+        <button class="btn btn-success" style="margin-top:12px;width:100%;" onclick="saveMOC()">✓ Salva risultati MOC</button>
+      </div>
+      <button class="risk-action-btn" style="margin-top:8px;font-size:0.78rem;border-color:var(--muted);color:var(--muted);" onclick="toggleInlineRisk('moc-input')">✏️ Inserisci risultati manualmente</button>
+    </div>
+
+    <div class="risk-module" id="mod-cv">
+      <div class="risk-module-header">
+        <span class="risk-module-icon">❤️</span>
+        <div><div class="risk-module-title">Rischio Cardiovascolare</div><div class="risk-module-subtitle">SCORE2 · ESC 2021</div></div>
+        <span class="risk-status pending" id="cv-status">Da completare</span>
+      </div>
+      <div class="risk-result-preview" id="cv-preview">Dati da step 1 precaricati</div>
+      <div class="inline-risk open" id="cv-input">
+        <div id="cv-autofill" style="font-size:0.78rem;color:var(--muted);margin-bottom:10px;background:var(--bg2);padding:8px 10px;border-radius:6px;"></div>
+
+        <!-- Campi editabili inline se non inseriti allo step 1 -->
+        <div id="cv-missing-alert" class="alert alert-warning" style="display:none;margin-bottom:10px;">
+          <span class="ai">⚠️</span><div>Alcuni dati non sono stati inseriti allo Step 1. Inseriscili qui — verranno sincronizzati automaticamente.</div>
+        </div>
+        <div class="three-col" style="margin-bottom:8px;">
+          <div class="field-group">
+            <label class="fl">PA sistolica (mmHg)</label>
+            <input type="number" id="cv-pa" placeholder="es. 125" min="60" max="250"
+              oninput="syncCVtoStep1();calcScore2()">
+          </div>
+          <div class="field-group">
+            <label class="fl">Fumo</label>
+            <select id="cv-fumo" onchange="syncCVtoStep1();calcScore2()">
+              <option value="no">Non fumatore</option>
+              <option value="ex">Ex fumatore</option>
+              <option value="si">Fumatore attivo</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl">HDL (mg/dL)</label>
+            <input type="number" id="cv-hdl-display" placeholder="es. 58" min="5" max="200"
+              oninput="syncCVtoStep1();calcScore2()">
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field-group"><label class="fl">Colesterolo totale (mg/dL)</label>
+            <input type="number" id="cv-colesterolo" placeholder="es. 210" min="100" max="500" oninput="calcScore2()">
+          </div>
+          <div class="field-group" style="display:flex;align-items:flex-end;">
+            <div style="width:100%;padding:10px 14px;background:#f5f3ff;border-radius:var(--radius-sm);font-size:0.78rem;color:var(--muted);">
+              Non-HDL calcolato automaticamente · SCORE2 ESC 2021 · Donne · Italia (moderato)
+            </div>
+          </div>
+        </div>
+        <div class="field-group" style="margin-top:8px;">
+          <label class="fl">Rischio SCORE2 a 10 anni <span class="auto-badge">AUTO</span></label>
+          <input type="text" id="cv-score2result" readonly placeholder="calcolato">
+        </div>
+        <button class="btn btn-success" style="margin-top:10px;width:100%;" onclick="saveCV()">✓ Conferma valutazione CV</button>
+      </div>
+    </div>
+
+    <div class="risk-module" id="mod-sm">
+      <div class="risk-module-header">
+        <span class="risk-module-icon">⚖️</span>
+        <div><div class="risk-module-title">Sindrome Metabolica</div><div class="risk-module-subtitle">Criteri IDF 2006</div></div>
+        <span class="risk-status" id="sm-status" style="background:var(--bg2);color:var(--muted);">—</span>
+      </div>
+      <div class="risk-result-preview" id="sm-preview">Calcolato automaticamente dai dati di step 1</div>
+      <div id="sm-auto-result" style="margin-top:6px;"></div>
+    </div>
+
+    <div class="risk-module" id="mod-onco">
+      <div class="risk-module-header">
+        <span class="risk-module-icon">🎗️</span>
+        <div><div class="risk-module-title">Profilo Oncologico</div><div class="risk-module-subtitle">Mammella · Endometrio · Ovaio</div></div>
+        <span class="risk-status optional" id="onco-status" style="background:var(--bg2);color:var(--muted);">Opzionale</span>
+      </div>
+      <div class="risk-result-preview" id="onco-preview">Non ancora valutato</div>
+      <div class="inline-risk" id="onco-input">
+
+        <!-- ANAMNESI EREDITARIA E DEMOGRAFICA -->
+        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🧬 ANAMNESI EREDITARIA</div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Familiarità K mammella<span class="tip-icon">?</span><span class="tip-box">Indicare se madre, sorella o figlia hanno avuto carcinoma mammario. La familiarità di primo grado aumenta il rischio relativo di 1.8×; se ≥2 parenti, di 2.9×.</span></span></label>
+            <select id="onco-famMammella" onchange="calcOncoRisk()">
+              <option value="no">Nessuna</option>
+              <option value="1grado">1 parente 1° grado</option>
+              <option value="multipla">≥2 parenti 1° grado / bilaterale</option>
+              <option value="brca">Mutazione BRCA1/2 nota in famiglia</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Familiarità K ovaio<span class="tip-icon">?</span><span class="tip-box">Familiarità per carcinoma ovarico epiteliale. In presenza di mutazione BRCA1, il rischio lifetime per K ovaio è 44%; BRCA2 ~17%. Indica invio a consulenza genetica.</span></span></label>
+            <select id="onco-ovaio" onchange="calcOncoRisk()">
+              <option value="no">Nessuna</option>
+              <option value="1grado">1 parente 1° grado</option>
+              <option value="brca">BRCA1/2 o BRIP1 confermato</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Familiarità K colon / endometrio<span class="tip-icon">?</span><span class="tip-box">La sindrome di Lynch (difetti nei geni MMR: MLH1, MSH2, MSH6, PMS2) aumenta il rischio di K endometrio al 40–60% e K colon al 52–82% lifetime. La familiarità di 1° grado raddoppia il rischio.</span></span></label>
+            <select id="onco-colon" onchange="calcOncoRisk()">
+              <option value="no">Nessuna</option>
+              <option value="1grado">1 parente 1° grado &lt;60 aa</option>
+              <option value="lynch">Sindrome di Lynch / poliposi familiare</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Discendenza ebraica ashkenazita<span class="tip-icon">?</span><span class="tip-box">Nelle popolazioni ebraiche ashkenazite la frequenza di mutazioni founder BRCA1/2 è circa 1:40 vs 1:400 nella popolazione generale. Suggerisce triage genetico anche in assenza di forte familiarità.</span></span></label>
+            <select id="onco-etnia" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="si">Sì (rischio BRCA aumentato ~2%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group" style="margin-bottom:8px;">
+          <label class="fl"><span class="tip-wrap">Test genetici già eseguiti in famiglia<span class="tip-icon">?</span><span class="tip-box">Se un parente ha già eseguito test genetici negativi per BRCA (wild-type), il rischio ereditario nella paziente si riduce significativamente. Un test patogeno confermato in famiglia ha implicazioni immediate per la gestione.</span></span></label>
+          <select id="onco-genetica" onchange="calcOncoRisk()">
+            <option value="no">No / non noto</option>
+            <option value="negativi">Sì — negativi (BRCA wild-type confermato)</option>
+            <option value="brca1">Sì — BRCA1 patogeno</option>
+            <option value="brca2">Sì — BRCA2 patogeno</option>
+            <option value="lynch-gene">Sì — gene Lynch (MLH1/MSH2/MSH6/PMS2)</option>
+            <option value="altri">Sì — altro gene ad alto rischio (PALB2, CHEK2, ATM)</option>
+          </select>
+        </div>
+
+        <!-- SEZIONE MAMMELLA -->
+        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🎗️ RISCHIO MAMMELLA (Gail / Tyrer-Cuzick)</div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Rischio stimato (lifetime)<span class="tip-icon">?</span><span class="tip-box">Probabilità di sviluppare carcinoma mammario nell'arco della vita, calcolata con modelli validati (Gail, Tyrer-Cuzick). Soglia di alto rischio: ≥20% — indica RM mammaria di sorveglianza supplementare. Se non disponibile, lasciare vuoto.</span></span></label>
+            <select id="onco-mammella" onchange="calcOncoRisk()">
+              <option value="">— non calcolato —</option>
+              <option value="basso">Basso (&lt;15%)</option>
+              <option value="moderato">Moderato (15–20%)</option>
+              <option value="alto">Alto (20–30%)</option>
+              <option value="molto-alto">Molto alto (&gt;30% / BRCA1/2)</option>
+              <option value="pregresso-k">Pregressa neoplasia mammaria</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Densità mammaria (ultima mammografia)<span class="tip-icon">?</span><span class="tip-box">Classificazione ACR BI-RADS. Le mammelle dense (ACR-C/D) aumentano il rischio relativo di 1.5–2× e riducono la sensibilità della mammografia. Le donne con ACR-D possono beneficiare di ecografia o RM supplementare.</span></span></label>
+            <select id="onco-densita" onchange="calcOncoRisk()">
+              <option value="nd">Non disponibile</option>
+              <option value="A">ACR-A — Prevalentemente adiposo</option>
+              <option value="B">ACR-B — Fibroglandolare disperso</option>
+              <option value="C">ACR-C — Eterogeneo denso (rischio↑)</option>
+              <option value="D">ACR-D — Estremamente denso (rischio↑↑)</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Età menarca (anni)<span class="tip-icon">?</span><span class="tip-box">Il menarca precoce (≤11 anni) aumenta il rischio mammario di circa 1.3× per maggiore esposizione estrogenica cumulativa. È uno dei fattori del modello di Gail.</span></span></label>
+            <input type="number" id="onco-menarca" min="8" max="18" placeholder="es. 12" oninput="calcOncoRisk()">
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Età 1ª gravidanza a termine<span class="tip-icon">?</span><span class="tip-box">La prima gravidanza prima dei 20 anni è protettiva. Dopo i 30 anni aumenta transitoriamente il rischio (1.2×). Inserire 0 se nullipara.</span></span></label>
+            <input type="number" id="onco-etaParto" min="0" max="50" placeholder="es. 26 (0 = nullipara)" oninput="calcOncoRisk()">
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Numero di parti<span class="tip-icon">?</span><span class="tip-box">La multiparità (≥2 figli) è protettiva per il K mammella (RR 0.85). La nulliparità aumenta il rischio di 1.4× rispetto alle donne con più gravidanze.</span></span></label>
+            <select id="onco-parita" onchange="calcOncoRisk()">
+              <option value="0">Nullipara</option>
+              <option value="1">1 figlio</option>
+              <option value="2" selected>2 figli</option>
+              <option value="3">3 o più figli</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Allattamento al seno<span class="tip-icon">?</span><span class="tip-box">L'allattamento prolungato (≥6 mesi cumulativi) riduce il rischio mammario del 22% (RR 0.78). L'effetto è dose-dipendente: ogni 12 mesi di allattamento riduce il rischio di circa 4.3%.</span></span></label>
+            <select id="onco-allattamento" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="lt6">Sì, meno di 6 mesi totali</option>
+              <option value="gt6">Sì, 6 mesi o più (effetto protettivo)</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Biopsia mammaria precedente<span class="tip-icon">?</span><span class="tip-box">L'iperplasia atipica duttale (ADH) o lobulare (ALH) aumenta il rischio di 3.5–4×. Il carcinoma lobulare in situ (LCIS) è considerato un marcatore di rischio elevato (4×). L'iperplasia semplice senza atipia: 1.5×.</span></span></label>
+            <select id="onco-atipia" onchange="calcOncoRisk()">
+              <option value="no">No / non eseguita</option>
+              <option value="iperplasia">Iperplasia senza atipia</option>
+              <option value="atipia">Iperplasia atipica (ADH o ALH)</option>
+              <option value="lcis">LCIS (carcinoma lobulare in situ)</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Radioterapia toracica (età 10–30 aa)<span class="tip-icon">?</span><span class="tip-box">Le pazienti trattate con radioterapia mediastinica ad alto dosaggio per linfoma di Hodgkin tra i 10 e 30 anni hanno un rischio lifetime di K mammella del 20–30%. Indicazione a sorveglianza intensiva con RM annuale.</span></span></label>
+            <select id="onco-radioterapia" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="si">Sì (es. linfoma di Hodgkin)</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:8px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">TOS precedente o in corso<span class="tip-icon">?</span><span class="tip-box">TOS = Terapia Ormonale Sostitutiva. La terapia estroprogestinica sintetica per oltre 5 anni aumenta il rischio mammario di circa 1.26× (WHI, 2002). Gli estrogeni soli (donne senza utero) hanno un effetto trascurabile. Il progesterone micronizzato ha un profilo più favorevole rispetto ai progestinici sintetici.</span></span></label>
+            <select id="onco-mhtPrec" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="lt5">Meno di 5 anni (qualsiasi tipo)</option>
+              <option value="e-only">Più di 5 anni — estrogeni soli</option>
+              <option value="ep">Più di 5 anni — estroprogestinica sintetica</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Consumo di alcol<span class="tip-icon">?</span><span class="tip-box">Ogni unità alcolica giornaliera aggiuntiva aumenta il rischio di K mammella di circa il 7–10%. Il rischio è lineare, senza soglia sicura. Una unità = 12 g di alcol (es. 1 bicchiere di vino o 33 cl di birra).</span></span></label>
+            <select id="onco-alcol" onchange="calcOncoRisk()">
+              <option value="no">No / occasionale</option>
+              <option value="lt1">Circa 1 unità alcolica al giorno</option>
+              <option value="ge1">Più di 1 unità alcolica al giorno (rischio↑)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- RISULTATO MAMMELLA -->
+        <div id="onco-breast-result" style="font-size:0.82rem;padding:8px 12px;border-radius:6px;background:#f9f7ff;border:1px solid var(--border2);margin-bottom:12px;display:none;"></div>
+
+        <!-- SEZIONE ENDOMETRIO -->
+        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🔴 RISCHIO ENDOMETRIO</div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group"><label class="fl">BMI <span class="auto-badge">il passo 1</span></label>
+            <input type="number" id="onco-bmiDisp" placeholder="da step 1" readonly tabindex="-1" style="background:#f5f3ff;"></div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Diabete mellito tipo 2<span class="tip-icon">?</span><span class="tip-box">Il diabete tipo 2 raddoppia il rischio di carcinoma endometriale (RR ~2.0), indipendentemente dall'obesità, probabilmente attraverso l'iperinsulinemia e l'eccesso di fattori di crescita insulino-simili.</span></span></label>
+            <select id="onco-diabete" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="si">Sì (rischio endometrio ×2)</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col" style="margin-bottom:8px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Sanguinamenti anomali in postmenopausa<span class="tip-icon">?</span><span class="tip-box">Qualsiasi sanguinamento vaginale dopo 12 mesi di amenorrea deve essere considerato anomalo e richiede esclusione di patologia endometriale prima di avviare o continuare qualsiasi TOS. Indicazione a ecografia transvaginale urgente ± isteroscopia.</span></span></label>
+            <select id="onco-sanguinamento" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="spotting">Spotting occasionale</option>
+              <option value="menorragia">Metrorragia / sanguinamento significativo</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Sindrome di Lynch<span class="tip-icon">?</span><span class="tip-box">Sindrome ereditaria da difetti nei geni del mismatch repair (MLH1, MSH2, MSH6, PMS2). Il rischio lifetime di K endometrio è del 40–60%, superiore a quello del K del colon-retto nelle donne. Richiede sorveglianza endometriale annuale e consulenza oncogenetica.</span></span></label>
+            <select id="onco-lynch" onchange="calcOncoRisk()">
+              <option value="no">No / non testata</option>
+              <option value="sospetto">Sospetto clinico (criteri Amsterdam)</option>
+              <option value="confermata">Confermata geneticamente</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SCREENING ALTRI TUMORI -->
+        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🔍 SCREENING ALTRI TUMORI</div>
+        <div class="two-col" style="margin-bottom:6px;">
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Pap test / HPV test (ultimo)<span class="tip-icon">?</span><span class="tip-box">Le linee guida italiane (Piano Nazionale Screening) raccomandano HPV test ogni 5 anni (30–64 aa) come test primario. Il Pap test (citologia) ogni 3 anni è alternativa. Nelle donne con isterectomia totale per patologia benigna, il test non è indicato.</span></span></label>
+            <select id="onco-cervice" onchange="calcOncoRisk()">
+              <option value="nd">Non noto / non ricordato</option>
+              <option value="ok">Aggiornato — nei tempi previsti</option>
+              <option value="scaduto">Scaduto (oltre 3 aa Pap / oltre 5 aa HPV)</option>
+              <option value="cin">Storia di CIN o HPV ad alto rischio positivo</option>
+              <option value="isterectomia">Isterectomia totale — non indicato</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="fl"><span class="tip-wrap">Screening colon-retto<span class="tip-icon">?</span><span class="tip-box">In Italia, il programma nazionale offre FIT (sangue occulto fecale) ogni 2 anni dai 50 ai 69 anni (alcune Regioni fino a 74 aa). La colonscopia di sorveglianza è indicata dopo resezione di adenomi. Chi ha familiarità di 1° grado deve iniziare a 40 aa o 10 anni prima della diagnosi del familiare.</span></span></label>
+            <select id="onco-colonretto" onchange="calcOncoRisk()">
+              <option value="nd">Non noto</option>
+              <option value="ok">Aggiornato (FIT o colonscopia)</option>
+              <option value="scaduto">Scaduto / non eseguito</option>
+              <option value="polipi">Storia di polipi adenomatosi</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-group" style="margin-bottom:8px;">
+          <label class="fl"><span class="tip-wrap">Pack-years di fumo<span class="tip-icon">?</span><span class="tip-box">Pack-years = (sigarette al giorno ÷ 20) × anni di fumo. Es: 20 cig/die per 20 anni = 20 pack-years. Lo screening con TC torace a bassa dose è raccomandato (USPSTF 2021) per fumatori/ex-fumatori 50–80 anni con ≥20 pack-years.</span></span></label>
+          <input type="number" id="onco-packYears" min="0" max="150" placeholder="es. 20  —  formula: (sigarette/die ÷ 20) × anni" oninput="calcOncoRisk()">
+        </div>
+
+        <!-- RISULTATO GLOBALE ONCOLOGICO -->
+        <div id="onco-global-result" style="display:none;margin-bottom:10px;"></div>
+
+        <button class="btn btn-success" style="margin-top:4px;width:100%;" onclick="saveOnco()">✓ Salva profilo oncologico</button>
+      </div>
+      <button class="risk-action-btn" style="margin-top:8px;font-size:0.78rem;border-color:var(--muted);color:var(--muted);" onclick="openOncoModule()">✏️ Valuta profilo oncologico</button>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goStep(2)">← Indietro</button>
+    <button class="btn btn-primary" onclick="goStep(4)">Prossimo: Scelta Terapia →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 4: TERAPIA ═══ -->
+<div class="step-panel" id="step4">
+
+  <!-- PREFERENZE PAZIENTE -->
+  <div class="card">
+    <div class="card-title">🗣️ Preferenze e Timori della Paziente</div>
+    <div class="two-col" style="margin-bottom:14px;">
+      <label class="check-card"><input type="checkbox" id="pref-transdermica"><div><div class="rlm">✅ Preferisce cerotti/gel</div><div class="rls">Approccio transdermico gradito</div></div></label>
+      <label class="check-card"><input type="checkbox" id="pref-orale"><div><div class="rlm">✅ Preferisce compresse orali</div><div class="rls">Abitudine alla terapia orale</div></div></label>
+      <label class="check-card"><input type="checkbox" id="pref-naturale"><div><div class="rlm">🌿 Preferisce approccio naturale</div><div class="rls">Rifiuto o diffidenza verso gli ormoni</div></div></label>
+      <label class="check-card"><input type="checkbox" id="pref-minima"><div><div class="rlm">⚡ Vuole la terapia più efficace</div><div class="rls">Sintomi severi, priorità alla risoluzione</div></div></label>
+    </div>
+    <div class="sdiv">Timori espressi</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-mammella"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">🎗️ Tumore al seno</span></label>
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-tev"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">🩸 Trombosi</span></label>
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-peso"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">⚖️ Aumento peso</span></label>
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-ormoni"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">💊 Diffidenza ormoni</span></label>
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-sanguinamento"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">🔴 No sanguinamenti</span></label>
+      <label class="check-card" style="padding:8px 12px;"><input type="checkbox" id="timore-dipendenza"><span class="rlm" style="margin-left:8px;font-size:0.83rem;">🔒 Dipendenza</span></label>
+    </div>
+    <div class="field-group"><label class="fl">Note libere (perplessità, domande, contesto familiare)</label>
+      <textarea id="pref-note" rows="2" style="resize:vertical;" placeholder="es. madre con tumore al seno, marito contrario alla terapia..."></textarea>
+    </div>
+  </div>
+
+  <!-- RACCOMANDAZIONE -->
+  <div class="card">
+    <div class="card-title">💊 Raccomandazione Terapeutica</div>
+    <div class="alert alert-purple" id="therapyRiskSummary">
+      <span class="ai">📋</span><div id="therapyRiskText">Analisi profilo di rischio...</div>
+    </div>
+    <div id="therapyTracks"></div>
+  </div>
+
+  <!-- DETTAGLIO + TOS WIZARD -->
+  <div id="therapyDetail" style="display:none;">
+    <div class="card">
+      <div class="card-title">🔬 Dettaglio Schema Selezionato</div>
+      <div id="therapyDetailContent"></div>
+    </div>
+
+    <!-- TOS·SELECTOR (visibile solo per MHT transdermica/orale) -->
+    <div id="tosSelectorWrap" style="display:none;">
+      <div class="tos-wizard">
+        <div class="tos-wizard-title">💊 TOS·SELECTOR — Scelta del Farmaco</div>
+        <div class="tos-wizard-sub">Wizard guidato per la selezione della terapia ormonale: via estrogeno → progestinico → schema → prodotto</div>
+
+        <!-- Stepper tabs -->
+        <div class="tos-stepper">
+          <div class="tos-step-tab active" id="tstab1" onclick="tosGoStep(1)">1 · Via Estrogeno</div>
+          <div class="tos-step-tab pending" id="tstab2" onclick="tosGoStep(2)">2 · Progestinico</div>
+          <div class="tos-step-tab pending" id="tstab3" onclick="tosGoStep(3)">3 · Schema</div>
+          <div class="tos-step-tab pending" id="tstab4" onclick="tosGoStep(4)">4 · Farmaci</div>
+        </div>
+
+        <!-- PANEL 1: Via Estrogeno -->
+        <div class="tos-panel active" id="tsp1">
+          <div id="tosEstro_transdermica">
+            <div class="tos-options three" id="tosViaOptions">
+              <div class="tos-opt" onclick="tosSelect('viaEstro','cerotto',this)">
+                <div class="tos-opt-icon">🩹</div>
+                <div class="tos-opt-title">Cerotto</div>
+                <div class="tos-opt-desc">Rilascio continuo; cambio ogni 3-4 o 7 giorni secondo la formulazione. Livelli sierici stabili.</div>
+                <div class="tos-pro-con">
+                  <div class="tos-pro"><strong>✅ Pro</strong>Compliance alta · Livelli stabili · No first-pass · Nessun effetto su coagulazione</div>
+                  <div class="tos-con"><strong>⚠️ Contro</strong>Irritazione cutanea locale · Distacco in caso di sudorazione intensa</div>
+                </div>
+              </div>
+              <div class="tos-opt" onclick="tosSelect('viaEstro','gel',this)">
+                <div class="tos-opt-icon">🧴</div>
+                <div class="tos-opt-title">Gel transdermico</div>
+                <div class="tos-opt-desc">Applicazione quotidiana su gambe o braccia. Flessibilità di dosaggio pressione per pressione.</div>
+                <div class="tos-pro-con">
+                  <div class="tos-pro"><strong>✅ Pro</strong>Dosi facilmente regolabili · Buona tolleranza cutanea · No first-pass</div>
+                  <div class="tos-con"><strong>⚠️ Contro</strong>Applicazione quotidiana richiesta · Variabilità assorbitiva</div>
+                </div>
+              </div>
+              <div class="tos-opt" onclick="tosSelect('viaEstro','spray',this)">
+                <div class="tos-opt-icon">💨</div>
+                <div class="tos-opt-title">Spray cutaneo</div>
+                <div class="tos-opt-desc">Lenzetto® (0.5 mg/pressione). Applicazione su avambraccio interno, 1-3 pressioni/die.</div>
+                <div class="tos-pro-con">
+                  <div class="tos-pro"><strong>✅ Pro</strong>Veloce · Discreta da usare · No first-pass epatico</div>
+                  <div class="tos-con"><strong>⚠️ Contro</strong>Variabilità dose · Attesa per asciugatura · Unico prodotto</div>
+                </div>
+              </div>
+            </div>
+            <div id="tosEstroOrale_placeholder" style="display:none;">
+              <div class="tos-options two">
+                <div class="tos-opt" onclick="tosSelect('viaEstro','orale_E2',this)">
+                  <div class="tos-opt-icon">💊</div>
+                  <div class="tos-opt-title">Estradiolo orale</div>
+                  <div class="tos-opt-desc">Estradiolo valerato 1-2 mg. Prima scelta tra le formulazioni orali. Minor rischio rispetto a ECE.</div>
+                  <div class="tos-pro-con">
+                    <div class="tos-pro"><strong>✅ Pro</strong>Formulazioni combinate disponibili · Pratico · Fascia A</div>
+                    <div class="tos-con"><strong>⚠️ Contro</strong>First-pass epatico · Rischio TEV e ictus aumentato vs transdermica · Effetti lipidici</div>
+                  </div>
+                </div>
+                <div class="tos-opt" onclick="tosSelect('viaEstro','orale_ECE',this)">
+                  <div class="tos-opt-icon">💊</div>
+                  <div class="tos-opt-title">Estrogeni Coniugati Equini (ECE)</div>
+                  <div class="tos-opt-desc">ECE 0.45 mg. In combinazione con Dienogest (Paudien®) o Bazedoxifene (Duavive®).</div>
+                  <div class="tos-pro-con">
+                    <div class="tos-pro"><strong>✅ Pro</strong>Duavive: nessun progestinico obbligatorio · Opzione per utero presente</div>
+                    <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Profilo lipidico più sfavorevole · Meno evidenze di lungo termine vs E2</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tos-nav-row">
+            <div style="font-size:0.75rem;color:var(--muted);font-style:italic;" id="tosStep1Hint">Seleziona una via di somministrazione</div>
+            <button class="tos-btn tos-btn-primary" onclick="tosNext(1)" id="tosNext1" disabled>Avanti →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 2: Progestinico -->
+        <div class="tos-panel" id="tsp2">
+          <div id="tosProgArea"><!-- filled dynamically --></div>
+          <div class="tos-nav-row">
+            <button class="tos-btn tos-btn-outline" onclick="tosGoStep(1)">← Indietro</button>
+            <button class="tos-btn tos-btn-primary" onclick="tosNext(2)" id="tosNext2" disabled>Avanti →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 3: Schema -->
+        <div class="tos-panel" id="tsp3">
+          <div id="tosSchemaArea"><!-- filled dynamically --></div>
+          <div class="tos-nav-row">
+            <button class="tos-btn tos-btn-outline" onclick="tosGoStep(2)">← Indietro</button>
+            <button class="tos-btn tos-btn-primary" onclick="tosNext(3)" id="tosNext3" disabled>Mostra Farmaci →</button>
+          </div>
+        </div>
+
+        <!-- PANEL 4: Farmaci -->
+        <div class="tos-panel" id="tsp4">
+          <div id="tosDrugResult"><!-- filled dynamically --></div>
+          <div class="tos-nav-row">
+            <button class="tos-btn tos-btn-outline" onclick="tosGoStep(3)">← Modifica schema</button>
+            <button class="tos-btn tos-btn-primary" onclick="tosReset()">🔄 Ricomincia selezione</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STILE DI VITA - SEMPRE VISIBILE -->
+  <div class="lifestyle-default">
+    <h4>🌿 Raccomandazioni Stile di Vita — Incluse per Default</h4>
+    <div id="lifestyleItems" class="lifestyle-grid"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goStep(3)">← Indietro</button>
+    <button class="btn btn-primary" onclick="goStep(5)">Prossimo: Genera Relazione →</button>
+  </div>
+</div>
+
+<!-- ═══ STEP 5: RELAZIONE ═══ -->
+<div class="step-panel" id="step5">
+  <div class="report-wrap">
+    <div class="report-header-bar">
+      <span style="font-size:2.5rem">🌸</span>
+      <div>
+        <h2>MenoPATH — Relazione Clinica Specialistica</h2>
+        <p>Ambulatorio di Ginecologia · Supporto Decisionale Clinico</p>
+      </div>
+    </div>
+    <div class="report-disclaimer">
+      ⚠️ Documento generato da MenoPATH (sistema CDSS) in data <span id="reportDate"></span> — 
+      <strong>Deve essere validato e firmato dal medico specialista prima dell'uso clinico.</strong>
+      Non sostituisce la valutazione medica professionale.
+    </div>
+    <div class="report-body">
+      <div class="api-key-wrap">
+        <input type="password" id="apiKey" value="" style="display:none;">
+        <button class="btn btn-primary" onclick="generateReport()" id="generateBtn">✨ Genera Relazione</button>
+        <span style="font-size:0.82rem;color:var(--muted);align-self:center;">Elaborazione AI in corso...</span>
+      </div>
+      <div id="reportOutput"></div>
+      <div class="report-signature" id="reportSignature" style="display:none;">
+        <div class="sig-field">
+          <label>Specialista</label>
+          <input type="text" id="sigName" placeholder="Nome e Cognome">
+        </div>
+        <div class="sig-field">
+          <label>Qualifica</label>
+          <input type="text" id="sigQualifica" value="Specialista in Ostetricia e Ginecologia" placeholder="Specialista in Ostetricia e Ginecologia">
+        </div>
+        <div class="sig-field">
+          <label>Struttura</label>
+          <input type="text" id="sigStruttura" value="Ambulatorio di Ginecologia · Supporto Decisionale Clinico" placeholder="Struttura / Ambulatorio">
+        </div>
+        <div class="sig-field">
+          <label>Data visita</label>
+          <input type="text" id="sigData" placeholder="gg/mm/aaaa">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="reportActions" style="display:none;" class="btn-row">
+    <button class="btn btn-outline" onclick="copyReport()">📋 Copia testo</button>
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Stampa A4</button>
+    <button class="btn btn-success" onclick="saveReport()">💾 Salva .txt</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-outline" onclick="goStep(4)">← Modifica</button>
+    <button class="btn" style="background:white;border:2px solid var(--danger);color:var(--danger);" onclick="if(confirm('Azzerare tutti i dati?')){resetAll();}">🔄 Nuova Paziente</button>
+  </div>
+</div>
+
+</div>
+
+<div class="app-footer">
+  <span style="font-size:1.2rem">🌸</span>
+  MenoPATH v2.0 · GINOS Suite · Strumento CDSS evidence-based · Non sostituisce la valutazione clinica individuale
+</div>
+
+<script>
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+const STATE_KEY = 'menopath_v2';
+let S = (() => { try { return JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch { return {}; } })();
+function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(S)); } catch {} }
+
+// ── DISCLAIMER ──
+function closeDisclaimer() {
+  var m = document.getElementById('disclaimerModal');
+  if (m) { m.style.display = 'none'; }
+  try { localStorage.setItem('mp_disc','1'); } catch(e) {}
+}
+if (localStorage.getItem('mp_disc')==='1') document.getElementById('disclaimerModal').style.display='none';
+
+// ── REPORT DATE ──
+document.getElementById('reportDate').textContent = new Date().toLocaleDateString('it-IT');
+if (document.getElementById('sigData')) document.getElementById('sigData').value = new Date().toLocaleDateString('it-IT');
+
+// ══════════════════════════════════════
+// MRS
+// ══════════════════════════════════════
+const MRS_AREAS = [
+  { id:'vasomotori', label:'Vasomotori', color:'#e11d48', items:[
+    { id:'mrs_vampate', label:'Vampate / sudorazioni notturne' },
+    { id:'mrs_cuore', label:'Palpitazioni / pressione toracica' },
+    { id:'mrs_sonno', label:'Disturbi del sonno' },
+  ]},
+  { id:'psico', label:'Psicosomatici', color:'#7c3aed', items:[
+    { id:'mrs_umore', label:'Sintomi emotivi (irritabilità, ansia, umore)' },
+    { id:'mrs_esaur', label:'Esaurimento / riduzione performance' },
+    { id:'mrs_memoria', label:'Memoria / concentrazione' },
+  ]},
+  { id:'urogenitali', label:'Urogenitali', color:'#0891b2', items:[
+    { id:'mrs_sess', label:'Sessualità (desiderio, soddisfazione)' },
+    { id:'mrs_vescica', label:'Disturbi urinari (urgenza, incontinenza)' },
+    { id:'mrs_vagina', label:'Secchezza vaginale / dispareunia / GSM' },
+  ]},
+  { id:'somatici', label:'Somatici', color:'#059669', items:[
+    { id:'mrs_articol', label:'Dolori muscolo-articolari' },
+    { id:'mrs_addome', label:'Disturbi addominali (gonfiore, nausea)' },
+  ]},
+];
+
+const MRS_ITEMS = MRS_AREAS.flatMap(a => a.items);
+
+function buildMRS() {
+  MRS_AREAS.forEach(function(area) {
+    var container = document.getElementById('mrs-area-' + area.id);
+    if (!container) return;
+    var parts = [];
+    area.items.forEach(function(item) {
+      parts.push(
+        '<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border2);">' +
+        '<div style="flex:1;font-size:0.86rem;font-weight:500;">' + item.label + '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px;">' +
+        '<span style="font-size:0.75rem;color:var(--muted);width:40px;text-align:right;" id="lbl_' + item.id + '">0</span>' +
+        '<input type="range" data-mrs="' + item.id + '" id="' + item.id + '" min="0" max="4" value="0"' +
+        ' style="width:140px;accent-color:' + area.color + ';">' +
+        '<span style="font-size:0.72rem;font-weight:700;width:80px;" id="txt_' + item.id + '">Assente</span>' +
+        '</div></div>'
+      );
+    });
+    container.innerHTML = parts.join('');
+  });
+
+  // Attach event listeners via delegation
+  document.querySelectorAll('input[data-mrs]').forEach(function(input) {
+    input.addEventListener('input', function() {
+      var id = this.getAttribute('data-mrs');
+      var v = parseInt(this.value);
+      var lblEl = document.getElementById('lbl_' + id);
+      var txtEl = document.getElementById('txt_' + id);
+      if (lblEl) lblEl.textContent = v;
+      if (txtEl) {
+        txtEl.textContent = MRS_LABELS[v];
+        txtEl.style.color = MRS_COLORS_MAP[v];
+      }
+      updateMRS();
+    });
+  });
+}
+
+
+const MRS_LABELS = ['Assente','Lieve','Moderato','Severo','Molto severo'];
+const MRS_COLORS_MAP = { 0:'var(--muted)', 1:'#059669', 2:'#d97706', 3:'#dc2626', 4:'#7c3aed' };
+
+function updateMRS() {
+  let tot = 0;
+  const areaScores = {};
+
+  MRS_AREAS.forEach(area => {
+    let aScore = 0;
+    area.items.forEach(item => {
+      const v = parseInt(document.getElementById(item.id)?.value || 0);
+      tot += v; aScore += v;
+      const txtEl = document.getElementById('txt_' + item.id);
+      if (txtEl) { txtEl.textContent = MRS_LABELS[v]; txtEl.style.color = MRS_COLORS_MAP[v]; }
+    });
+    areaScores[area.id] = aScore;
+  });
+
+  S.mrsScore = tot;
+  S.mrsAreaScores = areaScores;
+  saveState();
+
+  // Score display
+  const d = document.getElementById('mrsDisplay');
+  const t = document.getElementById('mrsScoreText');
+  let cl, col, ds;
+  if(tot<=8){cl='Lieve';col='#059669';ds='Sintomi presenti ma ben tollerati.';}
+  else if(tot<=16){cl='Moderato';col='#d97706';ds='Impatto sulla qualità di vita — valutare trattamento.';}
+  else if(tot<=24){cl='Severo';col='#dc2626';ds='Interferenza con le attività quotidiane.';}
+  else{cl='Molto severo';col='#7c3aed';ds='Sintomi invalidanti — trattamento necessario.';}
+  d.style.cssText = `background:${col}18;border-left:4px solid ${col};padding:14px;border-radius:8px;`;
+  t.innerHTML = `MRS Score: <strong style="font-size:1.4rem;color:${col}">${tot}/44</strong> — <strong style="color:${col}">${cl}</strong> · <span style="font-size:0.82rem;font-weight:400;color:#4b5563;">${ds}</span>`;
+
+  // Area scores display
+  const areaEl = document.getElementById('mrsAreaScores');
+  if (areaEl) {
+    areaEl.innerHTML = MRS_AREAS.map(area => {
+      const s = areaScores[area.id] || 0;
+      const max = area.items.length * 4;
+      const pct = Math.round(s / max * 100);
+      return `<div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+          <span style="font-size:0.82rem;font-weight:600;color:${area.color};">${area.label}</span>
+          <span style="font-size:0.82rem;font-weight:700;color:${area.color};">${s}/${max}</span>
+        </div>
+        <div style="height:8px;background:#f3f0ff;border-radius:4px;overflow:hidden;">
+          <div style="height:100%;width:${pct}%;background:${area.color};border-radius:4px;transition:width 0.3s;"></div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Radar chart
+  drawRadar(areaScores);
+}
+
+function drawRadar(scores) {
+  const canvas = document.getElementById('mrsRadar');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2, R = Math.min(W,H)/2 - 30;
+  ctx.clearRect(0, 0, W, H);
+
+  const areas = MRS_AREAS;
+  const n = areas.length;
+  const maxVals = areas.map(a => a.items.length * 4);
+  const vals = areas.map(a => scores[a.id] || 0);
+  const angles = areas.map((_, i) => (i * 2 * Math.PI / n) - Math.PI/2);
+
+  // Grid circles
+  for (let level = 1; level <= 4; level++) {
+    ctx.beginPath();
+    angles.forEach((ang, i) => {
+      const r = R * level / 4;
+      const x = cx + r * Math.cos(ang);
+      const y = cy + r * Math.sin(ang);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.strokeStyle = '#e9d5ff';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // Axes
+  angles.forEach((ang, i) => {
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + R * Math.cos(ang), cy + R * Math.sin(ang));
+    ctx.strokeStyle = '#d8b4fe';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    // Labels
+    const lx = cx + (R + 18) * Math.cos(ang);
+    const ly = cy + (R + 18) * Math.sin(ang);
+    ctx.fillStyle = areas[i].color;
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(areas[i].label, lx, ly);
+  });
+
+  // Data polygon
+  ctx.beginPath();
+  vals.forEach((v, i) => {
+    const r = R * (v / maxVals[i]);
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.closePath();
+  ctx.fillStyle = 'rgba(124,58,237,0.18)';
+  ctx.fill();
+  ctx.strokeStyle = '#7c3aed';
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+
+  // Dots
+  vals.forEach((v, i) => {
+    const r = R * (v / maxVals[i]);
+    const x = cx + r * Math.cos(angles[i]);
+    const y = cy + r * Math.sin(angles[i]);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI*2);
+    ctx.fillStyle = areas[i].color;
+    ctx.fill();
+  });
+}
+
+
+// ══════════════════════════════════════
+// BMI
+// ══════════════════════════════════════
+function calcBMI() {
+  const p=parseFloat(document.getElementById('peso').value);
+  const a=parseFloat(document.getElementById('altezza').value);
+  if(p&&a) {
+    const bmi=+(p/((a/100)**2)).toFixed(1);
+    document.getElementById('bmi').value=bmi;
+    applyBMIClass(bmi);
+    S.bmi=bmi; S.peso=p; S.altezza=a; saveState();
+    checkSindMetabolica();
+    updateLifestyle();
+  }
+}
+function applyBMIClass(bmi) {
+  let cl,col='';
+  if(bmi<18.5){cl='Sottopeso';col='var(--warning)';}
+  else if(bmi<25){cl='Normopeso ✓';col='var(--success)';}
+  else if(bmi<30){cl='Sovrappeso';col='var(--warning)';}
+  else if(bmi<35){cl='Obesità I';col='var(--danger)';}
+  else if(bmi<40){cl='Obesità II';col='var(--danger)';}
+  else{cl='Obesità III';col='var(--danger)';}
+  const el=document.getElementById('bmiClasse');
+  el.value=cl; el.style.color=col; el.style.fontWeight='600';
+  const a=document.getElementById('bmiAlert');
+  if(bmi>=30) a.innerHTML=`<div class="alert alert-warning"><span class="ai">⚠️</span><div><strong>Obesità (BMI ${bmi}):</strong> Via transdermica obbligatoria — la via orale aumenta il rischio TEV 2-4×.</div></div>`;
+  else if(bmi>=25) a.innerHTML=`<div class="alert" style="background:#fffbeb;border-left:4px solid var(--warning);color:#78350f;"><span class="ai">⚠️</span><div>Sovrappeso — raccomandare riduzione ponderale come parte del piano terapeutico.</div></div>`;
+  else a.innerHTML='';
+}
+
+// ══════════════════════════════════════
+// ETÀ / MENOPAUSA
+// ══════════════════════════════════════
+function onEtaChange() { S.eta=parseInt(document.getElementById('eta').value)||null; calcAnni(); saveState(); updateLifestyle(); }
+function onEtaMenopausaChange() { S.etaMenopausa=parseInt(document.getElementById('etaMenopausa').value)||null; calcAnni(); saveState(); }
+function calcAnni() {
+  const e=S.eta, m=S.etaMenopausa;
+  if(e&&m) {
+    const a=Math.max(0,e-m);
+    document.getElementById('anniMenopausa').value=a;
+    S.anniMenopausa=a; saveState();
+    updateDerivedFlags();
+  }
+}
+function updateDerivedFlags() {
+  const flags=[];
+  const em=S.etaMenopausa, anni=S.anniMenopausa;
+  if(em&&em<40) flags.push(`<span class="derived-flag flag-red">⚠️ Menopausa precoce (&lt;40 aa) — rischio CV/osseo aumentato</span>`);
+  else if(em&&em<45) flags.push(`<span class="derived-flag flag-warn">⚠️ Menopausa early (40–44 aa)</span>`);
+  if(anni!==undefined&&anni>10) flags.push(`<span class="derived-flag flag-warn">⏳ Menopausa &gt;10 anni — finestra terapeutica ristretta</span>`);
+  else if(anni!==undefined&&anni>=0&&anni<=10) flags.push(`<span class="derived-flag flag-good">✅ Entro finestra terapeutica (&lt;10 anni)</span>`);
+  document.getElementById('derivedFlags').innerHTML=flags.join('');
+  checkFamiliarita();
+}
+
+// ══════════════════════════════════════
+// FAMILIARITÀ
+// ══════════════════════════════════════
+function checkFamiliarita() {
+  const positivi=[], protettivi=[];
+  if(document.getElementById('padreCVD')?.checked||document.getElementById('madreCVD')?.checked) positivi.push('CVD familiare');
+  if(document.getElementById('padreDM')?.checked||document.getElementById('madreDM')?.checked) positivi.push('diabete familiare');
+  if(document.getElementById('padreIctus')?.checked||document.getElementById('madreIctus')?.checked) positivi.push('ictus precoce');
+  if(document.getElementById('padreOsteo')?.checked||document.getElementById('madreOsteo')?.checked) positivi.push('osteoporosi familiare');
+  if(document.getElementById('padreTumori')?.checked||document.getElementById('madreTumori')?.checked) positivi.push('neoplasie familiari');
+  if(document.getElementById('padreLongevita')?.checked) protettivi.push(`padre longevo (${document.getElementById('etaPadre').value||'?'} aa)`);
+  if(document.getElementById('madreLongevita')?.checked) protettivi.push(`madre longeva (${document.getElementById('etaMadre').value||'?'} aa)`);
+  const div=document.getElementById('famigliaritaNote');
+  if(positivi.length||protettivi.length) {
+    div.style.display='flex';
+    let txt='';
+    if(protettivi.length) txt+=`<strong>Aspetti protettivi:</strong> ${protettivi.join(', ')}. `;
+    if(positivi.length) txt+=`<strong>Fattori di rischio familiari:</strong> ${positivi.join(', ')}.`;
+    document.getElementById('famigliaritaText').innerHTML=txt;
+  } else { div.style.display='none'; }
+}
+['padreCVD','padreDM','padreIctus','padreOsteo','padreTumori','padreLongevita',
+ 'madreCVD','madreDM','madreIctus','madreOsteo','madreTumori','madreLongevita','etaPadre','etaMadre'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('change',checkFamiliarita);
+  if(el) el.addEventListener('input',checkFamiliarita);
+});
+
+// ══════════════════════════════════════
+// SINDROME METABOLICA
+// ══════════════════════════════════════
+function checkSindMetabolica() {
+  const vita=parseFloat(document.getElementById('vitaCirc').value);
+  const tg=parseFloat(document.getElementById('trigliceridi').value);
+  const hdl=parseFloat(document.getElementById('hdl').value);
+  const gluc=parseFloat(document.getElementById('glicemia').value);
+  const pa=parseFloat(document.getElementById('paSistolica').value);
+  const bmi=parseFloat(document.getElementById('bmi').value);
+  const obObes=(vita>=80)||(bmi>=30);
+  let cc=0;
+  if(tg>=150)cc++; if(hdl&&hdl<50)cc++; if(gluc>=100)cc++; if(pa>=130)cc++;
+  const sm=obObes&&cc>=2;
+  S.sindMetabolica=sm; S.sindMetabolicaCriteria=cc; saveState();
+  document.getElementById('sindMetabolicaAlert').innerHTML=sm?`<div class="alert alert-warning"><span class="ai">🔴</span><div><strong>Sindrome Metabolica (criteri IDF 2006):</strong> obesità addominale + ${cc} criteri aggiuntivi soddisfatti. Via transdermica fortemente indicata. Intervento intensivo sullo stile di vita.</div></div>`:'';
+  updateSMmodule();
+  updateLifestyle();
+}
+
+function updateSMmodule() {
+  const pr=document.getElementById('sm-preview'), st=document.getElementById('sm-status');
+  if(!pr) return;
+  if(S.sindMetabolica) {
+    pr.textContent='⚠️ Criteri IDF soddisfatti';
+    st.textContent='Positiva'; st.style.cssText='background:#fef3c7;color:#92400e;padding:3px 12px;border-radius:12px;font-size:0.72rem;font-weight:700;';
+    document.getElementById('sm-auto-result').innerHTML='<div class="alert alert-warning"><span class="ai">⚠️</span><div>Sindrome Metabolica confermata — adattare scelta terapeutica.</div></div>';
+    document.getElementById('mod-sm').classList.add('completed');
+  } else {
+    pr.textContent='Calcolato automaticamente dai dati di step 1';
+    st.textContent=S.sindMetabolicaCriteria!==undefined?'Negativa':'—';
+    st.style.cssText='background:#d1fae5;color:#065f46;padding:3px 12px;border-radius:12px;font-size:0.72rem;font-weight:700;';
+    document.getElementById('sm-auto-result').innerHTML='';
+  }
+}
+
+function syncCVfromStep1() {
+  const paVal   = document.getElementById('paSistolica')?.value;
+  const fumoVal = document.getElementById('fumo')?.value || 'no';
+  const hdlVal  = document.getElementById('hdl')?.value;
+  const colVal  = document.getElementById('colesteroloTotale')?.value;
+
+  const cvPa   = document.getElementById('cv-pa');
+  const cvFumo = document.getElementById('cv-fumo');
+  const cvHdl  = document.getElementById('cv-hdl-display');
+  const cvCol  = document.getElementById('cv-colesterolo');
+  const alert  = document.getElementById('cv-missing-alert');
+
+  let missing = false;
+
+  if (paVal)   { if(cvPa)   { cvPa.value   = paVal;   cvPa.readOnly=true;  cvPa.style.background='#f5f3ff'; } }
+  else         { if(cvPa)   { cvPa.readOnly=false; cvPa.style.background=''; } missing = true; }
+  if (fumoVal) { if(cvFumo) cvFumo.value = fumoVal; }
+  if (hdlVal)  { if(cvHdl)  { cvHdl.value  = hdlVal;  cvHdl.readOnly=true;  cvHdl.style.background='#f5f3ff'; } }
+  else         { if(cvHdl)  { cvHdl.readOnly=false; cvHdl.style.background=''; } missing = true; }
+  if (colVal)  { if(cvCol)  { cvCol.value  = colVal;  cvCol.readOnly=true;  cvCol.style.background='#f5f3ff'; } }
+  else         { if(cvCol)  { cvCol.readOnly=false; cvCol.style.background=''; } }
+
+  if (alert) alert.style.display = missing ? 'flex' : 'none';
+}
+
+function syncCVtoStep1() {
+  // Propaga i valori editati nel modulo CV → step 1
+  const cvPa   = document.getElementById('cv-pa')?.value;
+  const cvFumo = document.getElementById('cv-fumo')?.value;
+  const cvHdl  = document.getElementById('cv-hdl-display')?.value;
+
+  if (cvPa)   { const el = document.getElementById('paSistolica'); if(el && !el.value) { el.value = cvPa; checkSindMetabolica(); } }
+  if (cvFumo) { const el = document.getElementById('fumo');        if(el) el.value = cvFumo; }
+  if (cvHdl)  { const el = document.getElementById('hdl');         if(el && !el.value) { el.value = cvHdl; checkSindMetabolica(); } }
+  // aggiorna S per il prompt
+  if(cvPa) S.paSistolica = parseFloat(cvPa);
+  if(cvFumo) S.fumo = cvFumo;
+  if(cvHdl) S.hdl = parseFloat(cvHdl);
+  saveState();
+}
+
+function syncHdlToCV() { syncCVfromStep1(); }
+
+// ══════════════════════════════════════
+// SCORE2 ESC 2021 — DONNE, RISCHIO MODERATO (Italia)
+// Algoritmo basato su: SCORE2 Working Group, Eur Heart J 2021;42:2439-2454
+// Coefficienti beta per donne, regione moderato rischio (S_Europe)
+// ══════════════════════════════════════
+function calcScore2() {
+  const eta = S.eta || 0;
+  const pa  = parseFloat(document.getElementById('paSistolica')?.value)
+           || parseFloat(document.getElementById('cv-pa')?.value) || 0;
+  const fumo = document.getElementById('cv-fumo')?.value
+            || document.getElementById('fumo')?.value || 'no';
+  // colesterolo: step1 ha la precedenza, poi cv-colesterolo
+  const colTot = parseFloat(document.getElementById('colesteroloTotale')?.value)
+              || parseFloat(document.getElementById('cv-colesterolo')?.value) || 0;
+  // Sincronizza cv-colesterolo con step1 se presente
+  if (document.getElementById('colesteroloTotale')?.value) {
+    const cvcol = document.getElementById('cv-colesterolo');
+    if (cvcol) cvcol.value = document.getElementById('colesteroloTotale').value;
+  }
+  const hdlMg  = parseFloat(document.getElementById('hdl')?.value)
+              || parseFloat(document.getElementById('cv-hdl-display')?.value) || 0;
+
+  const autofillEl = document.getElementById('cv-autofill');
+  const resultEl   = document.getElementById('cv-score2result');
+
+  if (!eta || !pa || !colTot) {
+    resultEl.value = 'Dati incompleti';
+    if(autofillEl) autofillEl.innerHTML =
+      '<strong>Dati da step 1:</strong> Età '+eta+' aa · PA '+(pa||'—')+' mmHg · Fumo: '+fumo+
+      '<br><span style="color:var(--danger);font-size:0.76rem;">⚠️ Inserire colesterolo totale per calcolo SCORE2</span>';
+    return;
+  }
+
+  // Conversione mg/dL → mmol/L
+  const colMmol = colTot / 38.67;
+  const hdlMmol = hdlMg  / 38.67;
+  const nonHdl  = Math.max(0, colMmol - hdlMmol);   // mmol/L
+
+  // ------- Modello SCORE2 donne, Europa rischio moderato -------
+  // Hazard ratio lineare (da supplementary ESC 2021):
+  // Centralizzazione: età su 60, PA su 120, non-HDL su 3.89 mmol/L
+  const ageTerm    = 0.3742 * (eta - 60) / 5;
+  const bpTerm     = 2.6550 * (Math.log(pa) - Math.log(120));
+  const smokeTerm  = fumo === 'si'  ? 0.8393
+                   : fumo === 'ex'  ? 0.1542
+                   : 0;
+  const cholTerm   = 0.8738 * (Math.log(nonHdl) - Math.log(3.89));
+
+  // Interazioni età × fattori di rischio
+  const ageInt_bp    = -0.7600 * ((eta - 60) / 5) * (Math.log(pa) - Math.log(120));
+  const ageInt_smoke = -0.1749 * ((eta - 60) / 5) * (fumo === 'si' ? 1 : 0);
+  const ageInt_chol  = -0.3580 * ((eta - 60) / 5) * (Math.log(nonHdl) - Math.log(3.89));
+
+  const LP = ageTerm + bpTerm + smokeTerm + cholTerm + ageInt_bp + ageInt_smoke + ageInt_chol;
+
+  // Baseline survival a 10 anni per donne, rischio moderato (Italia)
+  const S0_10 = 0.9776;
+  const risk10 = (1 - Math.pow(S0_10, Math.exp(LP))) * 100;
+
+  // Clamp a range ragionevole
+  const score = Math.max(0.5, Math.min(40, +risk10.toFixed(1)));
+
+  // Classificazione ESC 2021 (SCORE2 ≥50 aa donne)
+  let classe, colore, interp;
+  if (eta < 50) {
+    if      (score < 2.5) { classe='Basso';     colore='#059669'; interp='Rischio basso (<2.5%)'; }
+    else if (score < 7.5) { classe='Moderato';  colore='#d97706'; interp='Rischio moderato (2.5–7.5%)'; }
+    else if (score <10  ) { classe='Alto';       colore='#dc2626'; interp='Rischio alto (7.5–10%)'; }
+    else                  { classe='Molto alto'; colore='#7c3aed'; interp='Rischio molto alto (≥10%)'; }
+  } else if (eta < 60) {
+    if      (score < 5 ) { classe='Basso';     colore='#059669'; interp='Rischio basso (<5%)'; }
+    else if (score <10 ) { classe='Moderato';  colore='#d97706'; interp='Rischio moderato (5–10%)'; }
+    else if (score <20 ) { classe='Alto';       colore='#dc2626'; interp='Rischio alto (10–20%)'; }
+    else                  { classe='Molto alto'; colore='#7c3aed'; interp='Rischio molto alto (≥20%)'; }
+  } else {
+    if      (score < 7.5){ classe='Basso';     colore='#059669'; interp='Rischio basso (<7.5%)'; }
+    else if (score <15  ){ classe='Moderato';  colore='#d97706'; interp='Rischio moderato (7.5–15%)'; }
+    else if (score <30  ){ classe='Alto';       colore='#dc2626'; interp='Rischio alto (15–30%)'; }
+    else                  { classe='Molto alto'; colore='#7c3aed'; interp='Rischio molto alto (≥30%)'; }
+  }
+
+  resultEl.value = score + '% — ' + classe;
+  resultEl.style.color = colore;
+  resultEl.style.fontWeight = '700';
+  S.score2 = score; S.score2Classe = classe; S.nonHdl = +nonHdl.toFixed(2); saveState();
+  updateScore2Preview();
+
+  if (autofillEl) autofillEl.innerHTML =
+    '<strong>Input SCORE2:</strong> Età ' + eta + ' aa · PA ' + pa + ' mmHg · ' +
+    'Fumo: ' + fumo + ' · Col.Tot: ' + colTot + ' mg/dL · HDL: ' + (hdlMg||'—') + ' mg/dL · ' +
+    'Non-HDL: <strong>' + nonHdl.toFixed(2) + ' mmol/L</strong>' +
+    '<div style="margin-top:6px;padding:6px 10px;background:' + colore + '20;border-left:3px solid ' + colore +
+    ';border-radius:4px;font-size:0.8rem;"><strong style="color:' + colore + '">' + interp +
+    '</strong> · SCORE2 ESC 2021, donne, rischio moderato (Italia)' +
+    (fumo==='si'?' · <em>Il fumo raddoppia il rischio CV — cessazione prioritaria</em>':'') +
+    '</div>';
+}
+
+function saveCV() {
+  S.cvDone=true;
+  const res=document.getElementById('cv-score2result').value;
+  document.getElementById('cv-status').textContent='Completato'; document.getElementById('cv-status').className='risk-status done';
+  document.getElementById('mod-cv').classList.add('completed');
+  document.getElementById('cv-preview').textContent=`SCORE2: ${res}`; saveState();
+}
+function saveMOC() {
+  const cat=document.getElementById('moc-categoria').value;
+  if(!cat){ alert('Selezionare la categoria WHO'); return; }
+  S.moc={tscore:document.getElementById('moc-tscore').value,categoria:cat,fraxMaj:document.getElementById('moc-fraxmaj').value,fraxHip:document.getElementById('moc-fraxhip').value,nota79:document.getElementById('moc-nota79').value};
+  document.getElementById('moc-status').textContent='Completato'; document.getElementById('moc-status').className='risk-status done';
+  document.getElementById('mod-moc').classList.add('completed');
+  document.getElementById('moc-preview').textContent=`T-score: ${S.moc.tscore} · ${cat} · FRAX: ${S.moc.fraxMaj}% / ${S.moc.fraxHip}%`;
+  document.getElementById('moc-input').classList.remove('open'); saveState();
+}
+function openOncoModule() {
+  // Sync BMI from step 1
+  const bmiEl = document.getElementById('onco-bmiDisp');
+  if (bmiEl && S.bmi) bmiEl.value = S.bmi;
+  toggleInlineRisk('onco-input');
+  calcOncoRisk();
+}
+
+function calcOncoRisk() {
+  // ── MAMMELLA ──
+  const fam       = document.getElementById('onco-famMammella')?.value || 'no';
+  const etnia     = document.getElementById('onco-etnia')?.value || 'no';
+  const genetica  = document.getElementById('onco-genetica')?.value || 'no';
+  const densita   = document.getElementById('onco-densita')?.value || 'nd';
+  const menarca   = parseInt(document.getElementById('onco-menarca')?.value) || 12;
+  const etaParto  = parseInt(document.getElementById('onco-etaParto')?.value) || 0;
+  const parita    = parseInt(document.getElementById('onco-parita')?.value) || 0;
+  const allatt    = document.getElementById('onco-allattamento')?.value || 'no';
+  const atipia    = document.getElementById('onco-atipia')?.value || 'no';
+  const mhtPrec   = document.getElementById('onco-mhtPrec')?.value || 'no';
+  const radiot    = document.getElementById('onco-radioterapia')?.value || 'no';
+  const alcol     = document.getElementById('onco-alcol')?.value || 'no';
+  const mammella  = document.getElementById('onco-mammella')?.value || '';
+
+  // Rischio relativo mammella (fattori Gail + modificatori)
+  let rrBreast = 1.0;
+  if (genetica === 'brca1') rrBreast = 8.0;
+  else if (genetica === 'brca2') rrBreast = 6.0;
+  else if (genetica === 'altri') rrBreast *= 2.5;
+  else {
+    if (fam === '1grado')    rrBreast *= 1.8;
+    else if (fam === 'multipla') rrBreast *= 2.9;
+    else if (fam === 'brca') rrBreast *= 5.0;
+    if (etnia === 'si') rrBreast *= 1.4; // rischio BRCA~2% ashkenaziti
+  }
+  if (menarca <= 11) rrBreast *= 1.3;
+  if (parita === 0)         rrBreast *= 1.4;
+  else if (etaParto >= 30)  rrBreast *= 1.2;
+  else if (parita >= 2)     rrBreast *= 0.85;
+  if (allatt === 'gt6')     rrBreast *= 0.78;
+  if (atipia === 'atipia')  rrBreast *= 3.5;
+  else if (atipia === 'lcis') rrBreast *= 4.0;
+  else if (atipia === 'iperplasia') rrBreast *= 1.5;
+  if (radiot === 'si')      rrBreast *= 4.0; // RT toracica 10-30aa (Hodgkin)
+  if (mhtPrec === 'ep')     rrBreast *= 1.26;
+  else if (mhtPrec === 'e-only') rrBreast *= 1.05;
+  if (alcol === 'ge1')      rrBreast *= 1.15;
+  if (densita === 'C')      rrBreast *= 1.5;
+  else if (densita === 'D') rrBreast *= 2.0;
+
+  // Screening mammella consigliato
+  let mammScreening = 'Mammografia biennale dai 40–45 anni (standard popolazione generale)';
+  if (rrBreast >= 3 || densita === 'D' || densita === 'C')
+    mammScreening = 'Mammografia ANNUALE + valutare RM mammaria supplementare (rischio elevato / alta densità)';
+  if (rrBreast >= 5 || genetica.startsWith('brca') || radiot === 'si')
+    mammScreening = 'RM mammaria annuale + mammografia annuale — programma sorveglianza intensiva (consulenza senologica/genetica)';
+
+  let breastClass, breastCol, breastText, breastMHT;
+  if (mammella === 'pregresso-k' || genetica === 'brca1') {
+    breastClass = 'CONTROINDICAZIONE / CONSULENZA URGENTE'; breastCol = '#7f1d1d';
+    breastText = mammella === 'pregresso-k'
+      ? 'Pregressa neoplasia mammaria — MHT controindicata. Discutere con oncologo ogni eccezione (es. menopausa prematura post-chemioterapia).'
+      : 'BRCA1 patogeno — rischio lifetime 60–72%. MHT controindicata. Consulenza genetica e sorveglianza intensiva.';
+    breastMHT = 'CI-ASSOLUTA';
+  } else if (rrBreast >= 4 || fam === 'brca' || radiot === 'si' || genetica === 'brca2') {
+    breastClass = 'Alto'; breastCol = '#dc2626';
+    breastText = 'Rischio mammella ALTO (RR ×' + rrBreast.toFixed(1) + '). Invio a senologia/genetica prima di avviare MHT. Se MHT necessaria: preferire estrogeni soli (se isterectomia) + progesterone micronizzato, durata minima. ' + mammScreening + '.';
+    breastMHT = 'alto';
+  } else if (rrBreast >= 2) {
+    breastClass = 'Moderato-Alto'; breastCol = '#d97706';
+    breastText = 'Rischio moderato-alto (RR ×' + rrBreast.toFixed(1) + '). MHT personalizzata: preferire progesterone micronizzato vs progestinici sintetici. ' + mammScreening + '.';
+    breastMHT = 'moderato';
+  } else {
+    breastClass = 'Basso-Moderato'; breastCol = '#059669';
+    breastText = 'Rischio basso-moderato (RR ×' + rrBreast.toFixed(1) + '). MHT non controindicata per profilo mammario. ' + mammScreening + '.';
+    breastMHT = 'basso';
+  }
+
+  const brEl = document.getElementById('onco-breast-result');
+  if (brEl) {
+    brEl.style.display = 'block';
+    brEl.style.cssText = 'font-size:0.82rem;padding:10px 12px;border-radius:6px;background:' + breastCol + '10;border:1px solid ' + breastCol + '50;margin-bottom:12px;';
+    brEl.innerHTML = '<strong style="color:' + breastCol + '">🎗️ Mammella — ' + breastClass + '</strong><br>' + breastText;
+  }
+
+  // ── ENDOMETRIO ──
+  const bmi           = S.bmi || parseFloat(document.getElementById('onco-bmiDisp')?.value) || 0;
+  const diabete       = document.getElementById('onco-diabete')?.value || 'no';
+  const lynch         = document.getElementById('onco-lynch')?.value || 'no';
+  const sanguinamento = document.getElementById('onco-sanguinamento')?.value || 'no';
+  const nullipara     = parita === 0;
+  const lyncGene      = genetica === 'lynch-gene';
+
+  let endoClass, endoText, endoMHT;
+  if (lynch === 'confermata' || lyncGene) {
+    endoClass = 'Molto alto (Lynch)';
+    endoText  = 'Lynch confermato — rischio endometrio 40–60% lifetime. Sorveglianza endometriale attiva (biopsia endometriale annuale). Consulenza oncogenetica obbligatoria. MHT: valutare caso per caso con oncologo.';
+    endoMHT   = 'alto';
+  } else if (bmi >= 35 || (diabete === 'si' && nullipara) || lynch === 'sospetto') {
+    endoClass = 'Alto';
+    endoText  = 'Profilo ad alto rischio endometrio. ETV basale obbligatoria. MHT con progestinico continuo se utero presente.';
+    endoMHT   = 'moderato';
+  } else if (bmi >= 30 || diabete === 'si' || nullipara) {
+    endoClass = 'Moderato';
+    endoText  = 'Fattori di rischio presenti. ETV annuale raccomandata. MHT con progestinico standard.';
+    endoMHT   = 'basso-moderato';
+  } else {
+    endoClass = 'Basso';
+    endoText  = 'Profilo di rischio endometriale basso. MHT standard con progestinico adeguato se utero presente.';
+    endoMHT   = 'basso';
+  }
+  const endoAlertHtml = sanguinamento === 'menorragia'
+    ? '<br><strong style="color:#dc2626;">⚠️ METRORRAGIA — escludere patologia endometriale PRIMA di qualsiasi MHT (ETV + eventuale isteroscopia).</strong>' : '';
+
+  // ── SCREENING ALTRI TUMORI ──
+  const cervice     = document.getElementById('onco-cervice')?.value || 'nd';
+  const colonretto  = document.getElementById('onco-colonretto')?.value || 'nd';
+  const packYears   = parseFloat(document.getElementById('onco-packYears')?.value) || 0;
+  const etaP        = S.eta || 0;
+  const fumoAttivoCV= document.getElementById('fumo')?.value === 'si' || document.getElementById('cv-fumo')?.value === 'si';
+
+  const screenigNotes = [];
+  if (cervice === 'scaduto') screenigNotes.push('⚠️ HPV test / Pap scaduto — riprogrammare urgentemente');
+  if (cervice === 'cin')     screenigNotes.push('⚠️ Storia CIN / HPV positiva — follow-up colposcopico');
+  if (colonretto === 'scaduto') screenigNotes.push('⚠️ Screening colon-retto non aggiornato — FIT annuale o colonscopia');
+  if (colonretto === 'polipi')  screenigNotes.push('⚠️ Polipi adenomatosi — colonscopia di sorveglianza (ogni 3-5 aa)');
+  if ((fumoAttivoCV || packYears >= 20) && etaP >= 50 && etaP <= 80)
+    screenigNotes.push('🫁 Screening polmonare con TC a basso dosaggio indicato (≥20 pack-years, età 50–80 aa — USPSTF 2021)');
+  if (etnia === 'si' && genetica === 'no')
+    screenigNotes.push('🧬 Discendenza ashkenazita — valutare test BRCA (prevalenza ~1:40 vs 1:400 in popolazione generale)');
+  if ((fam === 'multipla' || fam === 'brca') && genetica === 'no')
+    screenigNotes.push('🧬 Anamnesi familiare ad alto rischio — invio a consulenza genetica per test BRCA/pannello ereditario');
+
+  // ── RENDER GLOBALE ──
+  const grEl = document.getElementById('onco-global-result');
+  if (grEl) {
+    let endoCol = endoClass.includes('Molto alto') ? '#7c3aed'
+                : endoClass.includes('Alto')       ? '#dc2626'
+                : endoClass.includes('Moderato')   ? '#d97706'
+                : '#059669';
+    const ovaio = document.getElementById('onco-ovaio')?.value || 'no';
+    const ovaioHtml = ovaio === 'brca' ? '<div class="alert alert-danger" style="margin-bottom:4px;"><span class="ai">🫧</span><div><strong>K Ovaio — BRCA confermato:</strong> Consulenza genetica urgente. Salpingo-ovariectomia profilattica da discutere.</div></div>'
+      : ovaio === '1grado' ? '<div class="alert alert-warning" style="margin-bottom:4px;"><span class="ai">🫧</span><div>Familiarità K ovaio — ecografia TV + CA-125 periodico.</div></div>' : '';
+
+    grEl.style.display = 'block';
+    grEl.innerHTML =
+      '<div class="alert" style="background:' + endoCol + '10;border-left:4px solid ' + endoCol + ';color:#1e1b4b;margin-bottom:6px;">' +
+      '<span class="ai">🔴</span><div><strong>Endometrio — ' + endoClass + '</strong><br>' + endoText + endoAlertHtml + '</div></div>' +
+      ovaioHtml +
+      (screenigNotes.length ? '<div class="alert alert-info" style="margin-bottom:4px;"><span class="ai">🔍</span><div><strong>Screening da aggiornare / raccomandazioni:</strong><br>' + screenigNotes.join('<br>') + '</div></div>' : '');
+  }
+
+  S.oncoRisk = { breastRR: +rrBreast.toFixed(2), breastClass, endoClass, breastMHT, endoMHT, screenigNotes };
+  saveState();
+}
+
+function saveOnco() {
+  calcOncoRisk();
+  S.onco = {
+    mammella: document.getElementById('onco-mammella')?.value || 'non specificato',
+    famMammella: document.getElementById('onco-famMammella')?.value,
+    densita: document.getElementById('onco-densita')?.value,
+    breastClass: S.oncoRisk?.breastClass || '—',
+    breastRR: S.oncoRisk?.breastRR || 1,
+    endoClass: S.oncoRisk?.endoClass || '—',
+    diabete: document.getElementById('onco-diabete')?.value,
+    lynch: document.getElementById('onco-lynch')?.value,
+    sanguinamento: document.getElementById('onco-sanguinamento')?.value,
+    ovaio: document.getElementById('onco-ovaio')?.value,
+    cervice: document.getElementById('onco-cervice')?.value,
+    colonretto: document.getElementById('onco-colonretto')?.value,
+    packYears: document.getElementById('onco-packYears')?.value,
+    genetica: document.getElementById('onco-genetica')?.value,
+    screenigNotes: S.oncoRisk?.screenigNotes || [],
+  };
+  document.getElementById('onco-status').textContent = 'Completato';
+  document.getElementById('onco-status').className = 'risk-status done';
+  document.getElementById('mod-onco').classList.add('completed');
+  document.getElementById('onco-preview').textContent =
+    'Mammella: ' + (S.onco.breastClass || '—') + ' · Endometrio: ' + (S.onco.endoClass || '—');
+  document.getElementById('onco-input').classList.remove('open');
+  saveState();
+}
+function openMOC() { localStorage.setItem('menopath_to_moc',JSON.stringify({eta:S.eta,peso:S.peso,fumo:document.getElementById('fumo').value})); window.open('https://moc-consult.netlify.app/','_blank'); toggleInlineRisk('moc-input'); }
+
+// ══════════════════════════════════════
+// LIFESTYLE (sempre visibile, personalizzato)
+// ══════════════════════════════════════
+function updateLifestyle() {
+  const bmi=S.bmi||0;
+  const anni=S.anniMenopausa||0;
+  const fumo=document.getElementById('fumo').value;
+  const intestino=document.querySelector('input[name="intestino"]:checked')?.value||'normale';
+  const sm=S.sindMetabolica;
+  const items=[];
+
+  // Attività fisica
+  let attivita='Attività aerobica 150 min/settimana (es. camminata veloce 30 min/die) + resistance training 2-3×/settimana per mantenimento massa ossea e muscolare.';
+  items.push({icon:'🏃',title:'Attività Fisica',text:attivita});
+
+  // Peso
+  if(bmi>=30) items.push({icon:'⚖️',title:'Riduzione Ponderale — Prioritaria',text:`BMI attuale ${bmi} kg/m² (Obesità). Obiettivo: riduzione 5-10% del peso corporeo. Dieta ipocalorica mediterranea (-500 kcal/die), limitare zuccheri semplici e grassi saturi. La perdita di peso migliora il profilo metabolico e riduce il rischio CV.`});
+  else if(bmi>=25) items.push({icon:'⚖️',title:'Controllo del Peso',text:`BMI ${bmi} kg/m² (Sovrappeso). Mantenere peso stabile, privilegiare dieta mediterranea. Evitare ulteriore incremento ponderale in postmenopausa.`});
+  else items.push({icon:'⚖️',title:'Mantenimento Peso',text:`BMI ${bmi} kg/m² (Normopeso). Mantenere l'attuale composizione corporea con dieta equilibrata e attività fisica regolare.`});
+
+  // Alimentazione
+  let dieta='Dieta mediterranea: ricca di calcio (1000–1200 mg/die da latticini, crucifere, legumi), vitamina D, acidi grassi omega-3. ';
+  if(sm) dieta+='In presenza di sindrome metabolica: ridurre carboidrati raffinati, aumentare fibre (>25 g/die), limitare sale. ';
+  items.push({icon:'🥗',title:'Alimentazione',text:dieta});
+
+  // Fumo
+  if(fumo==='si') items.push({icon:'🚭',title:'Cessazione Fumo — Urgente',text:'Il fumo accelera la perdita ossea (+50% rischio osteoporosi), anticipa la menopausa, aumenta il rischio CV e riduce l\'efficacia della MHT. Counselling motivazionale e terapia sostitutiva nicotinica.'  });
+
+  // Intestino
+  if(intestino==='stipsi'||intestino==='entrambi') items.push({icon:'🫀',title:'Funzione Intestinale',text:'Aumentare apporto di fibre (25-35 g/die), idratazione ≥1.5 L/die, attività fisica regolare. Valutare probiotici specifici (Lactobacillus spp). Escludere intolleranze alimentari (glutine, lattosio).'  });
+  if(intestino==='meteorismo'||intestino==='entrambi') items.push({icon:'🫀',title:'Disbiosi Intestinale',text:'Il meteorismo indica alterazione del microbioma. Probiotici multi-ceppo, ridurre alimenti fermentabili (FODMAP), evitare bevande gassate. Il microbioma intestinale influenza la flora vaginale e vescicale.'  });
+
+  // Idratazione
+  items.push({icon:'💧',title:'Idratazione',text:'Almeno 1.5-2 litri di acqua al giorno. Fondamentale per funzione renale, mucose urogenitali e motilità intestinale. Ridurre caffeina e alcol (aggravano vampate).'  });
+
+  // Sonno
+  items.push({icon:'😴',title:'Igiene del Sonno',text:'Orari regolari, camera fresca (18-20°C utile per vampate notturne), ridurre schermo 2h prima del sonno. Tecniche di rilassamento (mindfulness, respiro diaframmatico) per ansia e disturbi del sonno.'  });
+
+  if(anni>10) items.push({icon:'🩺',title:'Monitoraggio Cardiovascolare',text:'Con menopausa >10 anni, il rischio cardiovascolare è aumentato. Controllo PA domiciliare, profilo lipidico e glicemia annuali, screening diabete tipo 2.'  });
+
+  document.getElementById('lifestyleItems').innerHTML=items.map(i=>`
+    <div class="lifestyle-item">
+      <span class="lifestyle-icon">${i.icon}</span>
+      <div class="lifestyle-text"><strong>${i.title}</strong>${i.text}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════
+// THERAPY
+// ══════════════════════════════════════
+function buildTherapy() {
+  const bmi=S.bmi||0;
+  const hasCI=document.querySelectorAll('.ci-ass:checked').length>0;
+  const sm=S.sindMetabolica;
+  const mrsScore=S.mrsScore||0;
+  const oncoAlto=S.onco&&(S.onco.mammella==='alto'||S.onco.mammella==='pregresso-k');
+  const anni=S.anniMenopausa||0;
+  const finestraRistretta=anni>10;
+
+  const riskSummary=[];
+  if(bmi>=30) riskSummary.push('Obesità → transdermica obbligatoria');
+  if(sm) riskSummary.push('Sindrome metabolica → transdermica + stile di vita');
+  if(finestraRistretta) riskSummary.push(`Menopausa ${anni} anni → finestra terapeutica ristretta`);
+  if(S.moc) riskSummary.push(`Osso: ${S.moc.categoria}`);
+  if(oncoAlto) riskSummary.push('Rischio oncologico elevato → MHT controindicata');
+  if(S.score2) riskSummary.push(`SCORE2: ${S.score2}% (${S.score2Classe})`);
+
+  document.getElementById('therapyRiskText').innerHTML=riskSummary.length
+    ?'<strong>Profilo di rischio:</strong> '+riskSummary.join(' · ')
+    :'Nessun fattore di rischio maggiore identificato.';
+
+  const mhtCI=hasCI||oncoAlto;
+  const tracks=[];
+
+  if(finestraRistretta&&!mhtCI) {
+    // Finestra >10 anni: nutraceutici prima scelta
+    tracks.push({id:'nutraceutici',featured:true,title:'🌿 Nutraceutici / Non-Ormonale — Prima Scelta',subtitle:'Menopausa >10 anni: la finestra terapeutica per la MHT è ristretta. I nutraceutici sono la prima scelta salvo sintomi severi o indicazioni specifiche.',disabled:false});
+    tracks.push({id:'farmaci-non-ormonali',title:'💊 Farmaci Non Ormonali',subtitle:'SSRI/SNRI (paroxetina, venlafaxina), gabapentin. Per sintomi vasomotori significativi senza possibilità di MHT.',disabled:false});
+    tracks.push({id:'transdermica',title:'🩹 Via Transdermica — Casi Selezionati',subtitle:'Indicata solo in presenza di sintomi severi o indicazioni specifiche (osteoporosi, POI). Rapporto rischio/beneficio da discutere singolarmente. Durata limitata.',disabled:false,cls:''});
+    tracks.push({id:'lifestyle',title:'🏃 Solo Stile di Vita',subtitle:'Appropriato in assenza di sintomi significativi. Le raccomandazioni sotto sono già incluse nel piano.',disabled:false});
+  } else {
+    // Finestra normale
+    tracks.push({
+      id:'transdermica',featured:!mhtCI,
+      title:mhtCI?'🩹 Via Transdermica (MHT) — ⛔ Controindicata':'🩹 Via Transdermica — Prima Scelta Evidence-Based',
+      subtitle:mhtCI?'Controindicazione assoluta presente. Non selezionabile.':`Cerotto estradiolico${bmi>=30?' (obbligatorio per BMI≥30)':''} + progesterone micronizzato${document.getElementById('uteroPresente')?.checked?' (utero presente)':' non necessario'}. Profilo di rischio ottimale.`,
+      disabled:mhtCI,cls:mhtCI?'contraindicated':bmi>=30||sm?'featured':''
+    });
+    tracks.push({
+      id:'orale',
+      title:mhtCI?'💊 Via Orale (MHT) — ⛔ Controindicata':'💊 Via Orale — Seconda Scelta',
+      subtitle:mhtCI?'Controindicazione assoluta. Non selezionabile.':'Estradiolo valerato. Solo se transdermica non tollerata. Rischio TEV e ictus maggiore.',
+      disabled:mhtCI,cls:mhtCI?'contraindicated':''
+    });
+    tracks.push({
+      id:'nutraceutici',
+      title:'🌿 Nutraceutici / Approccio Non Ormonale',
+      subtitle:mhtCI?'Raccomandata in presenza di controindicazioni alla MHT.':'Per sintomi lievi, rifiuto della terapia ormonale o come supporto alla MHT.',
+      disabled:false,cls:mhtCI?'featured':''
+    });
+    tracks.push({id:'farmaci-non-ormonali',title:'💊 Farmaci Non Ormonali',subtitle:'SSRI/SNRI (paroxetina 7.5 mg — unica approvata per vampate), venlafaxina, gabapentin.',disabled:false,cls:mhtCI?'featured':''});
+    tracks.push({id:'lifestyle',title:'🏃 Stile di Vita Ottimizzato',subtitle:'Già incluso come componente obbligatoria del piano. Selezionabile come scelta esclusiva solo in assenza di sintomi.',disabled:false});
+  }
+
+  document.getElementById('therapyTracks').innerHTML=tracks.map(t=>`
+    <div class="therapy-track ${t.featured?'featured':''} ${t.cls||''}" onclick="${t.disabled?'':`selectTherapy('${t.id}',this)`}">
+      <h3>${t.title}</h3><p>${t.subtitle}</p>
+    </div>`).join('');
+}
+
+function selectTherapy(id,el) {
+  document.querySelectorAll('.therapy-track').forEach(t=>t.classList.remove('selected'));
+  el.classList.add('selected');
+  S.therapySelected=id; saveState();
+  document.getElementById('therapyDetail').style.display='block';
+
+  const details={
+    'nutraceutici':'<p style="font-size:0.88rem;line-height:1.8;"><strong>Isoflavoni di soia</strong> 40-80 mg/die (se no controindicazioni oncologiche).<br><strong>Vitamina D3 + Calcio:</strong> 1000-2000 UI/die + 1200 mg Ca/die.<br><strong>Omega-3:</strong> EPA+DHA 1-2 g/die per supporto cardiovascolare.<br><em>Nota: efficacia inferiore alla MHT; valutare risposta a 8-12 settimane.</em></p>',
+    'farmaci-non-ormonali':'<p style="font-size:0.88rem;line-height:1.8;"><strong>Paroxetina</strong> 7.5 mg/die (unica approvata FDA per vampate menopausali).<br><strong>Venlafaxina</strong> 75 mg/die — efficace anche in donne con storia oncologica.<br><strong>Gabapentin</strong> 300 mg × 3/die — utile per vampate notturne.<br><strong>Clonidina</strong> 0.05-0.15 mg × 2/die — modesta efficacia.</p>',
+    'lifestyle':'<p style="font-size:0.88rem;line-height:1.8;">Le raccomandazioni personalizzate di stile di vita sono riportate nel pannello verde sottostante. Rivalutazione a 3-6 mesi.</p>',
+    'transdermica':'<p style="font-size:0.88rem;line-height:1.8;color:var(--primary);"><strong>Utilizza il wizard TOS·SELECTOR qui sotto</strong> per scegliere la via dell\'estrogeno, il progestinico e lo schema terapeutico.</p>',
+    'orale':'<p style="font-size:0.88rem;line-height:1.8;color:var(--primary);"><strong>Utilizza il wizard TOS·SELECTOR qui sotto</strong> per scegliere la formulazione orale e il progestinico più adatto.</p>',
+  };
+  document.getElementById('therapyDetailContent').innerHTML=details[id]||'';
+
+  // Mostra/nasconde TOS wizard
+  const showWizard = (id==='transdermica'||id==='orale');
+  document.getElementById('tosSelectorWrap').style.display = showWizard ? 'block' : 'none';
+  if(showWizard) {
+    TOS.track = id;
+    tosInit();
+  }
+}
+
+// ══════════════════════════════════════
+// TOS·SELECTOR WIZARD
+// ══════════════════════════════════════
+const TOS = {
+  track: null,   // 'transdermica' | 'orale'
+  viaEstro: null,
+  prog: null,
+  schema: null,
+  currentStep: 1
+};
+
+function tosInit() {
+  TOS.viaEstro=null; TOS.prog=null; TOS.schema=null; TOS.currentStep=1;
+  // Mostra/nasconde opzioni correttamente
+  const isTD = TOS.track==='transdermica';
+  document.getElementById('tosEstro_transdermica').style.display = isTD ? 'block' : 'none';
+  document.getElementById('tosEstroOrale_placeholder').style.display = isTD ? 'none' : 'block';
+  // reset selezioni
+  document.querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
+  ['tosNext1','tosNext2','tosNext3'].forEach(id=>{
+    const b=document.getElementById(id); if(b) b.disabled=true;
+  });
+  // step tabs
+  tosUpdateTabs();
+  // Attiva panel 1
+  document.querySelectorAll('.tos-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tsp1').classList.add('active');
+}
+
+function tosGoStep(n) {
+  // Consente navigazione solo a step già completati
+  if(n>1 && !TOS.viaEstro) return;
+  if(n>2 && !TOS.prog) return;
+  if(n>3 && !TOS.schema) return;
+  TOS.currentStep=n;
+  document.querySelectorAll('.tos-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tsp'+n).classList.add('active');
+  if(n===2) tosRenderProgPanel();
+  if(n===3) tosRenderSchemaPanel();
+  if(n===4) tosRenderResult();
+  tosUpdateTabs();
+}
+
+function tosUpdateTabs() {
+  [1,2,3,4].forEach(n=>{
+    const tab=document.getElementById('tstab'+n);
+    if(!tab) return;
+    tab.className='tos-step-tab';
+    if(n===TOS.currentStep) tab.classList.add('active');
+    else if( (n===2&&TOS.viaEstro)||(n===3&&TOS.prog)||(n===4&&TOS.schema) ) tab.classList.add('done');
+    else tab.classList.add('pending');
+  });
+}
+
+function tosSelect(field, val, el) {
+  // Deseleziona tutte le opzioni nello stesso gruppo
+  el.closest('.tos-options,.tos-panel').querySelectorAll('.tos-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  TOS[field]=val; saveState();
+  const nextMap={'viaEstro':'tosNext1','prog':'tosNext2','schema':'tosNext3'};
+  const btn=document.getElementById(nextMap[field]);
+  if(btn) btn.disabled=false;
+}
+
+function tosNext(step) {
+  tosGoStep(step+1);
+}
+
+function tosReset() {
+  TOS.viaEstro=null; TOS.prog=null; TOS.schema=null;
+  tosInit();
+}
+
+// ─── PANEL 2: Progestinico ───
+function tosRenderProgPanel() {
+  const utero = document.getElementById('uteroPresente')?.checked;
+  const container=document.getElementById('tosProgArea');
+
+  if(!utero) {
+    container.innerHTML=`<div class="alert alert-info" style="font-size:0.84rem;">
+      <span class="ai">ℹ️</span><div><strong>Utero assente (isterectomia)</strong> — il progestinico non è necessario. Si procede direttamente allo schema estrogenico puro.</div>
+    </div>
+    <div class="tos-opt selected" style="background:#f5f3ff;border-color:var(--secondary);padding:14px 16px;border-radius:var(--radius-sm);" onclick="tosSelect('prog','nessuno',this)">
+      <div class="tos-opt-icon">✅</div>
+      <div class="tos-opt-title">Nessun progestinico necessario</div>
+      <div class="tos-opt-desc">Donna isterectomizzata — solo terapia estrogenica</div>
+    </div>`;
+    TOS.prog='nessuno';
+    document.getElementById('tosNext2').disabled=false;
+    return;
+  }
+
+  const isTD=(TOS.track==='transdermica');
+
+  container.innerHTML=`
+  <div style="font-size:0.82rem;color:var(--primary);font-weight:600;margin-bottom:14px;">Utero presente → progestinico obbligatorio per protezione endometriale</div>
+
+  <div class="tos-options two" id="tosProgOpts">
+    <div class="tos-opt" onclick="tosSelect('prog','P4',this)">
+      <div class="tos-opt-icon">🌙</div>
+      <div class="tos-opt-title">Progesterone micronizzato</div>
+      <div class="tos-opt-desc">Prometrium® / Progeffik® 100-200 mg. Molecola bioidentica al progesterone umano. <span class="tos-schema-badge">Fascia A</span></div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Profilo cardiovascolare neutro · Nessun effetto androgenico · Favorevole per sonno e ansia · Fascia A · Via vaginale disponibile</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Sonnolenza serale · Da assumere preferibilmente la sera · Non per pazienti con allergia alle arachidi (Prometrium)</div>
+      </div>
+    </div>
+    <div class="tos-opt" onclick="tosSelect('prog','DYD',this)">
+      <div class="tos-opt-icon">💊</div>
+      <div class="tos-opt-title">Diidrogesterone (DYD)</div>
+      <div class="tos-opt-desc">Dufaston® 10 mg. Progestinico retro-progesterone, strutturalmente vicino al progesterone. <span class="tos-schema-badge">Fascia C</span></div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Profilo metabolico favorevole · No effetti androgenici · Buona tollerabilità · Disponibile in combinazione (Femoston)</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C (ticket) · Dati su K mammella simili a progesterone micronizzato ma meno consolidati</div>
+      </div>
+    </div>
+    <div class="tos-opt" onclick="tosSelect('prog','NETA',this)">
+      <div class="tos-opt-icon">💊</div>
+      <div class="tos-opt-title">NETA / Noretisterone acetato</div>
+      <div class="tos-opt-desc">In combinazione transdermica: Activelle® (E2+NETA), Estalis-sequi®. Solo cerotti combinati.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Efficace protezione endometriale · Cerotto combinato pratico · Compliance alta</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Lieve attività androgenica · Possibile effetto sul K mammella superiore al P4 · Solo combinazione E+P in cerotto</div>
+      </div>
+    </div>
+    <div class="tos-opt" onclick="tosSelect('prog','DRSP',this)">
+      <div class="tos-opt-icon">💊</div>
+      <div class="tos-opt-title">Drospirenone</div>
+      <div class="tos-opt-desc">Angeliq® (E2 1mg + DRSP 2mg). Attività antimineralcorticoide, favorevole su PA.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Effetto favorevole su ritenzione idrica e PA · No effetti androgenici · Pratico (1 compressa)</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Monitorare kaliemia (effetto risparmiatore di potassio) · Solo formulazione orale E2+DRSP</div>
+      </div>
+    </div>
+    ${isTD?'':'<div class="tos-opt" onclick="tosSelect(\'prog\',\'MAP\',this)"><div class="tos-opt-icon">💊</div><div class="tos-opt-title">MAP / Medrossiprogesterone acetato</div><div class="tos-opt-desc">Farlutal® 10mg, Provera® 5mg. Progestinico sintetico classico. <span class="tos-schema-badge">Fascia A</span></div><div class="tos-pro-con"><div class="tos-pro"><strong>✅ Pro</strong>Costo basso · Fascia A · Lunga esperienza d\'uso · Efficace</div><div class="tos-con"><strong>⚠️ Contro</strong>Effetti gluco-androgeno-corticoidi · Profilo cardiovascolare meno favorevole · Studio WHI (MAP associato a rischio più elevato vs P4)</div></div></div>'}
+    <div class="tos-opt" onclick="tosSelect('prog','NOM',this)">
+      <div class="tos-opt-icon">💊</div>
+      <div class="tos-opt-title">Nomegestrolo acetato</div>
+      <div class="tos-opt-desc">Lutenyl® 5mg (P solo) · Naemis® (E2 1.5mg + NOM 3.75mg combinato). <span class="tos-schema-badge">Fascia C</span></div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Selettivo · No attività androgenica o glucocorticoide · Combinazione monofasica con E2</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Fascia C · Meno dati su lungo termine rispetto a P4 e DYD</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ─── PANEL 3: Schema ───
+function tosRenderSchemaPanel() {
+  const anni=S.anniMenopausa||0;
+  const sugg = anni<=2 ? 'sequenziale' : 'continuo';
+  document.getElementById('tosSchemaArea').innerHTML=`
+  <div class="alert alert-purple" style="font-size:0.82rem;margin-bottom:14px;">
+    <span class="ai">💡</span><div>
+    <strong>Suggerimento automatico:</strong> con ${anni||'?'} anni di menopausa, lo schema <strong>${sugg==='sequenziale'?'sequenziale':'continuo-combinato'}</strong> è in genere preferito.
+    ${anni<=2?'(<2 anni: probabile menopausa recente, schema sequenziale riduce spotting)':'(>2 anni: schema continuo elimina il sanguinamento da sospensione)'}
+    </div>
+  </div>
+  <div class="tos-options two" id="tosSchemaOpts">
+    <div class="tos-opt ${sugg==='sequenziale'?'selected':''}" onclick="tosSelect('schema','sequenziale',this)" id="tosSchSeq">
+      <div class="tos-opt-icon">📅</div>
+      <div class="tos-opt-title">Schema Sequenziale</div>
+      <div class="tos-opt-desc">Estrogeno continuo + progestinico per 10-14 giorni/mese. Produce un sanguinamento mensile ciclico.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Preferito nei primi 1-2 anni dalla menopausa · Confirm. dell'assenza di patologia endometriale · Psicologicamente rassicurante</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Sanguinamento mensile atteso · Sintomi premestruali nel 10-15% · Meno pratico</div>
+      </div>
+    </div>
+    <div class="tos-opt ${sugg==='continuo'?'selected':''}" onclick="tosSelect('schema','continuo',this)" id="tosSchCont">
+      <div class="tos-opt-icon">🔄</div>
+      <div class="tos-opt-title">Schema Continuo-Combinato</div>
+      <div class="tos-opt-desc">Estrogeno + progestinico ogni giorno senza sospensione. Amenorrea nel lungo periodo.</div>
+      <div class="tos-pro-con">
+        <div class="tos-pro"><strong>✅ Pro</strong>Amenorrea stabile dopo 3-6 mesi · Semplicità di assunzione · Preferito dopo 2+ anni dalla menopausa</div>
+        <div class="tos-con"><strong>⚠️ Contro</strong>Spotting nei primi 3-6 mesi (fase di adattamento) · Non indicato in menopausa molto recente</div>
+      </div>
+    </div>
+  </div>`;
+  // Preset la selezione suggerita
+  if(!TOS.schema) {
+    TOS.schema=sugg;
+    document.getElementById('tosNext3').disabled=false;
+  }
+}
+
+// ─── PANEL 4: Risultato ───
+function tosRenderResult() {
+  const {track,viaEstro,prog,schema}=TOS;
+  const utero=document.getElementById('uteroPresente')?.checked;
+  const bmi=S.bmi||0;
+  const sm=S.sindMetabolica;
+  let html='';
+
+  // Warning se necessari
+  const warns=[];
+  if(bmi>=30) warns.push('BMI ≥30: la via transdermica riduce il rischio TEV rispetto all\'orale. Scelta ottimale.');
+  if(sm) warns.push('Sindrome metabolica: preferire progesterone micronizzato (effetto neutro su insulino-resistenza).');
+  if(prog==='MAP') warns.push('MAP (medrossiprogesterone acetato): dati dello studio WHI associano questo progestinico a profilo di rischio meno favorevole rispetto al progesterone micronizzato. Valutare alternativa se disponibile.');
+  if(prog==='NETA'&&track==='orale') warns.push('NETA disponibile principalmente in formulazioni transdermica-combinate. Per via orale si preferisce Activelle® (E2 1mg + NETA 0.5mg).');
+
+  warns.forEach(w=>{ html+=`<div class="tos-warning"><span>⚠️</span><div>${w}</div></div>`; });
+
+  html+=`<div class="tos-result-title">🎯 Schema raccomandato: ${_tosSchemaLabel(track,viaEstro,prog,schema)}</div>`;
+
+  // ─── ESTROGENI ───
+  html+=`<div class="tos-section-label">Estrogeno</div>`;
+  html+=_tosEstroCards(track,viaEstro,schema);
+
+  // ─── PROGESTINICO ───
+  if(utero && prog!=='nessuno') {
+    html+=`<div class="tos-section-label">Progestinico</div>`;
+    html+=_tosProgCards(prog,schema,track);
+  } else if(!utero) {
+    html+=`<div class="alert alert-success" style="font-size:0.82rem;margin-top:12px;"><span class="ai">✅</span><div>Donna isterectomizzata — monoterapia estrogenica. Nessun progestinico necessario.</div></div>`;
+  }
+
+  // ─── COMBINAZIONI PRECOSTITUITE ───
+  const comboHtml=_tosCombinazioni(track,viaEstro,prog,schema);
+  if(comboHtml) {
+    html+=`<div class="tos-section-label">Oppure: Combinazione Precostituita</div>`;
+    html+=`<div style="font-size:0.76rem;color:var(--muted);margin-bottom:8px;font-style:italic;">Alternativa pratica — estrogeno + progestinico in un'unica preparazione</div>`;
+    html+=comboHtml;
+  }
+
+  // ─── Monitoraggio ───
+  html+=`<div class="tos-section-label">Monitoraggio</div>
+  <div class="tos-drug-card" style="background:#f9f7ff;">
+    <div class="tos-drug-name" style="font-size:0.85rem;">📋 Follow-up raccomandato</div>
+    <div class="tos-drug-dose" style="margin-top:8px;">
+      <strong>Prima rivalutazione:</strong> 4-6 settimane (tollerabilità, sintomi breakthrough)<br>
+      <strong>A 3 mesi:</strong> PA, peso, eventuale spotting<br>
+      ${utero?'<strong>ETV:</strong> 3-6 mesi per spessore endometriale (soprattutto se schema sequenziale e sanguinamento anomalo)<br>':''}
+      <strong>Annuale:</strong> Mammografia (screening), profilo lipidico, glicemia
+    </div>
+  </div>`;
+
+  document.getElementById('tosDrugResult').innerHTML=html;
+
+  // Aggiorna anche lo stato globale
+  S.tosSelection={track,viaEstro,prog,schema}; saveState();
+}
+
+function _tosSchemaLabel(track,viaEstro,prog,schema) {
+  const via = track==='transdermica'
+    ? (viaEstro==='cerotto'?'Cerotto E2':viaEstro==='gel'?'Gel E2':'Spray E2')
+    : (viaEstro==='orale_ECE'?'ECE orale':'E2 orale');
+  const schemaLabel=schema==='sequenziale'?'Sequenziale':'Continuo-combinato';
+  const progLabel={'P4':'+ Progesterone micronizzato','DYD':'+ Diidrogesterone','NETA':'+ NETA','DRSP':'+ Drospirenone','MAP':'+ MAP','NOM':'+ Nomegestrolo','nessuno':'(monoterapia E)'}[prog]||'';
+  return `${via} ${progLabel} — ${schemaLabel}`;
+}
+
+function _tosEstroCards(track,viaEstro,schema) {
+  if(track==='transdermica' && viaEstro==='cerotto') {
+    return `
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">🩹 Dermestril® / Estraderm MX® <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Estradiolo 25-50 mcg/24h · cambio ogni 3-4 giorni</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose iniziale:</strong> 25 mcg/24h. Rivalutare a 4-6 settimane; incrementare a 50 mcg se risposta insufficiente</div>
+      <div class="tos-drug-note">Dermestril® e Dermestril Septem® (ogni 7gg) — Estraderm MX® ogni 3-4gg. Applicare su zona glutea o addome.</div>
+    </div>
+    <div class="tos-drug-card">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">🩹 Climara® <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Estradiolo 50-100 mcg/24h · cambio ogni 7 giorni</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose:</strong> 50 mcg/7gg come dose standard; 100 mcg per sintomi severi o POI</div>
+      <div class="tos-drug-note">Cerotto settimanale (Climara, Femseven 50) — massima comodità, cambio una volta/settimana.</div>
+    </div>`;
+  }
+  if(track==='transdermica' && viaEstro==='gel') {
+    return `
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">🧴 Sandrena® gel 0.5-1 mg <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Bustina da 0.5 g (0.5 mg E2) o 1 g (1 mg E2) · 1 die</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose iniziale:</strong> 1 mg/die (1 bustina da 1g). Applicare su coscia o parte bassa addome. Assorbimento ottimale in pelle asciutta.</div>
+      <div class="tos-drug-note">Vantaggi del gel: dose facilmente modulabile, nessun rischio di distacco, ottima tolleranza cutanea.</div>
+    </div>
+    <div class="tos-drug-card">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">🧴 Estrèva® gel / Lenzetto® spray <small style="font-weight:400">(estradiolo)</small></div><div class="tos-drug-molecule">Gel 0.5mg/pressione · Spray 0.5mg/pressione</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Estrèva gel:</strong> 1-2 pressioni/die su coscia<br><strong>Lenzetto spray:</strong> 1-3 sprays/die su avambraccio interno (lasciare asciugare 2 min)</div>
+      <div class="tos-drug-note">Lenzetto è pratico per donne attive. Attenzione al trasferimento cutaneo se contatto diretto con altri.</div>
+    </div>`;
+  }
+  if(track==='transdermica' && viaEstro==='spray') {
+    return `
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💨 Lenzetto® <small style="font-weight:400">(estradiolo spray)</small></div><div class="tos-drug-molecule">0.5 mg/pressione · Spray cutaneo avambraccio · 1 die</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose:</strong> 1-3 pressioni/die su avambraccio interno asciutto. Iniziare con 1 pressione; rivalutare a 4-6 settimane<br><strong>Assorbimento:</strong> lasciare asciugare 2 min. Evitare doccia per 1 ora.</div>
+      <div class="tos-drug-note">Unico spray estrogenico disponibile in Italia. Pratico per donne che non tollerano il cerotto. Evitare contatto con bambini/partner immediato dopo applicazione.</div>
+    </div>`;
+  }
+  if(track==='orale' && viaEstro==='orale_E2') {
+    return `
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 Estradiolo valerato 1-2 mg <small style="font-weight:400">(Femoston, Climen)</small></div><div class="tos-drug-molecule">Estradiolo valerato · compresse orali · 1 die</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Dose:</strong> 1-2 mg/die. Iniziare con 1 mg; incrementare se sintomi persistenti dopo 4-6 settimane<br><strong>Nota:</strong> disponibile in combinazione con progestinico nella famiglia Femoston</div>
+      <div class="tos-drug-note">Il primo passaggio epatico aumenta SHBG e CRP, con un lieve aumento del rischio tromboembolico rispetto alla via transdermica.</div>
+    </div>`;
+  }
+  if(track==='orale' && viaEstro==='orale_ECE') {
+    return `
+    <div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 ECE 0.45 mg <small style="font-weight:400">(Duavive®, Paudien®)</small></div><div class="tos-drug-molecule">Estrogeni coniugati equini · compresse orali</div></div>
+        <span class="tos-drug-badge badge-c">Fascia C</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Duavive® (ECE 0.45 + bazedoxifene 20 mg):</strong> 1 cp/die — non richiede progestinico con utero presente (SERM + estrogeno)<br><strong>Paudien® (ECE + dienogest 2 mg):</strong> 1 cp/die — schema combinato</div>
+      <div class="tos-drug-note">Duavive è l'unica preparazione approvata con SERM che evita il progestinico. Utile in donne che non tollerano i progestinici. Fascia C.</div>
+    </div>`;
+  }
+  return '';
+}
+
+function _tosProgCards(prog,schema,track) {
+  const schDose = schema==='sequenziale'
+    ? 'Regime <strong>sequenziale</strong>: aggiungere per 14 giorni/mese (gg 15-28)'
+    : 'Regime <strong>continuo-combinato</strong>: assumere ogni giorno';
+
+  const cards={
+    'P4':`<div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">🌙 Prometrium® / Progeffik® <small style="font-weight:400">(progesterone micronizzato)</small></div><div class="tos-drug-molecule">Progesterone 100-200 mg · capsule orali o vaginali</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose">${schDose}<br><strong>Schema sequenziale:</strong> 200 mg/sera per 14 gg<br><strong>Schema continuo:</strong> 100 mg/sera ogni giorno</div>
+      <div class="tos-drug-note">Prima scelta per profilo di sicurezza. Prometrium contiene olio di arachidi — alternative: Progeffik o via vaginale (Crinone gel). Effetto sedativo serale può essere benefico in caso di insonnia.</div>
+    </div>`,
+    'DYD':`<div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 Dufaston® <small style="font-weight:400">(diidrogesterone 10 mg)</small></div><div class="tos-drug-molecule">Diidrogesterone · compresse orali</div></div>
+        <span class="tos-drug-badge badge-c">Fascia C</span>
+      </div>
+      <div class="tos-drug-dose">${schDose}<br><strong>Schema sequenziale:</strong> 10 mg × 2/die per 14 gg<br><strong>Schema continuo:</strong> 5-10 mg/die ogni giorno</div>
+      <div class="tos-drug-note">Disponibile anche nelle combinazioni precostituite Femoston® (E2 + DYD). Profilo farmacologico vicino al progesterone naturale.</div>
+    </div>`,
+    'NETA':`<div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 NETA <small style="font-weight:400">(Noretisterone acetato)</small></div><div class="tos-drug-molecule">Disponibile in combinazione E2+NETA</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Activelle®</strong> (E2 1mg + NETA 0.5mg): 1 cp/die continuo<br><strong>Cerotto Estalis-sequi®:</strong> E2+NETA transdermico (schema sequenziale-continuo)</div>
+      <div class="tos-drug-note">Il NETA come principio attivo standalone non è disponibile in Italia; si usa in combinazioni precostituite.</div>
+    </div>`,
+    'DRSP':`<div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 Angeliq® <small style="font-weight:400">(E2 1mg + Drospirenone 2mg)</small></div><div class="tos-drug-molecule">Drospirenone · attività antimineralcorticoide</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose"><strong>Schema continuo-combinato:</strong> 1 compressa/die<br><strong>Indicazione specifica:</strong> donne con ipertensione lieve-moderata o ritenzione idrica</div>
+      <div class="tos-drug-note">Monitorare kaliemia nei primi 3 mesi (effetto di risparmio del potassio). Controindicato in insufficienza renale, epatica o surrenalica.</div>
+    </div>`,
+    'MAP':`<div class="tos-drug-card">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 Farlutal® 10mg / Provera® 5mg <small style="font-weight:400">(MAP)</small></div><div class="tos-drug-molecule">Medrossiprogesterone acetato · compresse</div></div>
+        <span class="tos-drug-badge badge-a">Fascia A</span>
+      </div>
+      <div class="tos-drug-dose">${schDose}<br><strong>Sequenziale:</strong> Farlutal 10mg/die per 14 gg<br><strong>Continuo:</strong> Provera 5mg/die</div>
+      <div class="tos-drug-note">⚠️ Seconda scelta: dati WHI associano MAP a profilo meno favorevole rispetto al progesterone micronizzato. Preferire P4 o DYD quando disponibili.</div>
+    </div>`,
+    'NOM':`<div class="tos-drug-card primo">
+      <div class="tos-drug-header">
+        <div><div class="tos-drug-name">💊 Lutenyl® 5mg <small style="font-weight:400">(nomegestrolo acetato)</small></div><div class="tos-drug-molecule">Nomegestrolo acetato · progestinico selettivo</div></div>
+        <span class="tos-drug-badge badge-c">Fascia C</span>
+      </div>
+      <div class="tos-drug-dose">${schDose}<br><strong>Sequenziale:</strong> 5mg/die per 14 gg/mese<br><strong>Combinazione:</strong> Naemis® (E2 1.5mg + NOM 3.75mg) — schema 24 giorni</div>
+      <div class="tos-drug-note">Progestinico con elevata selettività per il recettore del progesterone, senza attività androgenica, estrogenica o glucocorticoide.</div>
+    </div>`,
+  };
+  return cards[prog]||'';
+}
+
+function _tosCombinazioni(track,viaEstro,prog,schema) {
+  // Suggerisce combinazioni precostituite pertinenti
+  let out='';
+  if(track==='transdermica'&&viaEstro==='cerotto') {
+    if(prog==='NETA') {
+      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">🩹 Combiseven® / Femity® <small style="font-weight:400">(E2 + LNG)</small></div><div class="tos-drug-molecule">E2 50 mcg + Levonorgestrel 7 mcg · cerotto settimanale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Schema:</strong> continuo-combinato · 1 cerotto ogni 7 giorni</div><div class="tos-drug-note">Combinazione transdermica E2+LNG. Alternativa pratica al cerotto solo + progestinico orale.</div></div>`;
+      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">🩹 Estalis-sequi® <small style="font-weight:400">(E2 + NETA)</small></div><div class="tos-drug-molecule">4 cerotti E2 50mcg → 4 cerotti E2+NETA 250mcg · schema sequenziale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Schema sequenziale-continuo:</strong> prima 4 cerotti solo E2 (2 sett), poi 4 cerotti E2+NETA (2 sett)</div><div class="tos-drug-note">Unico cerotto combinato a schema sequenziale disponibile in Italia.</div></div>`;
+    }
+  }
+  if(track==='orale'||(track==='transdermica'&&viaEstro==='orale_E2')) {
+    if(prog==='DYD') {
+      out+=`<div class="tos-drug-card primo"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Femoston® 1/10 o 2/10 <small style="font-weight:400">(E2 + DYD)</small></div><div class="tos-drug-molecule">E2 1-2mg + Diidrogesterone 10mg · schema sequenziale</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose"><strong>Femoston 1/10:</strong> 14 cp E2 1mg → 14 cp E2 1mg + DYD 10mg<br><strong>Femoston 2/10:</strong> 14 cp E2 2mg → 14 cp E2 2mg + DYD 10mg<br><strong>Femoston 1/5 conti:</strong> schema continuo (E2 1mg + DYD 5mg ogni giorno)</div><div class="tos-drug-note">Tra le combinazioni orali con miglior profilo di sicurezza. L'aggiunta di DYD non peggiora il rischio cardiovascolare rispetto alla sola E2.</div></div>`;
+    }
+    if(prog==='DRSP') {
+      out+=`<div class="tos-drug-card primo"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Angeliq® <small style="font-weight:400">(E2 1mg + DRSP 2mg)</small></div><div class="tos-drug-molecule">Schema continuo-combinato</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose">1 compressa/die in schema continuo-combinato</div><div class="tos-drug-note">Indicata in donne con componente di ritenzione idrica o lieve ipertensione. Monitorare kaliemia.</div></div>`;
+    }
+    if(prog==='NOM') {
+      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Naemis® <small style="font-weight:400">(E2 1.5mg + NOM 3.75mg)</small></div><div class="tos-drug-molecule">Schema 24/4 (24 gg attivi + 4 gg sospensione)</div></div><span class="tos-drug-badge badge-c">Fascia C</span></div><div class="tos-drug-dose">1 compressa/die per 24 giorni, poi pausa di 4 gg</div><div class="tos-drug-note">Schema a 24 giorni riduce la durata del sanguinamento da sospensione rispetto ai classici 21/7.</div></div>`;
+    }
+    if(prog==='NETA') {
+      out+=`<div class="tos-drug-card"><div class="tos-drug-header"><div><div class="tos-drug-name">💊 Activelle® <small style="font-weight:400">(E2 1mg + NETA 0.5mg)</small></div><div class="tos-drug-molecule">Schema continuo-combinato</div></div><span class="tos-drug-badge badge-a">Fascia A</span></div><div class="tos-drug-dose">1 compressa/die — solo schema continuo-combinato</div><div class="tos-drug-note">Combinazione pratica a bassa dose di NETA. Non indicato per schema sequenziale.</div></div>`;
+    }
+  }
+  return out;
+}
+
+// ══════════════════════════════════════
+// REPORT GENERATION
+// ══════════════════════════════════════
+function buildPrompt() {
+  const eta = S.eta||'—', etaMen = S.etaMenopausa||'—', anni = S.anniMenopausa??'—';
+  const bmi = S.bmi||'—', bmiClasse = document.getElementById('bmiClasse')?.value||'—';
+  const tipoMen = document.querySelector('input[name="tipoMenopausa"]:checked')?.value||'—';
+  const therapy = S.therapySelected||'non definita';
+  const moc = S.moc ? `T-score ${S.moc.tscore}, ${S.moc.categoria}, FRAX maggiori ${S.moc.fraxMaj}%, femore ${S.moc.fraxHip}%` : 'non eseguita';
+
+  const intestino = document.querySelector('input[name="intestino"]:checked')?.value||'normale';
+  const utero = document.getElementById('uteroPresente')?.checked ? 'presente' : 'assente';
+  const fumo = document.getElementById('fumo')?.value||'—';
+  const pa = document.getElementById('paSistolica')?.value
+          || document.getElementById('cv-pa')?.value||'—';
+  const sm = S.sindMetabolica ? 'POSITIVA' : 'Negativa';
+  const cv = S.score2 ? `SCORE2 ${S.score2}% (${S.score2Classe}) — ESC 2021, donne, Italia moderato, Non-HDL ${S.nonHdl||'—'} mmol/L` : 'non calcolato';
+
+  // MRS
+  const mrsTotal = S.mrsScore || 0;
+  const mrsAreas = S.mrsAreaScores || {};
+  const mrsVasomotori = mrsAreas.vasomotori || 0;
+  const mrsPsico = mrsAreas.psico || 0;
+  const mrsUrogenitali = mrsAreas.urogenitali || 0;
+  const mrsSomatici = mrsAreas.somatici || 0;
+
+  // Area labels per sintesi
+  const areaLabel = (score, max) => {
+    const pct = score/max;
+    if(pct === 0) return 'Assente';
+    if(pct <= 0.25) return 'Lieve';
+    if(pct <= 0.5) return 'Moderato';
+    if(pct <= 0.75) return 'Severo';
+    return 'Molto severo';
+  };
+
+  // Sintomi dominanti (area con score più alto)
+  const areaScores = [
+    {name:'urogenitali', label:'Urogenitali (secchezza vaginale, dispareunia, disturbi urinari, riduzione libido)', score:mrsUrogenitali, max:12},
+    {name:'vasomotori', label:'Vasomotori (vampate, sudorazioni, palpitazioni, sonno)', score:mrsVasomotori, max:12},
+    {name:'psico', label:'Psicosomatici (umore, irritabilità, ansia, stanchezza)', score:mrsPsico, max:12},
+    {name:'somatici', label:'Somatici (articolazioni, addome)', score:mrsSomatici, max:8},
+  ].sort((a,b) => b.score/b.max - a.score/a.max);
+
+  const sintomiDominanti = areaScores.filter(a => a.score > 0).map(a =>
+    `${a.label}: ${a.score}/${a.max} (${areaLabel(a.score,a.max)})`
+  ).join('\n  ');
+
+  // Familiarità
+  const fam_pos=[], fam_prot=[];
+  if(document.getElementById('padreCVD')?.checked||document.getElementById('madreCVD')?.checked) fam_pos.push('CVD');
+  if(document.getElementById('padreOsteo')?.checked||document.getElementById('madreOsteo')?.checked) fam_pos.push('osteoporosi');
+  if(document.getElementById('padreTumori')?.checked||document.getElementById('madreTumori')?.checked) fam_pos.push('neoplasie');
+  if(document.getElementById('padreLongevita')?.checked) fam_prot.push(`padre longevo (${document.getElementById('etaPadre')?.value} anni)`);
+  if(document.getElementById('madreLongevita')?.checked) fam_prot.push(`madre longeva (${document.getElementById('etaMadre')?.value} anni)`);
+
+  const timori=[];
+  if(document.getElementById('timore-mammella')?.checked) timori.push('carcinoma mammario');
+  if(document.getElementById('timore-tev')?.checked) timori.push('tromboembolismo');
+  if(document.getElementById('timore-peso')?.checked) timori.push('aumento ponderale');
+  if(document.getElementById('timore-ormoni')?.checked) timori.push('diffidenza verso terapia ormonale');
+  if(document.getElementById('timore-sanguinamento')?.checked) timori.push('sanguinamenti ciclici indesiderati');
+  const prefNote = document.getElementById('pref-note')?.value||'';
+
+  const tosDetails = S.tosSelection ? (() => {
+    const t=S.tosSelection;
+    const viaMap={'cerotto':'cerotto estradiolico','gel':'gel transdermico (Sandrena/Estrèva)','spray':'spray cutaneo (Lenzetto)','orale_E2':'estradiolo valerato orale','orale_ECE':'estrogeni coniugati equini (ECE) orali'};
+    const pMap={'P4':'progesterone micronizzato (Prometrium/Progeffik)','DYD':'diidrogesterone (Dufaston)','NETA':'noretisterone acetato','DRSP':'drospirenone (Angeliq)','MAP':'medrossiprogesterone acetato','NOM':'nomegestrolo acetato (Lutenyl)','nessuno':'nessuno (isterectomia)'};
+    const via=viaMap[t.viaEstro]||t.viaEstro;
+    const prog=pMap[t.prog]||t.prog;
+    const schema=t.schema==='sequenziale'?'sequenziale (progestinico per 14 gg/mese)':'continuo-combinato (ogni giorno)';
+    return `\n\nSCELTA FARMACOLOGICA TOS·SELECTOR:\n- Via estrogeno: ${via}\n- Progestinico: ${prog}\n- Schema: ${schema}`;
+  })() : '';
+
+  const therapyLabels = {
+    'transdermica':'MHT via transdermica — cerotto estradiolico + progesterone micronizzato',
+    'orale':'MHT via orale — estradiolo valerato + progestinico',
+    'nutraceutici':'Approccio nutraceutico non ormonale',
+    'farmaci-non-ormonali':'Farmaci non ormonali (SSRI/SNRI/gabapentin)',
+    'lifestyle':'Solo ottimizzazione stile di vita',
+  };
+  const therapyLabel = (therapyLabels[therapy] || therapy) + tosDetails;
+
+  // Therapy risks and benefits for the letter
+  const therapyRisksBenefits = {
+    'transdermica': {
+      vantaggi: 'riduzione significativa delle vampate (80-90%), miglioramento qualità del sonno, riduzione sintomi urogenitali (secchezza, dispareunia), protezione ossea, effetto favorevole sul profilo metabolico. La via transdermica evita il primo passaggio epatico: rischio TEV paragonabile alla popolazione generale, rischio ictus neutro.',
+      rischi: 'Con estradiolo transdermico + progesterone micronizzato: rischio aggiuntivo di carcinoma mammario verosimilmente nullo nei primi 5 anni; dopo 7-10 anni di uso continuato, circa 3-4 casi aggiuntivi ogni 10.000 donne/anno rispetto al rischio di base di 25-30/10.000. Questo rischio è molto difficile da attribuire con certezza alla terapia. Monitoraggio endometriale (ETV) necessario.',
+    },
+    'orale': {
+      vantaggi: 'Efficacia sulla sintomatologia vasomotoria e urogenitale. Disponibilità di formulazioni bioidentiche.',
+      rischi: 'Via orale: lieve aumento rischio ictus (RR ~1.3) e TEV (2-4x rispetto alla non-usatrice), indipendente dalla molecola. Preferire estradiolo valerato rispetto a CEE. Rischio mammario dipende dal tipo di progestinico associato.',
+    },
+    'nutraceutici': {
+      vantaggi: 'Approccio naturale senza rischi ormonali. Isoflavoni: riduzione vampate 20-45%. Vitamina D + calcio: protezione ossea. Omega-3: supporto cardiovascolare.',
+      rischi: 'Efficacia molto inferiore alla MHT (80-90% vs 20-45%). Dati scientifici spesso contrastanti. Per i sintomi urogenitali: scarsa o nulla efficacia con soli nutraceutici — considerare terapia locale (estriolo crema/ovuli) che non ha effetti sistemici significativi.',
+    },
+    'farmaci-non-ormonali': {
+      vantaggi: 'Paroxetina 7.5 mg: riduzione vampate 50-60%, approvata FDA. Venlafaxina: efficace anche in donne con storia oncologica. Nessun effetto ormonale.',
+      rischi: 'Scarsa efficacia sui sintomi urogenitali (necessaria terapia locale aggiuntiva). Effetti collaterali GI nelle prime settimane. Necessaria supervisione medica.',
+    },
+  };
+  const trb = therapyRisksBenefits[therapy] || {vantaggi:'Da definire con il medico', rischi:'Da valutare individualmente'};
+
+  const onco = S.onco ? [
+    'Mammella: ' + (S.onco.breastClass||'—') + ' (RR×' + (S.onco.breastRR||'—') + ', familiarità: ' + (S.onco.famMammella||'—') + ', densità: ' + (S.onco.densita||'nd') + ')',
+    'Endometrio: ' + (S.onco.endoClass||'—'),
+    'Ovaio: ' + (S.onco.ovaio||'—'),
+    'Genetica: ' + (S.onco.genetica||'—'),
+    'Cervice HPV/Pap: ' + (S.onco.cervice||'—'),
+    'Colon-retto: ' + (S.onco.colonretto||'—'),
+    S.onco.packYears ? 'Pack-years: ' + S.onco.packYears : '',
+    S.onco.screenigNotes?.length ? 'Screening da aggiornare: ' + S.onco.screenigNotes.join('; ') : ''
+  ].filter(Boolean).join(' | ') : 'non valutato';
+
+  return `Sei un esperto specialista in Ostetricia e Ginecologia con 30 anni di esperienza clinica. Redigi una relazione clinica in italiano in due parti distinte.
+
+IDENTITÀ DEL MEDICO: Medico di sesso MASCHILE. Nella lettera alla paziente usa sempre forme maschili (es. "il suo medico ha valutato", "sono del parere che", "ho ritenuto opportuno"). Non usare mai forme femminili riferite al medico.
+
+REGOLA FONDAMENTALE PER I DATI MANCANTI: Se una valutazione risulta "non calcolato", "non valutato" o "non compilato", NON inventare dati, NON stimare, NON scrivere frasi generiche su quel parametro. Lascia la sezione in standby con la dicitura: "[In attesa di valutazione — dato non disponibile]".
+
+DATI CLINICI:
+- Età: ${eta} anni | Menopausa: ${tipoMen} da ${anni} anni (età: ${etaMen} aa) | Utero: ${utero}
+- BMI: ${bmi || '[non inserito]'} kg/m² (${bmiClasse||'—'}) | Fumo: ${fumo} | PA sistolica: ${pa || '[non inserita]'} mmHg
+- Sindrome metabolica: ${sm} | Intestino: ${intestino}
+- Familiarità protettiva: ${fam_prot.length ? fam_prot.join(', ') : 'nessuna'}
+- Familiarità a rischio: ${fam_pos.length ? fam_pos.join(', ') : 'nessuna'}
+
+MRS SCORE TOTALE: ${mrsTotal}/44
+SINTOMI PER AREA (in ordine di severità):
+  ${sintomiDominanti || '[MRS non compilato — omettere sezione sintomi dalla tabella]'}
+
+VALUTAZIONE RISCHI:
+- MOC: ${moc}
+- SCORE2 CV: ${cv}
+- Oncologico: ${onco}
+
+TERAPIA PROPOSTA: ${therapyLabel}
+VANTAGGI ATTESI: ${trb.vantaggi}
+RISCHI QUANTIFICATI: ${trb.rischi}
+TIMORI DELLA PAZIENTE: ${timori.length ? timori.join(', ') : 'nessuno'}
+NOTE: ${prefNote || 'nessuna'}
+
+═══════════════════════════════
+PARTE 1 — SINTESI CLINICA
+═══════════════════════════════
+Crea una tabella markdown con questi parametri:
+| Parametro | Valore |
+Include: età, tipo menopausa, anni, BMI, utero, fumo, sindrome metabolica, MRS totale + per area, rischi valutati (solo quelli disponibili — per quelli mancanti scrivi "non valutato"), terapia proposta con schema (molecola/via/dose/regime), vantaggi attesi, rischi quantificati, follow-up pianificato.
+
+═══════════════════════════════
+PARTE 2 — LETTERA ALLA PAZIENTE
+═══════════════════════════════
+Inizia con "Gentile Signora,"
+Struttura OBBLIGATORIA in questo ordine:
+
+1. **Apertura** (2-3 righe): ringrazia per la fiducia, contestualizza la visita. Il medico si esprime al maschile.
+
+2. **I Suoi sintomi — cosa sta vivendo** (paragrafo dedicato per OGNI area con score > 0, dal più severo al meno severo):
+   - Urogenitali (se presenti): spiegazione empatica della GSM (secchezza, dispareunia, disturbi vescicali).
+   - Vasomotori, psicosomatici, somatici: stesso approccio empatico.
+   - SE MRS NON COMPILATO: ometti questa sezione.
+
+3. **Aspetti positivi del Suo profilo** (longevità genitori, BMI, fumo, SM)
+
+4. **Fattori di rischio** — MODIFICABILI vs NON MODIFICABILI. Tono motivante.
+
+5. **La terapia proposta**: vantaggi concreti, rischi in numeri assoluti, timori affrontati, schema pratico.
+
+6. **Piano di follow-up** (bullet points con tempistiche)
+
+7. **Raccomandazioni stile di vita** (personalizzate)
+
+8. **Chiusura** incoraggiante (3-4 righe)
+
+Tono: caldo, autorevole, empatico. Mai burocratico. Lunghezza lettera: 700-900 parole.
+
+═══════════════════════════════
+PARTE 3 — RIFERIMENTI BIBLIOGRAFICI
+═══════════════════════════════
+Lista 5-7 riferimenti pertinenti al caso (IMS 2024, NAMS 2024, ESHRE 2023, Cochrane reviews rilevanti, studi sulla terapia scelta).`;
+}
+
+
+async function generateReport() {
+  document.getElementById('generateBtn').disabled=true;
+  document.getElementById('generateBtn').textContent='⏳ Generazione...';
+  document.getElementById('reportOutput').innerHTML=`<div class="report-loading"><div class="spinner"></div><p style="color:var(--muted);font-style:italic;">Elaborazione AI in corso — attendere circa 30 secondi...</p></div>`;
+  document.getElementById('reportActions').style.display='none';
+  document.getElementById('reportSignature').style.display='none';
+  try {
+    const resp=await fetch('/api/generate',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt:buildPrompt()})
+    });
+    const data=await resp.json();
+    if(data.error) throw new Error(data.error.message);
+    const text=data.content[0].text;
+    S.lastReport=text; saveState();
+    // Render markdown-style
+    // Convert markdown to HTML
+    var out = text.trim();
+    // Remove excessive blank lines (max 1 consecutive)
+    out = out.replace(/\n{3,}/g, '\n\n');
+    // Headings
+    out = out.replace(/^# (.+)$/gm, '<h2 style="font-family:Cormorant Garamond,serif;font-size:1.4rem;color:var(--primary);margin:20px 0 10px;padding-bottom:6px;border-bottom:3px solid var(--secondary);">$1</h2>');
+    out = out.replace(/^## (.+)$/gm, '<h3 style="font-family:Cormorant Garamond,serif;font-size:1.1rem;color:var(--primary);margin:18px 0 8px;padding-bottom:5px;border-bottom:2px solid var(--border2);">$1</h3>');
+    out = out.replace(/^### (.+)$/gm, '<h4 style="font-size:0.95rem;font-weight:700;color:var(--secondary);margin:12px 0 5px;">$1</h4>');
+    // Bold
+    out = out.replace(/[*][*](.+?)[*][*]/g, '<strong>$1</strong>');
+    // Tables
+    var lines = out.split('\n');
+    var result = [];
+    var tableBuffer = [];
+    var firstRow = true;
+    lines.forEach(function(line) {
+      var trimmed = line.trim();
+      if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+        if (trimmed.replace(/[|\-\s]/g,'').length === 0) return;
+        var cells = trimmed.split('|').filter(function(c){return c.trim().length > 0;});
+        if (firstRow) {
+          tableBuffer.push('<tr style="background:#f5f3ff;">' + cells.map(function(c){return '<td style="padding:8px 12px;font-weight:700;color:var(--primary);border-bottom:2px solid var(--secondary);font-size:0.85rem;">' + c.trim() + '</td>';}).join('') + '</tr>');
+          firstRow = false;
+        } else {
+          tableBuffer.push('<tr>' + cells.map(function(c){return '<td style="padding:7px 12px;border-bottom:1px solid #e9d5ff;font-size:0.84rem;">' + c.trim() + '</td>';}).join('') + '</tr>');
+        }
+      } else {
+        if (tableBuffer.length > 0) {
+          result.push('<table style="width:100%;border-collapse:collapse;margin:10px 0;border:1px solid #e9d5ff;border-radius:8px;overflow:hidden;">' + tableBuffer.join('') + '</table>');
+          tableBuffer = [];
+          firstRow = true;
+        }
+        if (trimmed.length > 0 || result.length === 0) result.push(line);
+      }
+    });
+    if (tableBuffer.length > 0) {
+      result.push('<table style="width:100%;border-collapse:collapse;margin:10px 0;border:1px solid #e9d5ff;border-radius:8px;overflow:hidden;">' + tableBuffer.join('') + '</table>');
+    }
+    out = result.join('\n');
+    // Lists
+    out = out.replace(/^[•\-] (.+)$/gm, '<li style="margin-bottom:4px;">$1</li>');
+    out = out.replace(/(<li[^>]*>.*?<\/li>\n?)+/g, function(m){return '<ul style="padding-left:20px;margin:6px 0;">'+m+'</ul>';});
+    // Dividers
+    out = out.replace(/^═+$/gm, '<hr style="border:none;border-top:2px solid var(--border2);margin:16px 0;">');
+    // Paragraphs
+    out = out.replace(/\n\n/g, '</p><p style="margin-bottom:8px;line-height:1.8;">');
+    out = out.replace(/\n/g, '<br>');
+    document.getElementById('reportOutput').innerHTML='<p style="margin-bottom:8px;line-height:1.8;">' + out + '</p>';
+    document.getElementById('reportActions').style.display='flex';
+    document.getElementById('reportSignature').style.display='grid';
+  } catch(e) {
+    document.getElementById('reportOutput').innerHTML=`<div class="alert alert-danger"><span class="ai">❌</span><div><strong>Errore:</strong> ${e.message}</div></div>`;
+  }
+  document.getElementById('generateBtn').disabled=false;
+  document.getElementById('generateBtn').textContent='✨ Rigenera';
+}
+
+function copyReport() { navigator.clipboard.writeText(document.getElementById('reportOutput').innerText).then(()=>alert('Copiato!')); }
+function saveReport() { const b=new Blob([document.getElementById('reportOutput').innerText],{type:'text/plain'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`relazione_${new Date().toISOString().slice(0,10)}.txt`; a.click(); }
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+// ══════════════════════════════════════
+// FIX 7 — CLAMP INPUT (applicato su blur, non su oninput)
+// ══════════════════════════════════════
+function clampInput(el, mn, mx) {
+  if (!el.value || el.value.trim() === '') return;
+  const v = parseFloat(el.value);
+  if (isNaN(v)) return;
+  if (v > mx) { el.value = mx; el.classList.add('invalid'); }
+  else if (v < mn) { el.value = mn; el.classList.add('invalid'); }
+  else { el.classList.remove('invalid'); }
+}
+
+// ══════════════════════════════════════
+// FIX 3 — SYNC colesterolo step1 → modulo CV
+// ══════════════════════════════════════
+function syncColToCV() {
+  const v = document.getElementById('colesteroloTotale')?.value;
+  const cv = document.getElementById('cv-colesterolo');
+  if (cv && v) cv.value = v;
+}
+
+// ══════════════════════════════════════
+// FIX 4 — AUTO-LONGEVITÀ genitori
+// ══════════════════════════════════════
+function checkLongevita() {
+  const etaP  = parseFloat(document.getElementById('etaPadre')?.value);
+  const statoP = document.getElementById('statoPadre')?.value;
+  const etaM  = parseFloat(document.getElementById('etaMadre')?.value);
+  const statoM = document.getElementById('stataMadre')?.value;
+  const lonP = document.getElementById('padreLongevita');
+  const lonM = document.getElementById('madreLongevita');
+  if (lonP && statoP === 'deceduto' && etaP > 85) lonP.checked = true;
+  if (lonM && statoM === 'deceduta' && etaM > 85) lonM.checked = true;
+  checkFamiliarita();
+}
+
+// ══════════════════════════════════════
+// FIX 1+5 — VALIDATE INPUTS (coherenza + range + HDL source)
+// ══════════════════════════════════════
+function validateInputs() {
+  const eta = parseFloat(document.getElementById('eta')?.value);
+  const etaMen = parseFloat(document.getElementById('etaMenopausa')?.value);
+
+  // Fix 1: coerenza età / menopausa
+  if (eta && etaMen) {
+    if (etaMen >= eta) {
+      document.getElementById('etaMenopausa').classList.add('invalid');
+      alert(`⚠️ Incoerenza: l'età alla menopausa (${etaMen} aa) non può essere uguale o maggiore dell'età attuale (${eta} aa).`);
+      document.getElementById('etaMenopausa').focus();
+      return false;
+    }
+    if (etaMen < 20) {
+      document.getElementById('etaMenopausa').classList.add('invalid');
+      alert('⚠️ Età alla menopausa non plausibile (min 20 anni).');
+      document.getElementById('etaMenopausa').focus();
+      return false;
+    }
+  }
+
+  const rules = [
+    {id:'eta',           min:30,   max:90,   label:'Età attuale'},
+    {id:'etaMenopausa',  min:20,   max:65,   label:'Età alla menopausa'},
+    {id:'peso',          min:25,   max:250,  label:'Peso'},
+    {id:'altezza',       min:130,  max:220,  label:'Altezza'},
+    {id:'paSistolica',   min:60,   max:250,  label:'PA sistolica'},
+    {id:'paDiastolica',  min:40,   max:160,  label:'PA diastolica'},
+    {id:'glicemia',      min:30,   max:600,  label:'Glicemia'},
+    {id:'trigliceridi',  min:20,   max:2000, label:'Trigliceridi'},
+    {id:'hdl',           min:5,    max:200,  label:'HDL'},
+    {id:'vitaCirc',      min:40,   max:200,  label:'Circonferenza vita'},
+    {id:'colesteroloTotale', min:100, max:500, label:'Colesterolo totale'},
+    {id:'etaPadre',      min:40,   max:130,  label:'Età padre'},
+    {id:'etaMadre',      min:40,   max:130,  label:'Età madre'},
+  ];
+  for (const r of rules) {
+    const el = document.getElementById(r.id);
+    if (!el || !el.value || el.value.trim() === '') continue;
+    const v = parseFloat(el.value);
+    if (isNaN(v) || v < r.min || v > r.max) {
+      el.classList.add('invalid');
+      alert(`⚠️ Valore non plausibile — ${r.label}: ${v} (atteso ${r.min}–${r.max})`);
+      el.focus(); return false;
+    } else { el.classList.remove('invalid'); }
+  }
+  return true;
+}
+
+// ══════════════════════════════════════
+// FIX 6 — NAVIGAZIONE DIRETTA (click su dot/label)
+// ══════════════════════════════════════
+let currentStep = 1;
+
+function goStepNav(n) {
+  // Indietro: libero, nessuna validazione
+  if (n < currentStep) { goStep(n, true); return; }
+  // Avanti: validazione obbligatoria passo per passo
+  goStep(n, false);
+}
+
+function goStep(n, skipValidation) {
+  const eta   = document.getElementById('eta').value;
+  const etaMen = document.getElementById('etaMenopausa').value;
+  if (!skipValidation && n > 1 && (!eta || !etaMen)) {
+    alert('Inserire età attuale ed età alla menopausa per procedere.');
+    return;
+  }
+  if (!skipValidation && n > 1 && !validateInputs()) return;
+
+  currentStep = n;
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  document.getElementById('progressFill').style.width = (n / 5 * 100) + '%';
+  for (let i = 1; i <= 5; i++) {
+    const d = document.getElementById('dot' + i), l = document.getElementById('lbl' + i);
+    d.className = 'step-dot' + (i === n ? ' active' : i < n ? ' done' : '');
+    l.className = 'step-label' + (i === n ? ' active' : i < n ? ' done' : '');
+  }
+  if (n === 3) { updateSMmodule(); checkCIalerts(); syncCVfromStep1(); calcScore2(); }
+  if (n === 4) { buildTherapy(); updateLifestyle(); }
+  if (n === 5) { document.getElementById('reportDate').textContent = new Date().toLocaleDateString('it-IT'); }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function checkCIalerts() {
+  const any = document.querySelectorAll('.ci-ass:checked').length > 0;
+  document.getElementById('ciAlert').style.display = any ? 'flex' : 'none';
+}
+document.querySelectorAll('.ci-ass').forEach(c => c.addEventListener('change', checkCIalerts));
+
+function selRad(el, name, val) {
+  document.querySelectorAll(`[name="${name}"]`).forEach(r => r.closest('.radio-card')?.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function setUtero(v) { document.getElementById('uteroPresente').checked = v; }
+function togAcc(h) { const b = h.nextElementSibling; b.classList.toggle('open'); h.querySelector('span:last-child').textContent = b.classList.contains('open') ? '▲' : '▼'; }
+function toggleInlineRisk(id) { document.getElementById(id).classList.toggle('open'); }
+function resetAll() { localStorage.removeItem(STATE_KEY); location.reload(); }
+
+// ── Live validation (blur) + clamp + score2 preview in step1 ──
+const FIELD_LIMITS = {
+  eta:[30,90], etaMenopausa:[20,65], peso:[25,250], altezza:[130,220],
+  paSistolica:[60,250], paDiastolica:[40,160], glicemia:[30,600],
+  trigliceridi:[20,2000], hdl:[5,200], vitaCirc:[40,200],
+  colesteroloTotale:[100,500], ldl:[30,400],
+  etaPadre:[40,130], etaMadre:[40,130]
+};
+
+['eta','etaMenopausa','peso','altezza','paSistolica','paDiastolica','glicemia','trigliceridi','hdl','vitaCirc','colesteroloTotale','ldl','etaPadre','etaMadre'].forEach(id => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('blur', () => {
+    if (!el.value || el.value.trim() === '') { el.classList.remove('invalid'); return; }
+    const r = FIELD_LIMITS[id]; if (!r) return;
+    clampInput(el, r[0], r[1]);
+    // Fix 1: live coherence check
+    if (id === 'eta' || id === 'etaMenopausa') {
+      const etaV = parseFloat(document.getElementById('eta')?.value);
+      const menV = parseFloat(document.getElementById('etaMenopausa')?.value);
+      if (etaV && menV && menV >= etaV) {
+        document.getElementById('etaMenopausa').classList.add('invalid');
+      }
+    }
+  });
+});
+
+// Fix 5: preview SCORE2 in step1
+function updateScore2Preview() {
+  const preview = document.getElementById('score2preview');
+  if (!preview) return;
+  const s = S.score2;
+  if (s) {
+    const col = s < 5 ? '#059669' : s < 10 ? '#d97706' : '#dc2626';
+    preview.innerHTML = `<strong style="color:${col}">SCORE2: ${s}% — ${S.score2Classe}</strong>`;
+  } else {
+    preview.textContent = 'SCORE2: inserire PA + colesterolo';
+    preview.style.color = 'var(--muted)';
+  }
+}
+
+// ── INIT ──
+document.addEventListener('DOMContentLoaded', function() {
+  buildMRS();
+  updateMRS();
+});
+</script>
+</body>
+</html>

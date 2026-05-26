@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="it" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<title>MenoPATH — Guida all'uso</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #4c1d95;
+  --secondary: #7c3aed;
+  --accent: #c4b5fd;
+  --bg: #faf5ff;
+  --bg2: #f3f0ff;
+  --border: #e9d5ff;
+  --border2: #ede9fe;
+  --text: #1e1b4b;
+  --muted: #6b7280;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(76,29,149,0.09);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+/* HEADER */
+.app-header {
+  background: linear-gradient(160deg,#0f0720 0%,#1a0a3d 50%,#0f0720 100%);
+  padding: 14px 48px;
+}
+.header-inner {
+  display: flex; align-items: center; gap: 20px;
+  max-width: 1100px; margin: 0 auto;
+}
+.header-inner h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 700;
+  background: linear-gradient(135deg,#e879f9,#c4b5fd,#67e8f9);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.header-inner p { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+.back-btn {
+  margin-left: auto;
+  padding: 7px 18px; border-radius: 20px;
+  background: rgba(196,181,253,0.15); color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(196,181,253,0.25);
+  font-size: 0.78rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: all 0.2s;
+}
+.back-btn:hover { background: rgba(196,181,253,0.28); }
+
+/* LAYOUT */
+.container { max-width: 1100px; margin: 0 auto; padding: 36px 32px 64px; display: grid; grid-template-columns: 240px 1fr; gap: 32px; }
+@media (max-width: 800px) { .container { grid-template-columns: 1fr; padding: 20px 16px; } .sidebar { display: none; } .app-header { padding: 12px 20px; } }
+
+/* SIDEBAR */
+.sidebar { position: sticky; top: 24px; align-self: start; }
+.sidebar nav { background: white; border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; border: 1px solid var(--border2); }
+.sidebar nav h3 { font-size: 0.72rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; }
+.sidebar nav a {
+  display: block; padding: 7px 10px; border-radius: 8px;
+  font-size: 0.82rem; color: var(--text); text-decoration: none;
+  transition: all 0.18s; margin-bottom: 2px;
+}
+.sidebar nav a:hover { background: var(--bg2); color: var(--primary); }
+.sidebar nav a.active { background: var(--bg2); color: var(--primary); font-weight: 600; border-left: 3px solid var(--secondary); padding-left: 7px; }
+.sidebar nav .nav-sub { font-size: 0.76rem; color: var(--muted); padding: 4px 10px 4px 20px; }
+
+/* CONTENT */
+.content {}
+.section { margin-bottom: 40px; }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 700; color: var(--primary);
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--border2);
+  display: flex; align-items: center; gap: 10px;
+}
+.section-sub {
+  font-size: 1.05rem; font-weight: 700; color: var(--secondary);
+  margin: 22px 0 10px;
+}
+p { margin-bottom: 12px; }
+
+/* CARDS */
+.step-card {
+  background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow); border: 1px solid var(--border2);
+  padding: 20px 24px; margin-bottom: 14px;
+  border-left: 4px solid var(--secondary);
+}
+.step-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white; font-size: 0.78rem; font-weight: 800;
+  margin-right: 8px; flex-shrink: 0; vertical-align: middle;
+}
+.step-title { font-size: 1rem; font-weight: 700; color: var(--primary); }
+.step-body { font-size: 0.88rem; color: #374151; margin-top: 10px; line-height: 1.75; }
+
+.info-box {
+  background: #f5f3ff; border: 1px solid var(--border);
+  border-left: 4px solid var(--secondary);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.86rem; margin: 14px 0;
+}
+.warn-box {
+  background: #fffbeb; border: 1px solid #fde68a;
+  border-left: 4px solid var(--warning);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.86rem; margin: 14px 0; color: #78350f;
+}
+.danger-box {
+  background: #fef2f2; border-left: 4px solid var(--danger);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.86rem; margin: 14px 0; color: #7f1d1d;
+}
+.success-box {
+  background: #ecfdf5; border-left: 4px solid var(--success);
+  border-radius: 10px; padding: 14px 18px;
+  font-size: 0.86rem; margin: 14px 0; color: #064e3b;
+}
+
+/* TABLE */
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; margin: 14px 0; }
+th { background: linear-gradient(135deg,var(--primary),var(--secondary)); color: white; padding: 9px 12px; text-align: left; font-weight: 600; }
+th:first-child { border-radius: 8px 0 0 0; }
+th:last-child { border-radius: 0 8px 0 0; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border2); vertical-align: top; }
+tr:nth-child(even) td { background: #fdfcff; }
+tr:hover td { background: #f5f3ff; }
+.badge {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 0.72rem; font-weight: 700;
+}
+.badge-purple { background: var(--bg2); color: var(--primary); }
+.badge-green { background: #d1fae5; color: #065f46; }
+.badge-yellow { background: #fef3c7; color: #92400e; }
+.badge-red { background: #fee2e2; color: #7f1d1d; }
+
+/* REF LIST */
+.ref-list { list-style: none; padding: 0; }
+.ref-list li {
+  padding: 10px 14px 10px 40px;
+  border-bottom: 1px solid var(--border2);
+  font-size: 0.84rem; position: relative;
+}
+.ref-list li::before {
+  content: attr(data-n);
+  position: absolute; left: 12px;
+  font-weight: 700; color: var(--secondary); font-size: 0.78rem;
+}
+
+/* TEAM */
+.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
+@media (max-width: 600px) { .team-grid { grid-template-columns: 1fr; } }
+.team-card {
+  background: white; border-radius: 12px; padding: 16px 18px;
+  box-shadow: var(--shadow); border: 1px solid var(--border2);
+  border-top: 3px solid var(--secondary);
+}
+.team-card .name { font-weight: 700; color: var(--primary); font-size: 0.95rem; margin-bottom: 3px; }
+.team-card .role { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+
+/* FOOTER */
+.app-footer {
+  background: white; border-top: 3px solid var(--primary);
+  padding: 14px 32px; text-align: center;
+  font-size: 0.77rem; color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="header-inner">
+    <span style="font-size:2rem">🌸</span>
+    <div>
+      <h1>MenoPATH</h1>
+      <p>Guida all'uso — versione aprile 2026</p>
+    </div>
+    <a href="index.html" class="back-btn">← Torna all'app</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <nav>
+      <h3>Indice</h3>
+      <a href="#intro">Cos'è MenoPATH</a>
+      <a href="#percorso">Il percorso in 5 step</a>
+      <a class="nav-sub" href="#step1">Step 1 — Anagrafica</a>
+      <a class="nav-sub" href="#step2">Step 2 — Sintomi MRS</a>
+      <a class="nav-sub" href="#step3">Step 3 — Rischi</a>
+      <a class="nav-sub" href="#step4">Step 4 — Terapia</a>
+      <a class="nav-sub" href="#step5">Step 5 — Relazione AI</a>
+      <a href="#fonti">Fonti e algoritmi</a>
+      <a href="#privacy">Privacy e dati</a>
+      <a href="#team">Gruppo di lavoro</a>
+      <a href="#disclaimer">Disclaimer</a>
+    </nav>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- INTRO -->
+    <div class="section" id="intro">
+      <div class="section-title">🌸 Cos'è MenoPATH</div>
+      <p><strong>MenoPATH</strong> (Percorso Integrato per la Gestione della Menopausa) è un sistema di supporto decisionale clinico (CDSS — Clinical Decision Support System) sviluppato per lo specialista in ostetricia e ginecologia.</p>
+      <p>L'app guida il clinico attraverso un percorso strutturato di raccolta dati, valutazione dei rischi e selezione terapeutica, e genera automaticamente una relazione clinica completa — sintesi tabellare, lettera alla paziente e riferimenti bibliografici — tramite intelligenza artificiale (modello Claude di Anthropic).</p>
+      <p>MenoPATH fa parte della suite <strong>GINOS</strong> (Gynecology Intelligent Network Open-Source), una collezione di CDSS web ad accesso libero per l'ostetricia e la ginecologia.</p>
+
+      <div class="info-box">
+        <strong>A chi è destinato:</strong> esclusivamente a medici specialisti. L'app non è destinata all'uso diretto da parte delle pazienti e non sostituisce la valutazione clinica individuale, gli esami diagnostici né il giudizio professionale del medico.
+      </div>
+
+      <div class="section-sub">Caratteristiche tecniche</div>
+      <table>
+        <tr><th>Caratteristica</th><th>Dettaglio</th></tr>
+        <tr><td>Piattaforma</td><td>Web — funziona su qualsiasi browser moderno (Chrome, Firefox, Safari, Edge). Nessuna installazione.</td></tr>
+        <tr><td>Accesso</td><td>Libero, senza registrazione — <strong>menoconsult.vercel.app</strong></td></tr>
+        <tr><td>File</td><td>HTML singolo file, nessuna dipendenza esterna, nessun framework</td></tr>
+        <tr><td>Dati</td><td>Salvati localmente nel browser (localStorage). Non vengono trasmessi a server terzi, eccetto il testo anonimizzato inviato ad Anthropic AI per la generazione della relazione.</td></tr>
+        <tr><td>AI</td><td>Claude Sonnet 4 (Anthropic) — usato solo nello Step 5 per la relazione</td></tr>
+        <tr><td>Dispositivo consigliato</td><td>Desktop o tablet in orizzontale per la migliore esperienza</td></tr>
+      </table>
+    </div>
+
+    <!-- IL PERCORSO -->
+    <div class="section" id="percorso">
+      <div class="section-title">🗺️ Il percorso in 5 step</div>
+      <p>La barra di navigazione in cima alla pagina mostra sempre in quale step ci si trova. È possibile <strong>spostarsi direttamente su qualsiasi step cliccando sul numero o sull'etichetta</strong> nella barra di progresso — andare avanti richiede che i dati obbligatori siano stati inseriti, tornare indietro è sempre libero senza vincoli.</p>
+
+      <!-- STEP 1 -->
+      <div class="step-card" id="step1">
+        <div><span class="step-num">1</span><span class="step-title">Anagrafica e dati di base</span></div>
+        <div class="step-body">
+          <p><strong>Dati anagrafici:</strong> età attuale ed età alla menopausa (obbligatori per procedere). Il sistema calcola automaticamente gli anni dalla menopausa e segnala se la paziente è in <em>finestra terapeutica</em> (&lt;10 anni) o fuori. Viene rilevata automaticamente una menopausa precoce (&lt;40 anni) o early (40–44 anni).</p>
+          <p><strong>Tipo di menopausa:</strong> naturale, chirurgica con isterectomia totale, con sola annessiectomia bilaterale, o isterectomia con conservazione annessi. La presenza o assenza dell'utero influenza direttamente la raccomandazione terapeutica (progestinico obbligatorio se utero presente).</p>
+          <p><strong>Antropometria:</strong> peso e altezza → BMI calcolato automaticamente con classe WHO e alert se sovrappeso/obesità (la via transdermica è obbligatoria con BMI ≥30).</p>
+          <p><strong>Anamnesi familiare:</strong> età e stato (in vita / deceduto) di padre e madre; patologie familiari (CVD, diabete, ictus precoce, osteoporosi, tumori, longevità &gt;85 aa). La spunta <em>longevità</em> si attiva automaticamente se il genitore è deceduto dopo gli 85 anni.</p>
+          <p><strong>Fattori clinici e rischio vascolare:</strong> fumo, PA sistolica e diastolica, glicemia, trigliceridi, HDL, circonferenza vita, colesterolo totale (usato per il calcolo SCORE2), LDL. Il calcolo SCORE2 inizia già in questo step appena si inseriscono PA e colesterolo, con anteprima del risultato visibile in tempo reale.</p>
+          <div class="info-box">
+            <strong>Controllo valori:</strong> tutti i campi numerici hanno limiti fisiologici verificati. Valori fuori range vengono segnalati con bordo rosso al momento in cui si lascia il campo. Un'incoerenza tra età attuale ed età alla menopausa (es. menopausa &gt; età attuale) viene rilevata e bloccata prima di poter procedere al passo successivo.
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step-card" id="step2">
+        <div><span class="step-num">2</span><span class="step-title">Sintomatologia — Menopause Rating Scale (MRS)</span></div>
+        <div class="step-body">
+          <p>La <strong>Menopause Rating Scale</strong> è lo strumento validato per la quantificazione della sintomatologia menopausale (Heinemann K. et al., <em>Health Qual Life Outcomes</em> 2004). Punteggio totale: 0–44 punti.</p>
+          <p>Per ciascuno degli 11 item, si regola il cursore da 0 (assente) a 4 (molto severo). Il sistema aggrega i punteggi per quattro aree:</p>
+          <table>
+            <tr><th>Area</th><th>Item inclusi</th><th>Punteggio max</th></tr>
+            <tr><td>🔥 Vasomotori</td><td>Vampate/sudorazioni, palpitazioni/pressione toracica, disturbi del sonno</td><td>12</td></tr>
+            <tr><td>🧠 Psicosomatici</td><td>Sintomi emotivi (irritabilità, ansia, umore), esaurimento/performance, memoria/concentrazione</td><td>12</td></tr>
+            <tr><td>💜 Urogenitali</td><td>Sessualità (desiderio/soddisfazione), disturbi urinari, secchezza vaginale/dispareunia/GSM</td><td>12</td></tr>
+            <tr><td>💪 Somatici</td><td>Dolori muscolo-articolari, disturbi addominali</td><td>8</td></tr>
+          </table>
+          <p style="margin-top:10px;">Il punteggio totale è classificato come: <span class="badge badge-green">Lieve 1–8</span> <span class="badge badge-yellow">Moderato 9–16</span> <span class="badge badge-red">Severo 17–24</span> <span class="badge" style="background:#fdf4ff;color:#6b21a8;">Molto severo 25–44</span></p>
+          <p>Un <strong>radar chart</strong> visualizza graficamente il profilo sintomatologico per area. I dati MRS guidano sia la scelta terapeutica che la struttura della lettera alla paziente nello step 5.</p>
+          <p><strong>Funzione intestinale:</strong> la card finale raccoglie informazioni su stipsi e meteorismo — la carenza estrogenica riduce la motilità intestinale e la disbiosi può influenzare il microbioma vaginale e vescicale (GSM).</p>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step-card" id="step3">
+        <div><span class="step-num">3</span><span class="step-title">Valutazione dei rischi</span></div>
+        <div class="step-body">
+          <p>Lo step 3 raccoglie i moduli di valutazione del rischio, precompilati con i dati già inseriti. I risultati guidano automaticamente la raccomandazione terapeutica.</p>
+
+          <p class="section-sub" style="margin-top:14px;">🚫 Controindicazioni assolute alla TOS</p>
+          <p>Checklist di 5 controindicazioni assolute: carcinoma mammario attuale o pregresso, carcinoma endometriale, sanguinamento vaginale non diagnosticato, epatopatia severa/neoplasia epatica, TEV in fase attiva. Se spuntata anche una sola voce, compare un alert rosso che segnala la controindicazione alla terapia ormonale.</p>
+
+          <p class="section-sub">🦴 Rischio Osteoporosi — MOC-Consult / FRAX / DeFRACALC79</p>
+          <p>Il pulsante "Apri MOC-Consult" rimanda all'app companion per la valutazione densitometrica completa. I risultati si importano manualmente: T-score peggiore, categoria WHO (normale / osteopenia / osteoporosi / osteoporosi severa con frattura), FRAX per fratture maggiori e femore, eleggibilità Nota 79 AIFA.</p>
+
+          <p class="section-sub">❤️ Rischio Cardiovascolare — SCORE2 ESC 2021</p>
+          <p>Il calcolo è basato sull'algoritmo pubblicato da <em>SCORE2 Working Group &amp; ESC Cardiovascular Risk Collaboration</em> (Eur Heart J 2021;42:2439–2454), con i coefficienti beta validati per <strong>donne in Europa a rischio moderato (Italia)</strong>.</p>
+          <p>Input: età, PA sistolica, fumo, colesterolo totale, HDL. Il colesterolo Non-HDL viene calcolato automaticamente. Le variabili vengono precaricate dai dati di Step 1; se non inseriti, i campi diventano editabili direttamente in questo step e si sincronizzano con Step 1.</p>
+          <p>Soglie di classificazione ESC 2021 per fasce d'età:</p>
+          <table>
+            <tr><th>Fascia d'età</th><th>Basso</th><th>Moderato</th><th>Alto</th><th>Molto alto</th></tr>
+            <tr><td>&lt;50 anni</td><td>&lt;2,5%</td><td>2,5–7,5%</td><td>7,5–10%</td><td>≥10%</td></tr>
+            <tr><td>50–59 anni</td><td>&lt;5%</td><td>5–10%</td><td>10–20%</td><td>≥20%</td></tr>
+            <tr><td>≥60 anni</td><td>&lt;7,5%</td><td>7,5–15%</td><td>15–30%</td><td>≥30%</td></tr>
+          </table>
+
+          <p class="section-sub">⚖️ Sindrome Metabolica — Criteri IDF 2006</p>
+          <p>Calcolata automaticamente dai dati di Step 1. Richiede obesità addominale (vita ≥80 cm in donne europee, o BMI ≥30) più almeno 2 criteri aggiuntivi tra: TG ≥150 mg/dL, HDL &lt;50 mg/dL, glicemia ≥100 mg/dL, PA ≥130 mmHg. In presenza di sindrome metabolica è fortemente indicata la via transdermica.</p>
+
+          <p class="section-sub">🎗️ Profilo Oncologico — Gail / Tyrer-Cuzick / USPSTF / NCCN</p>
+          <p>Modulo strutturato in tre sezioni:</p>
+          <p><strong>Anamnesi ereditaria:</strong> familiarità per K mammella, ovaio, colon/endometrio; discendenza ashkenazita (prevalenza BRCA ~1:40 vs ~1:400 in pop. generale); test genetici già eseguiti in famiglia (BRCA1/2, Lynch, PALB2, CHEK2, ATM).</p>
+          <p><strong>Rischio mammella</strong> — modello Gail/Tyrer-Cuzick semplificato: calcola un rischio relativo composto dai fattori età menarca, parità, età primo parto, allattamento, biopsia con atipia (ADH/ALH/LCIS), radioterapia toracica in età giovanile (Hodgkin), TOS precedente, consumo di alcol, densità mammaria (ACR BI-RADS A/B/C/D). Le soglie per la raccomandazione di RM supplementare seguono le linee guida ACS/NCCN (lifetime ≥20%).</p>
+          <p><strong>Rischio endometrio:</strong> BMI, diabete tipo 2, sanguinamenti anomali, Lynch. La presenza di metrorragia genera un alert urgente che richiede esclusione di patologia prima di qualsiasi TOS.</p>
+          <p><strong>Screening altri tumori:</strong> HPV/Pap test (piano screening italiano), colon-retto (FIT/colonscopia), screening polmonare TC a bassa dose (USPSTF 2021: 50–80 anni, ≥20 pack-years).</p>
+          <div class="info-box">Ogni campo del profilo oncologico ha un'icona <strong>ⓘ</strong> con tooltip che spiega il razionale clinico e i valori di riferimento bibliografici.</div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step-card" id="step4">
+        <div><span class="step-num">4</span><span class="step-title">Scelta terapeutica</span></div>
+        <div class="step-body">
+          <p>Lo step 4 elabora il profilo di rischio costruito negli step precedenti e propone le opzioni terapeutiche ordinate per appropriatezza, con evidenziazione di quella raccomandata.</p>
+          <p><strong>Preferenze e timori della paziente:</strong> si raccolgono le preferenze di via (transdermica, orale, naturale) e i timori espressi (K mammella, trombosi, aumento ponderale, sanguinamenti, dipendenza). Questi dati vengono usati nella lettera alla paziente per rispondere esplicitamente alle preoccupazioni con dati quantitativi reali.</p>
+          <p><strong>Opzioni terapeutiche disponibili:</strong></p>
+          <table>
+            <tr><th>Opzione</th><th>Indicazione preferenziale</th></tr>
+            <tr><td>🩹 TOS via transdermica</td><td>Prima scelta in presenza di BMI ≥30, rischio TEV aumentato, sindrome metabolica. Estradiolico cerotto + progesterone micronizzato (Prometrium®).</td></tr>
+            <tr><td>💊 TOS via orale</td><td>Alternativa in assenza di controindicazioni alla via sistemica. Estradiolo valerato + progestinico.</td></tr>
+            <tr><td>🌿 Approccio nutraceutico</td><td>Sintomi lievi, rifiuto della terapia ormonale. Isoflavoni, vitamina D3+Ca, omega-3.</td></tr>
+            <tr><td>💊 Farmaci non ormonali</td><td>Controindicazione alla TOS, storia oncologica. Paroxetina 7,5 mg (unica approvata FDA), venlafaxina, gabapentin.</td></tr>
+            <tr><td>🏃 Solo stile di vita</td><td>Sintomi assenti o lievi, scelta esclusiva. Sempre incluso come componente obbligatoria.</td></tr>
+          </table>
+          <p>Le <strong>raccomandazioni sullo stile di vita</strong> sono personalizzate in tempo reale in base a BMI, fumo, funzione intestinale, anni dalla menopausa, sindrome metabolica — e sempre visibili nella sezione verde in fondo allo step.</p>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step-card" id="step5">
+        <div><span class="step-num">5</span><span class="step-title">Generazione della relazione AI</span></div>
+        <div class="step-body">
+          <p>Il pulsante <strong>✨ Genera Relazione</strong> invia i dati a Claude Sonnet 4 (Anthropic) e riceve in circa 30 secondi una relazione strutturata in tre parti:</p>
+          <p><strong>Parte 1 — Sintesi clinica tabellare:</strong> tutti i parametri rilevanti in formato tabella pronta per la cartella clinica (età, tipo menopausa, BMI, MRS per area, rischi valutati con risultati numerici, terapia proposta con schema posologico completo, vantaggi attesi, rischi quantificati, follow-up pianificato).</p>
+          <p><strong>Parte 2 — Lettera alla paziente</strong> (700–900 parole): documento narrativo scritto al femminile verso la paziente, che spiega in linguaggio accessibile i suoi sintomi, il profilo di rischio individuale, la terapia proposta con rischi in numeri assoluti (es. "su 10.000 donne..."), risponde ai timori espressi con dati reali e include raccomandazioni pratiche sullo stile di vita. Il tono è caldo, autorevole, non burocratico.</p>
+          <p><strong>Parte 3 — Riferimenti bibliografici:</strong> 5–7 citazioni pertinenti al caso specifico (IMS 2024, NAMS 2024, ESHRE 2023, Cochrane reviews, studi sulla terapia selezionata).</p>
+          <div class="info-box">
+            <strong>Nota sul prompt:</strong> il comportamento della relazione — struttura, tono, lunghezza, fonti citate — è interamente configurabile modificando il prompt testuale nell'app, senza toccare il codice. Questo permette di adattare rapidamente la relazione a contesti diversi (es. includere linee guida SIGO/AIFM, modificare il tono, aggiungere sezioni).
+          </div>
+          <div class="warn-box">
+            <strong>Dati mancanti:</strong> se alcuni moduli di rischio non sono stati completati, la relazione lascia quella sezione in standby con la dicitura "[In attesa di valutazione — dato non disponibile]" anziché inventare dati o fare stime non supportate.
+          </div>
+          <p><strong>Azioni disponibili dopo la generazione:</strong> 📋 Copia testo, 🖨️ Stampa A4 (ottimizzata per la stampa, con margini corretti e spaziatura delle tabelle), 💾 Salva .txt. Il campo firma (specialista, qualifica, struttura, data) è precompilato e modificabile prima della stampa.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FONTI -->
+    <div class="section" id="fonti">
+      <div class="section-title">📚 Fonti, algoritmi e linee guida</div>
+      <p>MenoPATH implementa algoritmi validati e raccomandazioni evidence-based. Di seguito le fonti specifiche per ogni modulo di valutazione.</p>
+
+      <div class="section-sub">Sintomatologia menopausale</div>
+      <ul class="ref-list">
+        <li data-n="1">Heinemann K et al. The Menopause Rating Scale (MRS) scale: a methodological review. <em>Health Qual Life Outcomes</em> 2004;2:67. — Strumento validato per la quantificazione dei sintomi menopausali, 11 item in 4 domini.</li>
+      </ul>
+
+      <div class="section-sub">Terapia ormonale sostitutiva (TOS)</div>
+      <ul class="ref-list">
+        <li data-n="2">The Menopause Society (ex NAMS). 2023 Menopause Society Position Statement on hormone therapy. <em>Menopause</em> 2023;30(6):573–652.</li>
+        <li data-n="3">IMS (International Menopause Society). Recommendations on women's midlife health and menopause hormone therapy. <em>Climacteric</em> 2024;27:1–24.</li>
+        <li data-n="4">ESHRE Guideline Group. Menopause guideline 2023. <em>Hum Reprod Open</em> 2023.</li>
+        <li data-n="5">Collaborative Group on Hormonal Factors in Breast Cancer. Type and timing of menopausal hormone therapy and breast cancer risk: individual participant meta-analysis of the worldwide epidemiological evidence. <em>Lancet</em> 2019;394:1159–1168.</li>
+        <li data-n="6">Vinogradova Y et al. Use of hormone replacement therapy and risk of venous thromboembolism: nested case-control studies using the QResearch and CPRD databases. <em>BMJ</em> 2019;364:k4810.</li>
+      </ul>
+
+      <div class="section-sub">Rischio cardiovascolare — SCORE2</div>
+      <ul class="ref-list">
+        <li data-n="7">SCORE2 working group and ESC Cardiovascular risk collaboration. SCORE2 risk prediction algorithms: new models to estimate 10-year risk of cardiovascular disease in Europe. <em>Eur Heart J</em> 2021;42(25):2439–2454. — I coefficienti beta implementati nell'app corrispondono al modello validato per donne in Europa a rischio moderato (Italia).</li>
+        <li data-n="8">ESC Guidelines on cardiovascular disease prevention in clinical practice 2021. <em>Eur Heart J</em> 2021;42(34):3227–3337.</li>
+      </ul>
+
+      <div class="section-sub">Osteoporosi e metabolismo osseo</div>
+      <ul class="ref-list">
+        <li data-n="9">Kanis JA et al. FRAX and its applications to clinical practice. <em>Bone</em> 2009;44:734–743. — Modello WHO per il calcolo del rischio di frattura a 10 anni (integrato tramite MOC-Consult).</li>
+        <li data-n="10">AIFA. Nota 79 — Criteri di eleggibilità alla rimborsabilità dei farmaci per l'osteoporosi. Aggiornamento 2020.</li>
+      </ul>
+
+      <div class="section-sub">Sindrome metabolica</div>
+      <ul class="ref-list">
+        <li data-n="11">International Diabetes Federation. The IDF consensus worldwide definition of the metabolic syndrome. Brussels: IDF, 2006. — Criteri implementati: obesità addominale (vita ≥80 cm nelle donne europee) + ≥2 tra TG, HDL, glicemia, PA.</li>
+      </ul>
+
+      <div class="section-sub">Rischio oncologico mammella</div>
+      <ul class="ref-list">
+        <li data-n="12">Gail MH et al. Projecting individualized probabilities of developing breast cancer for white females who are being examined annually. <em>J Natl Cancer Inst</em> 1989;81:1879–1886. — Modello di base per la stima del rischio relativo mammario.</li>
+        <li data-n="13">Tyrer J, Duffy SW, Cuzick J. A breast cancer prediction model incorporating familial and personal risk factors. <em>Stat Med</em> 2004;23:1111–1130.</li>
+        <li data-n="14">American Cancer Society. Breast Cancer Screening Guidelines 2023 (aggiornamento). — Soglie per RM supplementare: lifetime risk ≥20%.</li>
+        <li data-n="15">Collaborative Group on Hormonal Factors in Breast Cancer. Breast cancer and breastfeeding: collaborative reanalysis of individual data from 47 epidemiological studies. <em>Lancet</em> 2002;360:187–195.</li>
+      </ul>
+
+      <div class="section-sub">Rischio oncologico endometrio e genetica</div>
+      <ul class="ref-list">
+        <li data-n="16">Bokhman JV. Two pathogenetic types of endometrial carcinoma. <em>Gynecol Oncol</em> 1983;15:10–17. — Base per la classificazione dei fattori di rischio endometriale (obesità, nulliparità, diabete).</li>
+        <li data-n="17">Aarnio M et al. Cancer risk in mutation carriers of DNA-mismatch-repair genes (Lynch syndrome). <em>Int J Cancer</em> 1999;81:214–218. — Rischio lifetime K endometrio 40–60%, K colon 52–82% in Lynch.</li>
+        <li data-n="18">King MC et al. Breast and ovarian cancer risks due to inherited mutations in BRCA1 and BRCA2. <em>Science</em> 2003;302:643–646.</li>
+      </ul>
+
+      <div class="section-sub">Screening oncologici</div>
+      <ul class="ref-list">
+        <li data-n="19">US Preventive Services Task Force. Lung Cancer Screening Recommendation Statement. <em>JAMA</em> 2021;325(10):962–970. — TC torace a bassa dose: 50–80 anni, ≥20 pack-years, fumatori attivi o ex-fumatori da &lt;15 anni.</li>
+        <li data-n="20">Piano Nazionale di Screening Oncologici, Ministero della Salute (aggiornamento 2023). — HPV test ogni 5 anni (30–64 aa), FIT ogni 2 anni (50–74 aa).</li>
+      </ul>
+    </div>
+
+    <!-- PRIVACY -->
+    <div class="section" id="privacy">
+      <div class="section-title">🔒 Privacy e gestione dei dati</div>
+      <p>MenoPATH è progettata con la privacy come criterio fondamentale.</p>
+      <div class="success-box">
+        <strong>Archiviazione locale:</strong> tutti i dati inseriti (anagrafica, sintomi, rischi, terapia) vengono salvati esclusivamente nel <code>localStorage</code> del browser del dispositivo in uso. Non vengono trasmessi a nessun server di MenoPATH o GINOS.
+      </div>
+      <div class="warn-box">
+        <strong>Generazione relazione AI:</strong> quando si clicca "Genera Relazione", il sistema invia ad Anthropic (tramite API) un testo con i dati clinici della sessione, <em>senza nome né cognome della paziente</em>. Anthropic elabora la richiesta secondo la propria informativa sulla privacy. Non inserire mai nome, cognome, codice fiscale o altri identificativi diretti della paziente nei campi dell'app.
+      </div>
+      <p><strong>Reset dati:</strong> il pulsante 🔄 "Nuova Paziente" in Step 5 cancella tutti i dati dal localStorage e ricarica l'app per la visita successiva.</p>
+    </div>
+
+    <!-- TEAM -->
+    <div class="section" id="team">
+      <div class="section-title">👥 Gruppo di lavoro</div>
+      <p>MenoPATH è stato sviluppato nell'ambito della suite GINOS con il contributo di:</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="name">Dr. Carlo Piscicelli</div>
+          <div class="role">Specialista in Ostetricia e Ginecologia<br>Sviluppatore GINOS</div>
+        </div>
+        <div class="team-card">
+          <div class="name">Dr. Giovan Battista Serra</div>
+          <div class="role">Specialista in Ostetricia e Ginecologia<br>Revisione clinica e metodologica</div>
+        </div>
+        <div class="team-card">
+          <div class="name">Dr.ssa Paola Manna</div>
+          <div class="role">Specialista in Ostetricia e Ginecologia<br>Revisione clinica e metodologica</div>
+        </div>
+        <div class="team-card">
+          <div class="name">Dr.ssa Stefania Ricci</div>
+          <div class="role">Specialista in Ostetricia e Ginecologia<br>Revisione clinica e metodologica</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMER -->
+    <div class="section" id="disclaimer">
+      <div class="section-title">⚠️ Disclaimer</div>
+      <div class="danger-box">
+        <strong>Strumento di supporto decisionale — non dispositivo medico certificato.</strong> MenoPATH è destinata esclusivamente a medici specialisti. Le raccomandazioni generate sono basate su linee guida internazionali e algoritmi validati, ma rappresentano stime di popolazione e non previsioni individuali. Non sostituiscono la valutazione clinica personalizzata, gli esami diagnostici né il giudizio professionale del medico.
+      </div>
+      <p>La relazione generata dall'intelligenza artificiale è un supporto redazionale. Il medico è tenuto a rivederla, verificarla e validarla nella sua completezza prima di qualsiasi uso clinico o consegna alla paziente.</p>
+      <p>Condizioni non contemplate dall'app, comorbidità complesse, terapie concomitanti e situazioni cliniche particolari possono modificare radicalmente l'approccio terapeutico.</p>
+      <p>Gli autori declinano ogni responsabilità per decisioni cliniche adottate sulla base esclusiva dell'output dell'applicazione senza adeguata valutazione medica individualizzata.</p>
+      <p style="color:var(--muted);font-size:0.82rem;margin-top:16px;">MenoPATH v2 · GINOS Suite · Ultimo aggiornamento: aprile 2026</p>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /container -->
+
+<div class="app-footer">
+  🌸 MenoPATH · GINOS Suite · Strumento CDSS evidence-based · Non sostituisce la valutazione clinica individuale
+</div>
+
+<script>
+// Highlight sidebar link on scroll
+const sections = document.querySelectorAll('.section[id]');
+const navLinks = document.querySelectorAll('.sidebar nav a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 80) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+</script>
+</body>
+</html>

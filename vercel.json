@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "functions": {
+    "api/generate.js": {
+      "maxDuration": 60
+    }
+  },
+  "routes": [
+    { "src": "/api/generate", "dest": "/api/generate.js" },
+    { "src": "/guida", "dest": "/guida.html" },
+    { "src": "/", "dest": "/index.html" }
+  ]
+}
