@@ -573,6 +573,44 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
   .lifestyle-grid{grid-template-columns:1fr;}
   .report-signature{grid-template-columns:1fr;}
 }
+
+/* ── BREAST·RISK CALCULATOR ── */
+#breastRiskModal{position:fixed;inset:0;background:rgba(30,27,75,0.75);backdrop-filter:blur(4px);z-index:2000;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+#breastRiskModal.open{display:flex;}
+.br-box{background:white;border-radius:20px;max-width:760px;width:100%;margin:auto;box-shadow:0 25px 80px rgba(76,29,149,0.3);}
+.br-header{background:linear-gradient(135deg,#1e3a5f,#2c5f8d);color:white;padding:18px 24px;border-radius:20px 20px 0 0;display:flex;justify-content:space-between;align-items:center;}
+.br-header h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:700;margin:0;}
+.br-close{background:rgba(255,255,255,0.2);border:none;color:white;width:28px;height:28px;border-radius:50%;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.br-tabs{display:flex;border-bottom:2px solid #e5e7eb;padding:0 24px;background:#f9fafb;border-radius:0;}
+.br-tab{padding:12px 20px;font-size:0.82rem;font-weight:700;cursor:pointer;border-bottom:3px solid transparent;color:#6b7280;transition:all 0.2s;margin-bottom:-2px;}
+.br-tab.active{border-bottom-color:#2c5f8d;color:#2c5f8d;background:white;}
+.br-body{padding:22px 24px;}
+.br-disclaimer{background:#fef3c7;border:1px solid #fcd34d;border-radius:8px;padding:10px 14px;font-size:0.74rem;color:#78350f;margin-bottom:16px;line-height:1.5;}
+.br-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;}
+.br-field{display:flex;flex-direction:column;gap:4px;}
+.br-field label{font-size:0.75rem;font-weight:700;color:var(--primary);}
+.br-field select,.br-field input{padding:7px 10px;border:1.5px solid #d1d5db;border-radius:8px;font-size:0.82rem;font-family:'Inter',sans-serif;outline:none;background:white;}
+.br-field select:focus,.br-field input:focus{border-color:#2c5f8d;}
+.br-field .br-hint{font-size:0.68rem;color:#6b7280;font-style:italic;}
+.br-section-title{font-size:0.72rem;font-weight:800;color:#2c5f8d;text-transform:uppercase;letter-spacing:1px;margin:14px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #e5e7eb;}
+.br-calc-btn{width:100%;padding:11px;background:linear-gradient(135deg,#2c5f8d,#4a90d9);color:white;border:none;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;margin-top:4px;font-family:'Inter',sans-serif;letter-spacing:0.3px;}
+.br-calc-btn:hover{opacity:0.9;}
+.br-result{display:none;background:#f0f7ff;border:2px solid #2c5f8d;border-radius:12px;padding:18px 20px;margin-top:16px;}
+.br-result-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:#1e3a5f;margin-bottom:14px;}
+.br-risk-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.br-risk-box{border-radius:10px;padding:14px;text-align:center;}
+.br-risk-box .br-risk-val{font-size:2rem;font-weight:800;line-height:1;}
+.br-risk-box .br-risk-lab{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-top:4px;}
+.br-risk-box .br-risk-avg{font-size:0.7rem;color:#6b7280;margin-top:4px;}
+.br-risk-low{background:#ecfdf5;color:#065f46;}
+.br-risk-mod{background:#fef3c7;color:#92400e;}
+.br-risk-high{background:#fef2f2;color:#991b1b;}
+.br-risk-vhigh{background:#4c1d95;color:white;}
+.br-interp{font-size:0.8rem;line-height:1.7;color:#1e3a5f;background:white;border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+.br-transfer-btn{width:100%;padding:10px;background:#059669;color:white;border:none;border-radius:8px;font-weight:800;font-size:0.84rem;cursor:pointer;font-family:'Inter',sans-serif;}
+.br-transfer-btn:hover{background:#047857;}
+.br-link-box{background:#f0fdf4;border:1px solid #6ee7b7;border-radius:8px;padding:10px 14px;font-size:0.74rem;color:#047857;margin-top:10px;}
+@media(max-width:600px){.br-grid{grid-template-columns:1fr;}.br-risk-boxes{grid-template-columns:1fr 1fr;}}
 </style>
 </head>
 <body>
@@ -1044,21 +1082,19 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
         </div>
 
         <!-- SEZIONE MAMMELLA -->
-        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🎗️ RISCHIO MAMMELLA (Gail / Tyrer-Cuzick)</div>
-        <div class="two-col" style="margin-bottom:6px;">
+        <div style="font-size:0.78rem;font-weight:700;color:var(--primary);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border2);">🎗️ RISCHIO MAMMELLA</div>
+
+        <!-- Radioterapia toracica: alta priorità, resta visibile -->
+        <div class="two-col" style="margin-bottom:8px;">
           <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Rischio stimato (lifetime)<span class="tip-icon">?</span><span class="tip-box">Probabilità di sviluppare carcinoma mammario nell'arco della vita, calcolata con modelli validati (Gail, Tyrer-Cuzick). Soglia di alto rischio: ≥20% — indica RM mammaria di sorveglianza supplementare. Se non disponibile, lasciare vuoto.</span></span></label>
-            <select id="onco-mammella" onchange="calcOncoRisk()">
-              <option value="">— non calcolato —</option>
-              <option value="basso">Basso (&lt;15%)</option>
-              <option value="moderato">Moderato (15–20%)</option>
-              <option value="alto">Alto (20–30%)</option>
-              <option value="molto-alto">Molto alto (&gt;30% / BRCA1/2)</option>
-              <option value="pregresso-k">Pregressa neoplasia mammaria</option>
+            <label class="fl"><span class="tip-wrap">Radioterapia toracica (età 10–30 aa)<span class="tip-icon">?</span><span class="tip-box">Radioterapia mediastinica ad alto dosaggio (es. linfoma di Hodgkin) tra i 10 e 30 anni → rischio lifetime K mammella 20–30%. RR ×4. Indicazione a sorveglianza intensiva con RM annuale.</span></span></label>
+            <select id="onco-radioterapia" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="si">Sì (es. linfoma di Hodgkin)</option>
             </select>
           </div>
           <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Densità mammaria (ultima mammografia)<span class="tip-icon">?</span><span class="tip-box">Classificazione ACR BI-RADS. Le mammelle dense (ACR-C/D) aumentano il rischio relativo di 1.5–2× e riducono la sensibilità della mammografia. Le donne con ACR-D possono beneficiare di ecografia o RM supplementare.</span></span></label>
+            <label class="fl"><span class="tip-wrap">Densità mammaria (ultima mammografia)<span class="tip-icon">?</span><span class="tip-box">ACR BI-RADS. Mammelle dense (ACR-C/D): RR 1.5–2×, ridotta sensibilità mammografica. ACR-D: considerare ecografia o RM supplementare.</span></span></label>
             <select id="onco-densita" onchange="calcOncoRisk()">
               <option value="nd">Non disponibile</option>
               <option value="A">ACR-A — Prevalentemente adiposo</option>
@@ -1068,74 +1104,51 @@ input.invalid{border-color:var(--danger)!important;background:var(--danger-bg)!i
             </select>
           </div>
         </div>
-        <div class="two-col" style="margin-bottom:6px;">
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Età menarca (anni)<span class="tip-icon">?</span><span class="tip-box">Il menarca precoce (≤11 anni) aumenta il rischio mammario di circa 1.3× per maggiore esposizione estrogenica cumulativa. È uno dei fattori del modello di Gail.</span></span></label>
-            <input type="number" id="onco-menarca" min="8" max="18" placeholder="es. 12" oninput="calcOncoRisk()">
-          </div>
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Età 1ª gravidanza a termine<span class="tip-icon">?</span><span class="tip-box">La prima gravidanza prima dei 20 anni è protettiva. Dopo i 30 anni aumenta transitoriamente il rischio (1.2×). Inserire 0 se nullipara.</span></span></label>
-            <input type="number" id="onco-etaParto" min="0" max="50" placeholder="es. 26 (0 = nullipara)" oninput="calcOncoRisk()">
-          </div>
-        </div>
-        <div class="two-col" style="margin-bottom:6px;">
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Numero di parti<span class="tip-icon">?</span><span class="tip-box">La multiparità (≥2 figli) è protettiva per il K mammella (RR 0.85). La nulliparità aumenta il rischio di 1.4× rispetto alle donne con più gravidanze.</span></span></label>
-            <select id="onco-parita" onchange="calcOncoRisk()">
-              <option value="0">Nullipara</option>
-              <option value="1">1 figlio</option>
-              <option value="2" selected>2 figli</option>
-              <option value="3">3 o più figli</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Allattamento al seno<span class="tip-icon">?</span><span class="tip-box">L'allattamento prolungato (≥6 mesi cumulativi) riduce il rischio mammario del 22% (RR 0.78). L'effetto è dose-dipendente: ogni 12 mesi di allattamento riduce il rischio di circa 4.3%.</span></span></label>
-            <select id="onco-allattamento" onchange="calcOncoRisk()">
-              <option value="no">No</option>
-              <option value="lt6">Sì, meno di 6 mesi totali</option>
-              <option value="gt6">Sì, 6 mesi o più (effetto protettivo)</option>
-            </select>
+
+        <!-- BREAST·RISK Calculator -->
+        <div style="background:#f0fdf4;border:2px solid #059669;border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div>
+              <div style="font-weight:800;color:#065f46;font-size:0.84rem;margin-bottom:3px;">📊 BREAST·RISK — Calcola il rischio con Gail o Tyrer-Cuzick</div>
+              <div style="font-size:0.73rem;color:#047857;line-height:1.5;">Inserisci i dati nel calcolatore integrato. Il risultato si trasferisce automaticamente qui sotto e aggiorna le raccomandazioni.</div>
+            </div>
+            <button onclick="openBreastRisk()" style="background:#059669;color:white;border:none;border-radius:10px;padding:9px 18px;font-weight:800;font-size:0.82rem;cursor:pointer;white-space:nowrap;font-family:Inter,sans-serif;">📊 Apri calcolatore</button>
           </div>
         </div>
-        <div class="two-col" style="margin-bottom:6px;">
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Biopsia mammaria precedente<span class="tip-icon">?</span><span class="tip-box">L'iperplasia atipica duttale (ADH) o lobulare (ALH) aumenta il rischio di 3.5–4×. Il carcinoma lobulare in situ (LCIS) è considerato un marcatore di rischio elevato (4×). L'iperplasia semplice senza atipia: 1.5×.</span></span></label>
-            <select id="onco-atipia" onchange="calcOncoRisk()">
-              <option value="no">No / non eseguita</option>
-              <option value="iperplasia">Iperplasia senza atipia</option>
-              <option value="atipia">Iperplasia atipica (ADH o ALH)</option>
-              <option value="lcis">LCIS (carcinoma lobulare in situ)</option>
-            </select>
-          </div>
-          <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Radioterapia toracica (età 10–30 aa)<span class="tip-icon">?</span><span class="tip-box">Le pazienti trattate con radioterapia mediastinica ad alto dosaggio per linfoma di Hodgkin tra i 10 e 30 anni hanno un rischio lifetime di K mammella del 20–30%. Indicazione a sorveglianza intensiva con RM annuale.</span></span></label>
-            <select id="onco-radioterapia" onchange="calcOncoRisk()">
-              <option value="no">No</option>
-              <option value="si">Sì (es. linfoma di Hodgkin)</option>
-            </select>
-          </div>
-        </div>
+
+        <!-- Rischio stimato + pregresso K -->
         <div class="two-col" style="margin-bottom:8px;">
           <div class="field-group">
-            <label class="fl"><span class="tip-wrap">TOS precedente o in corso<span class="tip-icon">?</span><span class="tip-box">TOS = Terapia Ormonale Sostitutiva. La terapia estroprogestinica sintetica per oltre 5 anni aumenta il rischio mammario di circa 1.26× (WHI, 2002). Gli estrogeni soli (donne senza utero) hanno un effetto trascurabile. Il progesterone micronizzato ha un profilo più favorevole rispetto ai progestinici sintetici.</span></span></label>
-            <select id="onco-mhtPrec" onchange="calcOncoRisk()">
-              <option value="no">No</option>
-              <option value="lt5">Meno di 5 anni (qualsiasi tipo)</option>
-              <option value="e-only">Più di 5 anni — estrogeni soli</option>
-              <option value="ep">Più di 5 anni — estroprogestinica sintetica</option>
+            <label class="fl"><span class="tip-wrap">Rischio stimato lifetime<span class="tip-icon">?</span><span class="tip-box">Calcolato da BREAST·RISK (Gail o Tyrer-Cuzick). Soglia alto rischio: ≥20% → RM supplementare. Può essere inserito manualmente se disponibile da calcolo esterno.</span></span></label>
+            <select id="onco-mammella" onchange="calcOncoRisk()">
+              <option value="">— non calcolato —</option>
+              <option value="basso">Basso (&lt;15%)</option>
+              <option value="moderato">Moderato (15–20%)</option>
+              <option value="alto">Alto (20–30%)</option>
+              <option value="molto-alto">Molto alto (&gt;30% o BRCA1/2)</option>
+              <option value="pregresso-k">Pregressa neoplasia mammaria</option>
             </select>
           </div>
           <div class="field-group">
-            <label class="fl"><span class="tip-wrap">Consumo di alcol<span class="tip-icon">?</span><span class="tip-box">Ogni unità alcolica giornaliera aggiuntiva aumenta il rischio di K mammella di circa il 7–10%. Il rischio è lineare, senza soglia sicura. Una unità = 12 g di alcol (es. 1 bicchiere di vino o 33 cl di birra).</span></span></label>
-            <select id="onco-alcol" onchange="calcOncoRisk()">
-              <option value="no">No / occasionale</option>
-              <option value="lt1">Circa 1 unità alcolica al giorno</option>
-              <option value="ge1">Più di 1 unità alcolica al giorno (rischio↑)</option>
+            <label class="fl">Discendenza ebraica ashkenazita</label>
+            <select id="onco-etnia" onchange="calcOncoRisk()">
+              <option value="no">No</option>
+              <option value="si">Sì (rischio BRCA ~2%)</option>
             </select>
           </div>
         </div>
 
-        <!-- RISULTATO MAMMELLA -->
+        <!-- Hidden inputs — popolati da BREAST·RISK via brWriteBack() -->
+        <input type="hidden" id="onco-menarca" value="12">
+        <input type="hidden" id="onco-etaParto" value="0">
+        <input type="hidden" id="onco-parita" value="2">
+        <input type="hidden" id="onco-allattamento" value="no">
+        <input type="hidden" id="onco-atipia" value="no">
+        <input type="hidden" id="onco-mhtPrec" value="no">
+        <input type="hidden" id="onco-alcol" value="no">
+        <input type="hidden" id="onco-biopsy-count" value="0">
+
+                <!-- RISULTATO MAMMELLA -->
         <div id="onco-breast-result" style="font-size:0.82rem;padding:8px 12px;border-radius:6px;background:#f9f7ff;border:1px solid var(--border2);margin-bottom:12px;display:none;"></div>
 
         <!-- SEZIONE ENDOMETRIO -->
@@ -2059,6 +2072,8 @@ function saveOnco() {
     packYears: document.getElementById('onco-packYears')?.value,
     genetica: document.getElementById('onco-genetica')?.value,
     screenigNotes: S.oncoRisk?.screenigNotes || [],
+    breastRiskResult: S.breastRiskResult || null,
+    breastMHT: S.oncoRisk?.breastMHT || 'basso',
   };
   document.getElementById('onco-status').textContent = 'Completato';
   document.getElementById('onco-status').className = 'risk-status done';
@@ -2207,6 +2222,7 @@ function selectTherapy(id,el) {
 // ══════════════════════════════════════
 // TOS·SELECTOR WIZARD — Algoritmo clinico
 // ══════════════════════════════════════
+var BR_LAST = {pct:0, source:""};
 const TOS = {
   track: null,      // 'transdermica' | 'orale'
   viaEstro: null,   // 'cerotto'|'gel'|'spray'|'orale_E2'|'orale_ECE'
@@ -2755,9 +2771,10 @@ function tosPrintCard() {
   }
   const w = window.open('','_blank','width=780,height=900');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Scheda TOS</title>
-  <style>body{margin:0;padding:0;background:white;}@media print{@page{margin:15mm;}}</style>
+  <style>body{margin:0;padding:0;background:white;}@media print{@page{margin:15mm;}}
+<\/style>
   </head><body>${card.innerHTML}
-  <script>window.onload=function(){window.print();}<\/script></body></html>`);
+  \x3cscript\x3ewindow.onload=function(){window.print();}<\/script></body></html>`);
   w.document.close();
 }
 
@@ -2865,8 +2882,15 @@ function buildPrompt() {
   };
   const trb = therapyRisksBenefits[therapy] || {vantaggi:'Da definire con il medico', rischi:'Da valutare individualmente'};
 
+  // Dettaglio BREAST·RISK
+  var brRiskDetail = '';
+  if(S.onco && S.onco.breastRiskResult) {
+    var brr = S.onco.breastRiskResult;
+    brRiskDetail = ' [BREAST·RISK ' + brr.model + ': ' + brr.pct.toFixed(0) + '% lifetime]';
+  }
   const onco = S.onco ? [
-    'Mammella: ' + (S.onco.breastClass||'—') + ' (RR×' + (S.onco.breastRR||'—') + ', familiarità: ' + (S.onco.famMammella||'—') + ', densità: ' + (S.onco.densita||'nd') + ')',
+    'Mammella: ' + (S.onco.breastClass||'—') + ' (RR×' + (S.onco.breastRR||'—') + brRiskDetail + ', familiarità: ' + (S.onco.famMammella||'—') + ', densità: ' + (S.onco.densita||'nd') + ')',
+    'Indicazione MHT per profilo mammario: ' + (S.onco.breastMHT === 'CI-ASSOLUTA' ? 'CONTROINDICAZIONE ASSOLUTA' : S.onco.breastMHT === 'alto' ? 'Cautela — preferire durata minima e P4 micronizzato' : S.onco.breastMHT === 'moderato' ? 'Personalizzata — preferire P4 micronizzato' : 'Non controindicata'),
     'Endometrio: ' + (S.onco.endoClass||'—'),
     'Ovaio: ' + (S.onco.ovaio||'—'),
     'Genetica: ' + (S.onco.genetica||'—'),
@@ -3209,6 +3233,454 @@ document.addEventListener('DOMContentLoaded', function() {
   buildMRS();
   updateMRS();
 });
+
+// ══════════════════════════════════════
+// BREAST·RISK CALCULATOR
+// ══════════════════════════════════════
+function openBreastRisk() {
+  var m = document.getElementById('breastRiskModal');
+  m.style.display = 'flex';
+  brRiskInit();
+}
+function closeBreastRisk() {
+  brWriteBack();
+  document.getElementById('breastRiskModal').style.display = 'none';
+}
+
+function brWriteBack() {
+  var gailActive = document.getElementById('brtab-gail').classList.contains('active');
+
+  // ── MENARCA ──
+  var menKey = document.getElementById(gailActive ? 'br-g-menarca' : 'br-t-menarca')?.value || '';
+  var menMap = {'le11': 11, '1213': 12, 'ge14': 14};
+  if(menKey && menMap[menKey]) {
+    var hidMen = document.getElementById('onco-menarca');
+    if(hidMen) hidMen.value = menMap[menKey];
+  }
+
+  // ── ETA PRIMO PARTO + PARITA (da Gail AFB) ──
+  var afbKey = document.getElementById('br-g-afb')?.value || '';
+  var afbMap = {'null': {eta:0, par:0}, 'lt20': {eta:18, par:1}, '2024': {eta:22, par:1}, '2529': {eta:27, par:1}, 'ge30': {eta:32, par:1}};
+  if(afbKey && afbMap[afbKey]) {
+    var m = afbMap[afbKey];
+    var hidEta = document.getElementById('onco-etaParto');
+    var hidPar = document.getElementById('onco-parita');
+    if(hidEta) {
+      var curEta = parseInt(hidEta.value) || 0;
+      // Sovrascrive solo se incoerente con la categoria Gail
+      var incoer = false;
+      if(afbKey === 'null' || m.eta === 0) incoer = true; // sempre
+      else if(afbKey === 'lt20' && curEta >= 20) incoer = true;
+      else if(afbKey === '2024' && (curEta < 20 || curEta > 24)) incoer = true;
+      else if(afbKey === '2529' && (curEta < 25 || curEta > 29)) incoer = true;
+      else if(afbKey === 'ge30' && (curEta > 0 && curEta < 30)) incoer = true;
+      else if(curEta === 0 && afbKey !== 'null') incoer = true;
+      if(incoer) { hidEta.value = m.eta; if(hidPar) hidPar.value = m.par; }
+    }
+  }
+
+  // ── FAMILIARITA (da Gail) ──
+  var relKey = document.getElementById('br-g-rel')?.value || '';
+  var famEl = document.getElementById('onco-famMammella');
+  if(famEl && relKey) {
+    var relMap = {'0': 'no', '1': '1grado', '2': 'multipla'};
+    var newFam = relMap[relKey] || '';
+    if(newFam && famEl.value !== 'brca') famEl.value = newFam;
+  }
+
+  // ── BIOPSIA + ATIPIA (da Gail) ──
+  var biopsyCount = parseInt(document.getElementById('br-g-biopsy')?.value) || 0;
+  var atipiaGail  = document.getElementById('br-g-atipia')?.value || 'no';
+  var biopsyTC    = document.getElementById('br-t-biopsy')?.value || 'no';
+  var atipiaEl    = document.getElementById('onco-atipia');
+  var biopsyCountEl = document.getElementById('onco-biopsy-count');
+  if(biopsyCountEl) biopsyCountEl.value = biopsyCount;
+  if(atipiaEl) {
+    if(biopsyTC === 'lcis' || atipiaGail === 'yes' && biopsyTC === 'adh') {
+      atipiaEl.value = biopsyTC === 'lcis' ? 'lcis' : 'atipia';
+    } else if(atipiaGail === 'yes') {
+      atipiaEl.value = 'atipia';
+    } else if(biopsyTC === 'adh') {
+      atipiaEl.value = 'atipia';
+    } else if(biopsyTC === 'benign' || (biopsyCount >= 1 && atipiaGail === 'no')) {
+      atipiaEl.value = 'iperplasia';
+    } else if(biopsyCount === 0 && atipiaGail === 'no' && biopsyTC === 'no') {
+      atipiaEl.value = 'no';
+    }
+  }
+
+  // ── DENSITA MAMMARIA (da TC) ──
+  var densTC = document.getElementById('br-t-density')?.value || '';
+  var densEl = document.getElementById('onco-densita');
+  if(densEl && densTC && densTC !== 'nd') densEl.value = densTC;
+
+  // ── TOS PREGRESSA (da TC) ──
+  var hrtTC = document.getElementById('br-t-hrt')?.value || '';
+  var mhtEl = document.getElementById('onco-mhtPrec');
+  if(mhtEl && hrtTC) {
+    if(hrtTC === 'ep') mhtEl.value = 'ep';
+    else if(hrtTC === 'e') mhtEl.value = 'e-only';
+    else mhtEl.value = 'no';
+  }
+
+  // ── ALLATTAMENTO (da TC) ──
+  var allattTC = document.getElementById('br-t-allatt')?.value || '';
+  var allattEl = document.getElementById('onco-allattamento');
+  if(allattEl && allattTC) allattEl.value = allattTC;
+
+  // ── ALCOL (da TC) ──
+  var alcolTC = document.getElementById('br-t-alcol')?.value || '';
+  var alcolEl = document.getElementById('onco-alcol');
+  if(alcolEl && alcolTC) alcolEl.value = alcolTC;
+
+  // Ricalcola
+  if(typeof calcOncoRisk === 'function') calcOncoRisk();
+}
+
+function brTab(tab) {
+  ['gail','tc'].forEach(function(t) {
+    document.getElementById('brtab-'+t).classList.toggle('active', t===tab);
+    document.getElementById('brpanel-'+t).style.display = t===tab ? 'block' : 'none';
+  });
+}
+function brRiskInit() {
+  var eta = S.eta || parseInt(document.getElementById('eta')?.value) || 50;
+  var bmi = S.bmi || 24;
+  var menarcaRaw = parseInt(document.getElementById('onco-menarca')?.value) || 0;
+  var densitaRaw = document.getElementById('onco-densita')?.value || 'nd';
+  var atipiaRaw = document.getElementById('onco-atipia')?.value || 'no';
+  var famRaw = document.getElementById('onco-famMammella')?.value || 'no';
+  var etaPartoRaw = parseInt(document.getElementById('onco-etaParto')?.value) || 0;
+  var paritaRaw = parseInt(document.getElementById('onco-parita')?.value) || 0;
+  var mhtPrecRaw = document.getElementById('onco-mhtPrec')?.value || 'no';
+  var anniMen = S.anniMenopausa || 0;
+
+  var menKey = menarcaRaw > 0 ? (menarcaRaw <= 11 ? 'le11' : menarcaRaw <= 13 ? '1213' : 'ge14') : '1213';
+
+  var afbGailKey = 'ge30';
+  if(paritaRaw === 0) afbGailKey = 'null';
+  else if(etaPartoRaw > 0 && etaPartoRaw < 20) afbGailKey = 'lt20';
+  else if(etaPartoRaw >= 20 && etaPartoRaw <= 24) afbGailKey = '2024';
+  else if(etaPartoRaw >= 25 && etaPartoRaw <= 29) afbGailKey = '2529';
+
+  var afbTCKey = 'lt25';
+  if(paritaRaw === 0) afbTCKey = 'null';
+  else if(etaPartoRaw >= 30) afbTCKey = 'ge30';
+  else if(etaPartoRaw >= 25) afbTCKey = '2529';
+
+  var relN = '0';
+  if(famRaw === '1grado') relN = '1';
+  else if(famRaw === 'multipla' || famRaw === 'brca') relN = '2';
+
+  var atipiaGail = atipiaRaw === 'atipia' ? 'yes' : 'no';
+  var biopsyTC = atipiaRaw === 'atipia' ? 'adh' : atipiaRaw === 'lcis' ? 'lcis' : atipiaRaw === 'iperplasia' ? 'benign' : 'no';
+
+  var menopKey = '5054';
+  if(anniMen > 0 && eta > 0) {
+    var etaMen = eta - anniMen;
+    menopKey = etaMen < 45 ? 'lt45' : etaMen < 50 ? '4549' : etaMen < 55 ? '5054' : 'ge55';
+  }
+
+  var el;
+  el = document.getElementById('br-g-age'); if(el) el.value = Math.max(35, Math.min(85, eta));
+  el = document.getElementById('br-g-menarca'); if(el) el.value = menKey;
+  el = document.getElementById('br-g-afb'); if(el) el.value = afbGailKey;
+  el = document.getElementById('br-g-rel'); if(el) el.value = relN;
+  el = document.getElementById('br-g-atipia'); if(el) el.value = atipiaGail;
+
+  el = document.getElementById('br-t-age'); if(el) el.value = Math.max(20, Math.min(85, eta));
+  el = document.getElementById('br-t-bmi'); if(el && bmi) el.value = parseFloat(bmi).toFixed(1);
+  el = document.getElementById('br-t-menarca'); if(el) el.value = menKey;
+  el = document.getElementById('br-t-menop'); if(el) el.value = menopKey;
+  el = document.getElementById('br-t-afb'); if(el) el.value = afbTCKey;
+  el = document.getElementById('br-t-density'); if(el && densitaRaw !== 'nd') el.value = densitaRaw;
+  el = document.getElementById('br-t-biopsy'); if(el && biopsyTC !== 'no') el.value = biopsyTC;
+  el = document.getElementById('br-t-hrt');
+  if(el && mhtPrecRaw === 'ep') el.value = 'ep';
+  else if(el && mhtPrecRaw === 'e-only') el.value = 'e';
+  // Pre-popola allattamento e alcol da hidden inputs
+  var allattRaw = document.getElementById('onco-allattamento')?.value || 'no';
+  el = document.getElementById('br-t-allatt'); if(el) el.value = allattRaw;
+  var alcolRaw = document.getElementById('onco-alcol')?.value || 'no';
+  el = document.getElementById('br-t-alcol'); if(el) el.value = alcolRaw;
+  // Biopsia
+  var biopsyRaw = parseInt(document.getElementById('onco-biopsy-count')?.value) || 0;
+  el = document.getElementById('br-g-biopsy'); if(el) el.value = biopsyRaw > 0 ? (biopsyRaw >= 2 ? '2' : '1') : '0';
+
+  if(famRaw === '1grado' || famRaw === 'multipla') {
+    el = document.getElementById('br-t-madre'); if(el) el.value = '1';
+  }
+  if(famRaw === 'multipla') {
+    el = document.getElementById('br-t-sorelle'); if(el) el.value = '1';
+  }
+
+  brTab('gail');
+}
+
+// ── Baseline rates (donne europee/italiane, AIRTUM data) ──
+function brBaseline5yr(age) {
+  var rates = {
+    35:0.40, 36:0.43, 37:0.46, 38:0.49, 39:0.52,
+    40:0.56, 41:0.60, 42:0.64, 43:0.68, 44:0.73,
+    45:0.78, 46:0.83, 47:0.88, 48:0.94, 49:1.00,
+    50:1.06, 51:1.10, 52:1.14, 53:1.18, 54:1.22,
+    55:1.26, 56:1.29, 57:1.32, 58:1.35, 59:1.37,
+    60:1.39, 61:1.41, 62:1.43, 63:1.44, 64:1.45,
+    65:1.46, 66:1.47, 67:1.47, 68:1.47, 69:1.46,
+    70:1.46, 71:1.45, 72:1.44, 73:1.42, 74:1.40,
+    75:1.38, 76:1.35, 77:1.32, 78:1.28, 79:1.24,
+    80:1.19, 81:1.15, 82:1.10, 83:1.05, 84:1.00, 85:0.95
+  };
+  return rates[age] || rates[Math.max(35, Math.min(85, age))] || 1.00;
+}
+function brBaselineLifetime(age) {
+  // Rischio cumulativo residuo a vita (fino a 90 anni), donne italiane AIRTUM
+  if(age <= 35) return 12.5;
+  if(age <= 40) return 12.0;
+  if(age <= 45) return 11.3;
+  if(age <= 50) return 10.4;
+  if(age <= 55) return 9.2;
+  if(age <= 60) return 7.8;
+  if(age <= 65) return 6.2;
+  if(age <= 70) return 4.7;
+  if(age <= 75) return 3.3;
+  if(age <= 80) return 2.1;
+  return 1.2;
+}
+function brAvgPopRR() { return 1.28; } // Fattore di calibrazione per pop. europea
+
+// ── Interpretazione rischio ──
+function brInterpretClass(pctLifetime) {
+  if(pctLifetime >= 30) return {cls:'br-risk-vhigh', label:'MOLTO ALTO'};
+  if(pctLifetime >= 20) return {cls:'br-risk-high', label:'ALTO'};
+  if(pctLifetime >= 15) return {cls:'br-risk-mod', label:'INTERMEDIO'};
+  return {cls:'br-risk-low', label:'NELLA NORMA'};
+}
+
+// ── Trasferisce risultato al form principale ──
+function brTransfer(pctLifetime, source) {
+  var sel = document.getElementById('onco-mammella');
+  if(!sel) return;
+  if(pctLifetime < 15) sel.value = 'basso';
+  else if(pctLifetime < 20) sel.value = 'moderato';
+  else if(pctLifetime < 30) sel.value = 'alto';
+  else sel.value = 'molto-alto';
+  // Salva il risultato BREAST·RISK per includerlo nel prompt
+  S.breastRiskResult = {
+    pct: pctLifetime,
+    source: source,
+    model: source === 'gail' ? 'Modello di Gail (NCI)' : 'Tyrer-Cuzick Semplificato',
+    category: sel.value
+  };
+  saveState();
+  calcOncoRisk();
+  saveOnco(); // Salva automaticamente il profilo oncologico con i dati BREAST·RISK
+  closeBreastRisk();
+  document.getElementById('onco-mammella').scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// ── Render risultato comune ──
+function brRenderResult(containerId, risk5yr, riskLifetime, rr, details, source) {
+  var interp = brInterpretClass(riskLifetime);
+  var popAvg5 = brBaseline5yr(parseInt(document.getElementById('br-'+(source==='gail'?'g':'t')+'-age').value)||50);
+  var popAvgLT = brBaselineLifetime(parseInt(document.getElementById('br-'+(source==='gail'?'g':'t')+'-age').value)||50);
+
+  // Soglie cliniche
+  var thresh5 = risk5yr >= 1.67;
+  var threshLT = riskLifetime >= 20;
+
+  var interpText = '';
+  if(riskLifetime >= 30) {
+    interpText = 'Rischio molto elevato. Indicazione a consulenza genetica/senologica urgente. RM mammaria annuale + mammografia annuale. Valutare profilassi con tamoxifene o chirurgia profilattica (se BRCA confermato).';
+  } else if(riskLifetime >= 20) {
+    interpText = 'Rischio elevato (soglia RM supplementare). Mammografia annuale + RM mammaria annuale. Invio a senologia per programma di sorveglianza intensiva. Valutare consulenza genetica.';
+  } else if(riskLifetime >= 15) {
+    interpText = 'Rischio intermedio. Mammografia annuale dai 40-45 anni. Sorveglianza clinica semestrale. Rivalutare se nuovi fattori di rischio emergono.';
+  } else {
+    interpText = 'Rischio nella norma per la popolazione generale. Screening standard: mammografia biennale 45-74 anni (programma nazionale).';
+  }
+
+  var rr5cls = risk5yr >= 1.67 ? 'br-risk-high' : risk5yr >= 1.0 ? 'br-risk-mod' : 'br-risk-low';
+  var rrLTcls = interp.cls;
+
+  var html = '<div class="br-result-title">Risultato ' + (source==='gail' ? 'Modello di Gail' : 'Tyrer-Cuzick Semplificato') + '</div>';
+  html += '<div class="br-risk-boxes">';
+  html += '<div class="br-risk-box ' + rr5cls + '">';
+  html += '<div class="br-risk-val">' + risk5yr.toFixed(1) + '%</div>';
+  html += '<div class="br-risk-lab">Rischio a 5 anni</div>';
+  html += '<div class="br-risk-avg">Media: ' + popAvg5.toFixed(1) + '%' + (thresh5 ? ' ⚠️ >1.67%' : '') + '</div>';
+  html += '</div>';
+  html += '<div class="br-risk-box ' + rrLTcls + '">';
+  html += '<div class="br-risk-val">' + riskLifetime.toFixed(0) + '%</div>';
+  html += '<div class="br-risk-lab">Rischio lifetime</div>';
+  html += '<div class="br-risk-avg">Media: ' + popAvgLT.toFixed(0) + '%' + (threshLT ? ' ⚠️ soglia RM' : '') + '</div>';
+  html += '</div>';
+  html += '</div>';
+  html += '<div class="br-interp">';
+  html += '<strong>Rischio relativo: ' + rr.toFixed(2) + 'x</strong> rispetto alla donna media<br>';
+  html += '<em>' + interpText + '</em><br><br>';
+  html += details;
+  html += '</div>';
+  if(thresh5) {
+    html += '<div style="background:#fef2f2;border-radius:8px;padding:10px 12px;font-size:0.78rem;color:#991b1b;margin-bottom:10px;">';
+    html += '⚠️ <strong>Rischio a 5 anni &gt;1.67%</strong>: soglia NCI per la considerazione di chemioprofilassi (tamoxifene, raloxifene). Valutare rapporto rischio/beneficio.';
+    html += '</div>';
+  }
+  BR_LAST = {pct: riskLifetime, source: source};
+  html += '<button class="br-transfer-btn" onclick="brTransfer(BR_LAST.pct, BR_LAST.source)">';
+  html += '✅ Usa questo risultato nel profilo paziente</button>';
+  html += '<div class="br-link-box">Il risultato verrà impostato nel campo Rischio Mammella e aggiornerà automaticamente le raccomandazioni terapeutiche.</div>';
+
+  var el = document.getElementById(containerId);
+  el.innerHTML = html;
+  el.style.display = 'block';
+  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ── CALCOLO GAIL ──
+function calcGail() {
+  var age = parseInt(document.getElementById('br-g-age').value) || 50;
+  var menarca = document.getElementById('br-g-menarca').value;
+  var afb = document.getElementById('br-g-afb').value;
+  var numRel = parseInt(document.getElementById('br-g-rel').value) || 0;
+  var numBiopsy = parseInt(document.getElementById('br-g-biopsy').value) || 0;
+  var atipia = document.getElementById('br-g-atipia').value;
+
+  // Validazione
+  if(age < 35 || age > 85) { alert('Il modello di Gail e valido per donne dai 35 agli 85 anni.'); return; }
+
+  // RR Menarca
+  var rrMen = menarca === 'le11' ? 1.21 : menarca === '1213' ? 1.10 : 1.00;
+
+  // RR AFB x Relatives (tabella pubblicata Gail 1989)
+  var relKey = numRel >= 2 ? '2' : String(numRel);
+  var afbKey = (afb === 'null' || afb === 'ge30') ? 'null_ge30' : afb;
+  var afbRelTable = {
+    '0': {'null_ge30': 1.00, 'lt20': 0.77, '2024': 0.77, '2529': 0.96},
+    '1': {'null_ge30': 2.61, 'lt20': 1.00, '2024': 1.24, '2529': 1.24},
+    '2': {'null_ge30': 6.80, 'lt20': 2.76, '2024': 2.76, '2529': 4.21}
+  };
+  var rrAfbRel = (afbRelTable[relKey] && afbRelTable[relKey][afbKey]) ? afbRelTable[relKey][afbKey] : 1.00;
+
+  // RR Biopsie (aggiustato per eta e iperplasia atipica)
+  var rrBiopsy = 1.00;
+  if(numBiopsy === 1) rrBiopsy = age < 50 ? 1.70 : 1.27;
+  else if(numBiopsy >= 2) rrBiopsy = age < 50 ? 2.88 : 1.62;
+  if(atipia === 'yes') rrBiopsy = rrBiopsy * 1.82;
+  else if(atipia === 'unknown') rrBiopsy = rrBiopsy * 0.93;
+
+  // RR combinato
+  var RR = rrMen * rrAfbRel * rrBiopsy;
+
+  // Rischio assoluto (calibrato per pop. europea)
+  var baseline5 = brBaseline5yr(age);
+  var baselineLT = brBaselineLifetime(age);
+  var calibF = brAvgPopRR();
+
+  var risk5yr = Math.min(baseline5 * RR / calibF, 40);
+  var riskLT = Math.min(baselineLT * RR / calibF, 80);
+
+  // Dettagli
+  var dets = 'Fattori calcolati: Menarca RR=' + rrMen.toFixed(2) +
+             ' · Familiarita x Parto RR=' + rrAfbRel.toFixed(2) +
+             ' · Biopsie RR=' + rrBiopsy.toFixed(2) +
+             ' · RR combinato=' + RR.toFixed(2) + 'x';
+
+  brRenderResult('br-g-result', risk5yr, riskLT, RR, dets, 'gail');
+}
+
+// ── CALCOLO TYRER-CUZICK SEMPLIFICATO ──
+function calcTC() {
+  var age = parseInt(document.getElementById('br-t-age').value) || 50;
+  var bmi = parseFloat(document.getElementById('br-t-bmi').value) || 24;
+  var menarca = document.getElementById('br-t-menarca').value;
+  var menop = document.getElementById('br-t-menop').value;
+  var madre = parseInt(document.getElementById('br-t-madre').value) || 0;
+  var sorelle = parseInt(document.getElementById('br-t-sorelle').value) || 0;
+  var figlie = parseInt(document.getElementById('br-t-figlie').value) || 0;
+  var pat = parseInt(document.getElementById('br-t-pat').value) || 0;
+  var ovaio = parseInt(document.getElementById('br-t-ovaio').value) || 0;
+  var male = parseInt(document.getElementById('br-t-male').value) || 0;
+  var afb = document.getElementById('br-t-afb').value;
+  var density = document.getElementById('br-t-density').value;
+  var biopsy = document.getElementById('br-t-biopsy').value;
+  var hrt = document.getElementById('br-t-hrt').value;
+
+  // Calcolo RR con moltiplicatori pubblicati (Tyrer 2004, aggiornamenti)
+  var RR = 1.0;
+
+  // Menarca
+  if(menarca === 'le11') RR = RR * 1.21;
+  else if(menarca === '1213') RR = RR * 1.10;
+
+  // Menopausa tardiva
+  if(menop === 'ge55') RR = RR * 1.22;
+  else if(menop === '5054') RR = RR * 1.10;
+  else if(menop === 'lt45') RR = RR * 0.85; // menopausa precoce protettiva
+
+  // BMI (post-menopausa: obesita aumenta rischio)
+  if(bmi >= 30) RR = RR * 1.30;
+  else if(bmi >= 25) RR = RR * 1.10;
+
+  // Familiarita materna lato
+  if(madre === 1) RR = RR * 1.90;
+  if(sorelle === 1) RR = RR * 1.80;
+  else if(sorelle >= 2) RR = RR * 3.20;
+  if(figlie >= 1) RR = RR * 1.60;
+  if(pat === 1) RR = RR * 1.40;
+  else if(pat >= 2) RR = RR * 1.80;
+
+  // K ovaio e K mammella maschile in famiglia (indicatori BRCA)
+  if(ovaio === 1) RR = RR * 1.50;
+  if(male === 1) RR = RR * 1.80;
+
+  // Primo parto
+  if(afb === 'null') RR = RR * 1.30;
+  else if(afb === 'ge30') RR = RR * 1.20;
+  else if(afb === 'lt25') RR = RR * 0.85;
+
+  // Densita mammaria
+  if(density === 'D') RR = RR * 2.10;
+  else if(density === 'C') RR = RR * 1.60;
+  else if(density === 'A') RR = RR * 0.60;
+
+  // Storia bioptica personale
+  if(biopsy === 'lcis') RR = RR * 4.00;
+  else if(biopsy === 'adh') RR = RR * 3.50;
+  else if(biopsy === 'benign') RR = RR * 1.50;
+
+  // TOS
+  if(hrt === 'ep') RR = RR * 1.25;
+  else if(hrt === 'e') RR = RR * 1.05;
+
+  // Allattamento
+  var allatt = document.getElementById('br-t-allatt')?.value || 'no';
+  if(allatt === 'gt6') RR = RR * 0.78;
+  // Alcol
+  var alcolBR = document.getElementById('br-t-alcol')?.value || 'no';
+  if(alcolBR === 'ge1') RR = RR * 1.15;
+  else if(alcolBR === 'lt1') RR = RR * 1.07;
+
+  // Rischio assoluto
+  var baselineLT = brBaselineLifetime(age);
+  var baseline5 = brBaseline5yr(age);
+  var calibF = brAvgPopRR();
+
+  var riskLT = Math.min(baselineLT * RR / calibF, 80);
+  var risk5yr = Math.min(baseline5 * RR / calibF, 40);
+
+  // Stima BRCA carrier probability (semplificata)
+  var brcaFlag = '';
+  var brcaScore = (madre + (sorelle >= 1 ? 1 : 0) + pat) + (ovaio * 2) + (male * 2);
+  if(brcaScore >= 4) brcaFlag = '⚠️ Pattern familiare suggestivo di mutazione BRCA1/2 — indicazione a consulenza genetica oncologica.';
+  else if(brcaScore >= 2) brcaFlag = 'Familiarita significativa: valutare consulenza genetica se non gia effettuata.';
+
+  var dets = 'RR calcolato=' + RR.toFixed(2) + 'x' +
+             (brcaFlag ? '<br>' + brcaFlag : '');
+
+  brRenderResult('br-t-result', risk5yr, riskLT, RR, dets, 'tc');
+}
+
 </script>
 <!-- MODAL BIOIDENTICI -->
 <div id="bioInfoModal">
@@ -3269,6 +3741,239 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="bio-modal-footer">
       <button onclick="closeBioModal()">Ho capito</button>
+    </div>
+  </div>
+</div>
+
+<!-- BREAST·RISK CALCULATOR MODAL -->
+<div id="breastRiskModal">
+  <div class="br-box">
+    <div class="br-header">
+      <h3>🎗️ BREAST·RISK — Calcolo Rischio Mammario</h3>
+      <button class="br-close" onclick="closeBreastRisk()">✕</button>
+    </div>
+    <div class="br-tabs">
+      <div class="br-tab active" id="brtab-gail" onclick="brTab('gail')">📊 Modello di Gail (NCI)</div>
+      <div class="br-tab" id="brtab-tc" onclick="brTab('tc')">📊 Tyrer-Cuzick Semplificato</div>
+    </div>
+    <div class="br-body">
+
+      <!-- GAIL PANEL -->
+      <div id="brpanel-gail">
+        <div class="br-disclaimer">
+          <strong>ℹ️ Modello di Gail (BCRAT)</strong> — Implementazione basata sui coefficienti pubblicati da Gail et al. (1989) e NSABP/NCI. Calcola il rischio assoluto a 5 anni e lifetime per donne di 35-85 anni. Non applicabile a portatrici BRCA1/2 note, pregresso K mammella o DCIS/LCIS.
+        </div>
+        <div class="br-section-title">Dati demografici</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Età attuale (anni)</label>
+            <input type="number" id="br-g-age" min="35" max="85" value="50">
+          </div>
+          <div class="br-field">
+            <label>Etnia</label>
+            <select id="br-g-race">
+              <option value="white">Bianca / Europea</option>
+              <option value="black">Nera / Afroamericana</option>
+              <option value="hispanic">Ispanica</option>
+              <option value="asian">Asiatica</option>
+            </select>
+          </div>
+        </div>
+        <div class="br-section-title">Anamnesi riproduttiva</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Età al menarca</label>
+            <select id="br-g-menarca">
+              <option value="le11">≤11 anni</option>
+              <option value="1213" selected>12-13 anni</option>
+              <option value="ge14">≥14 anni</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Età al primo parto vivo</label>
+            <select id="br-g-afb">
+              <option value="null">Nullipara</option>
+              <option value="lt20">Meno di 20 anni</option>
+              <option value="2024" selected>20-24 anni</option>
+              <option value="2529">25-29 anni</option>
+              <option value="ge30">30 anni o oltre</option>
+            </select>
+          </div>
+        </div>
+        <div class="br-section-title">Familiarità e storia bioptica</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Parenti 1° grado con K mammella</label>
+            <select id="br-g-rel">
+              <option value="0" selected>Nessuna</option>
+              <option value="1">Una (madre, sorella o figlia)</option>
+              <option value="2">Due o più</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Biopsie mammarie benigne</label>
+            <select id="br-g-biopsy">
+              <option value="0" selected>Nessuna</option>
+              <option value="1">Una</option>
+              <option value="2">Due o più</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Iperplasia atipica alla biopsia</label>
+            <select id="br-g-atipia">
+              <option value="no" selected>No / Non eseguita</option>
+              <option value="yes">Sì (ADH o ALH)</option>
+              <option value="unknown">Non noto</option>
+            </select>
+            <span class="br-hint">Solo se biopsia eseguita</span>
+          </div>
+        </div>
+        <button class="br-calc-btn" onclick="calcGail()">Calcola Rischio Gail →</button>
+        <div class="br-result" id="br-g-result"></div>
+      </div>
+
+      <!-- TYRER-CUZICK PANEL -->
+      <div id="brpanel-tc" style="display:none;">
+        <div class="br-disclaimer">
+          <strong>⚠️ Versione semplificata — non certificata.</strong> Basata sui fattori principali del modello Tyrer-Cuzick v8 (Tyrer et al. 2004, aggiornato 2018). Fornisce una stima clinica del rischio lifetime. Per il calcolo certificato usare il software IBIS ufficiale o il calcolatore MagView.
+        </div>
+        <div class="br-section-title">Dati base</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Età attuale (anni)</label>
+            <input type="number" id="br-t-age" min="20" max="85" value="50">
+          </div>
+          <div class="br-field">
+            <label>BMI (kg/m²)</label>
+            <input type="number" id="br-t-bmi" min="15" max="60" step="0.1" value="24">
+          </div>
+          <div class="br-field">
+            <label>Età al menarca</label>
+            <select id="br-t-menarca">
+              <option value="le11">≤11 anni</option>
+              <option value="1213" selected>12-13 anni</option>
+              <option value="ge14">≥14 anni</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Età alla menopausa</label>
+            <select id="br-t-menop">
+              <option value="lt45">Meno di 45 anni (menopausa precoce)</option>
+              <option value="4549">45-49 anni</option>
+              <option value="5054" selected>50-54 anni</option>
+              <option value="ge55">55 anni o oltre (menopausa tardiva)</option>
+              <option value="pre">Ancora in premenopausa</option>
+            </select>
+          </div>
+        </div>
+        <div class="br-section-title">Familiarità (materna e paterna)</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Madre con K mammella</label>
+            <select id="br-t-madre">
+              <option value="0" selected>No</option>
+              <option value="1">Sì</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Sorelle con K mammella</label>
+            <select id="br-t-sorelle">
+              <option value="0" selected>Nessuna</option>
+              <option value="1">Una</option>
+              <option value="2">Due o più</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Figlie con K mammella</label>
+            <select id="br-t-figlie">
+              <option value="0" selected>Nessuna</option>
+              <option value="1">Una o più</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>K mammella lato paterno (zia, nonna)</label>
+            <select id="br-t-pat">
+              <option value="0" selected>No</option>
+              <option value="1">Sì (1 parente)</option>
+              <option value="2">Sì (2+ parenti)</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>K ovaio in famiglia (1° o 2° grado)</label>
+            <select id="br-t-ovaio">
+              <option value="0" selected>No</option>
+              <option value="1">Sì</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>K mammella maschile in famiglia</label>
+            <select id="br-t-male">
+              <option value="0" selected>No</option>
+              <option value="1">Sì (padre, fratello, zio)</option>
+            </select>
+          </div>
+        </div>
+        <div class="br-section-title">Storia personale</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Primo parto</label>
+            <select id="br-t-afb">
+              <option value="null">Nullipara</option>
+              <option value="lt25" selected>Prima dei 25 anni</option>
+              <option value="2529">25-29 anni</option>
+              <option value="ge30">30 anni o oltre</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Densità mammaria (BI-RADS)</label>
+            <select id="br-t-density">
+              <option value="A">ACR-A — Adiposo</option>
+              <option value="B" selected>ACR-B — Fibroglandolare disperso</option>
+              <option value="C">ACR-C — Eterogeneo denso</option>
+              <option value="D">ACR-D — Estremamente denso</option>
+              <option value="nd">Non disponibile</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Storia bioptica personale</label>
+            <select id="br-t-biopsy">
+              <option value="no" selected>Nessuna biopsia</option>
+              <option value="benign">Biopsia benigna (no atipia)</option>
+              <option value="adh">ADH / ALH (iperplasia atipica)</option>
+              <option value="lcis">LCIS</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>TOS pregressa o attuale</label>
+            <select id="br-t-hrt">
+              <option value="no" selected>No / Mai</option>
+              <option value="e">Solo estrogeni</option>
+              <option value="ep">Estro-progestinica combinata</option>
+            </select>
+          </div>
+        </div>
+        <div class="br-section-title">Stile di vita</div>
+        <div class="br-grid">
+          <div class="br-field">
+            <label>Allattamento al seno</label>
+            <select id="br-t-allatt">
+              <option value="no">No / meno di 6 mesi totali</option>
+              <option value="gt6">Sì — 6 mesi o più (effetto protettivo)</option>
+            </select>
+          </div>
+          <div class="br-field">
+            <label>Consumo di alcol</label>
+            <select id="br-t-alcol">
+              <option value="no">No / occasionale</option>
+              <option value="lt1">Circa 1 unità/giorno</option>
+              <option value="ge1">Più di 1 unità/giorno (rischio↑)</option>
+            </select>
+          </div>
+        </div>
+        <button class="br-calc-btn" onclick="calcTC()">Calcola Rischio Tyrer-Cuzick →</button>
+        <div class="br-result" id="br-t-result"></div>
+      </div>
+
     </div>
   </div>
 </div>
