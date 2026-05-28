@@ -3354,52 +3354,62 @@ function brTabGail() { brTab('gail'); }
 function brTabTC() { brTab('tc'); }
 
 function brRenderGuide() {
-  var famRaw = document.getElementById('onco-famMammella')?.value || 'no';
-  var atipiaRaw = document.getElementById('onco-atipia')?.value || 'no';
+  var famRaw     = document.getElementById('onco-famMammella')?.value || 'no';
   var densitaRaw = document.getElementById('onco-densita')?.value || 'nd';
-  var geneticaRaw = document.getElementById('onco-genetica')?.value || 'no';
-  var ovaioRaw = document.getElementById('onco-ovaio')?.value || 'no';
-  var panel = document.getElementById('br-guide-panel');
-  if(!panel) return;
+  var geneticaRaw= document.getElementById('onco-genetica')?.value || 'no';
+  var ovaioRaw   = document.getElementById('onco-ovaio')?.value || 'no';
+  var atipiaRaw  = document.getElementById('onco-atipia')?.value || 'no';
 
-  if(geneticaRaw === 'brca1' || geneticaRaw === 'brca2') {
-    panel.innerHTML = '<div class="br-guide" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b;margin:12px 24px 0;">'
-      + '<div class="br-guide-title">&#x26D4; Mutazione BRCA confermata</div>'
-      + '<div class="br-guide-reason">Con BRCA1/2 patogeno i modelli popolazionistici non sono indicati — il rischio e gia classificato come molto alto. Procedere con consulenza genetica e sorveglianza intensiva.</div></div>';
-    return;
+  var tcFactors = [];
+  if(famRaw === 'multipla' || famRaw === 'brca') tcFactors.push('familiarita estesa o BRCA in famiglia');
+  if(atipiaRaw === 'atipia' || atipiaRaw === 'lcis') tcFactors.push('ADH/LCIS alla biopsia');
+  if(densitaRaw === 'C' || densitaRaw === 'D') tcFactors.push('alta densita mammaria');
+  if(ovaioRaw !== 'no') tcFactors.push('K ovaio in famiglia');
+  if(geneticaRaw !== 'no' && geneticaRaw !== 'negativi' && geneticaRaw !== 'brca1' && geneticaRaw !== 'brca2') tcFactors.push('gene ad alto rischio noto');
+
+  var isBRCA = (geneticaRaw === 'brca1' || geneticaRaw === 'brca2');
+  var gailEl = document.getElementById('br-guide-gail');
+  var tcEl   = document.getElementById('br-guide-tc');
+
+  // ── Pannello GAIL ──
+  if(gailEl) {
+    if(isBRCA) {
+      gailEl.innerHTML = '<div class="br-guide" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b;padding:11px 14px;border-radius:10px;border:1.5px solid;">'
+        + '<strong>&#x26D4; BRCA confermato</strong> — Il Gail non e applicabile con mutazione BRCA nota. Procedere con consulenza genetica.'
+        + '</div>';
+    } else if(tcFactors.length >= 2) {
+      gailEl.innerHTML = '<div class="br-guide" style="background:#fef3c7;border-color:#fcd34d;color:#78350f;padding:11px 14px;border-radius:10px;border:1.5px solid;font-size:0.8rem;">'
+        + '&#x26A0;&#xFE0F; <strong>Attenzione:</strong> questo caso presenta <strong>' + tcFactors.join(', ') + '</strong>. '
+        + 'Il Gail potrebbe <em>sottostimare</em> il rischio (non considera familiarita paterna, densita mammaria, storia bioptica estesa). '
+        + 'Valuta di usare <button onclick="brTabTC()" style="background:#059669;color:white;border:none;border-radius:6px;padding:2px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">Tyrer-Cuzick</button> per una stima piu completa.'
+        + '</div>';
+    } else if(tcFactors.length === 1) {
+      gailEl.innerHTML = '<div class="br-guide" style="background:#fffbeb;border-color:#fde68a;color:#92400e;padding:11px 14px;border-radius:10px;border:1.5px solid;font-size:0.8rem;">'
+        + '&#x1F4A1; Rilevato: <strong>' + tcFactors[0] + '</strong>. Il Gail e sufficiente, ma puoi confrontare con Tyrer-Cuzick per una stima piu dettagliata.'
+        + '</div>';
+    } else {
+      gailEl.innerHTML = '<div class="br-guide" style="background:#f0fdf4;border-color:#86efac;color:#14532d;padding:11px 14px;border-radius:10px;border:1.5px solid;font-size:0.8rem;">'
+        + '&#x2705; <strong>Profilo adatto al Gail:</strong> nessun fattore di complessita elevata. Questo modello e sufficiente per la valutazione.'
+        + '</div>';
+    }
   }
 
-  var tcReasons = [];
-  if(famRaw === 'multipla' || famRaw === 'brca') tcReasons.push('familiarita estesa o BRCA in famiglia');
-  if(atipiaRaw === 'atipia' || atipiaRaw === 'lcis') tcReasons.push('ADH/LCIS alla biopsia');
-  if(densitaRaw === 'C' || densitaRaw === 'D') tcReasons.push('alta densita mammaria ACR-C/D');
-  if(ovaioRaw !== 'no') tcReasons.push('K ovaio in famiglia');
-
-  var rec = tcReasons.length >= 2 ? 'tc' : tcReasons.length === 1 ? 'both' : 'gail';
-  var btnGail = '<button class="br-guide-btn" style="background:#0369a1;color:white;margin-right:8px;" onclick="brTabGail()">&#x2192; Gail</button>';
-  var btnTC   = '<button class="br-guide-btn" style="background:#059669;color:white;" onclick="brTabTC()">&#x2192; Tyrer-Cuzick</button>';
-  var html = '';
-
-  if(rec === 'gail') {
-    html = '<div class="br-guide br-guide-gail" style="margin:12px 24px 0;">'
-      + '<div class="br-guide-title">&#x1F4CA; Consigliato: Modello di Gail</div>'
-      + '<div class="br-guide-reason">Profilo senza fattori di complessita elevata. Il Gail calcola rischio a 5 anni e lifetime basandosi su storia riproduttiva e familiarita di 1&#xB0; grado — rapido e sufficiente per questo caso.</div>'
-      + btnGail + '<span style="font-size:0.72rem;color:#0369a1;vertical-align:middle;">Tyrer-Cuzick disponibile se vuoi confrontare</span>'
-      + '</div>';
-  } else if(rec === 'tc') {
-    html = '<div class="br-guide br-guide-tc" style="margin:12px 24px 0;">'
-      + '<div class="br-guide-title">&#x1F4CA; Consigliato: Tyrer-Cuzick</div>'
-      + '<div class="br-guide-reason">Rilevati: <strong>' + tcReasons.join(' · ') + '</strong>. Questi fattori richiedono il modello piu completo (familiarita estesa lato paterno, densita, storia bioptica).</div>'
-      + btnTC + '<span style="font-size:0.72rem;color:#065f46;vertical-align:middle;">Gail disponibile come confronto rapido</span>'
-      + '</div>';
-  } else {
-    html = '<div class="br-guide br-guide-both" style="margin:12px 24px 0;">'
-      + '<div class="br-guide-title">&#x1F4CA; Caso borderline — un solo calcolatore e sufficiente</div>'
-      + '<div class="br-guide-reason">Rilevato: <strong>' + tcReasons.join(' · ') + '</strong>. Puoi usare Gail come stima rapida oppure Tyrer-Cuzick per una valutazione piu dettagliata. Non serve eseguirli entrambi.</div>'
-      + btnGail + btnTC
-      + '</div>';
+  // ── Pannello TYRER-CUZICK ──
+  if(tcEl) {
+    if(isBRCA) {
+      tcEl.innerHTML = '<div class="br-guide" style="background:#fef2f2;border-color:#fca5a5;color:#991b1b;padding:11px 14px;border-radius:10px;border:1.5px solid;">'
+        + '<strong>&#x26D4; BRCA confermato</strong> — Il Tyrer-Cuzick non aggiunge informazioni con mutazione BRCA nota. Procedere con consulenza genetica.'
+        + '</div>';
+    } else if(tcFactors.length === 0) {
+      tcEl.innerHTML = '<div class="br-guide" style="background:#fffbeb;border-color:#fde68a;color:#92400e;padding:11px 14px;border-radius:10px;border:1.5px solid;font-size:0.8rem;">'
+        + '&#x1F4A1; Nessun fattore di complessita rilevato nel profilo. Per questo caso il <button onclick="brTabGail()" style="background:#0369a1;color:white;border:none;border-radius:6px;padding:2px 10px;font-size:0.75rem;font-weight:700;cursor:pointer;">Gail</button> e piu rapido e sufficiente. Usa il Tyrer-Cuzick se vuoi comunque una stima piu estesa.'
+        + '</div>';
+    } else {
+      tcEl.innerHTML = '<div class="br-guide" style="background:#f0fdf4;border-color:#86efac;color:#14532d;padding:11px 14px;border-radius:10px;border:1.5px solid;font-size:0.8rem;">'
+        + '&#x2705; <strong>Profilo adatto al Tyrer-Cuzick:</strong> <strong>' + tcFactors.join(', ') + '</strong>. Questo modello considera questi fattori in modo piu dettagliato.'
+        + '</div>';
+    }
   }
-  panel.innerHTML = html;
 }
 
 function brRiskInit() {
@@ -3816,13 +3826,11 @@ function calcTC() {
       <div class="br-tab active" id="brtab-gail" onclick="brTab('gail')">📊 Modello di Gail (NCI)</div>
       <div class="br-tab" id="brtab-tc" onclick="brTab('tc')">📊 Tyrer-Cuzick Semplificato</div>
     </div>
-    <!-- GUIDA AUTOMATICA SCELTA MODELLO -->
-    <div id="br-guide-panel"></div>
-
     <div class="br-body">
 
       <!-- GAIL PANEL -->
       <div id="brpanel-gail">
+        <div id="br-guide-gail" style="margin-bottom:12px;"></div>
         <div class="br-disclaimer">
           <strong>ℹ️ Modello di Gail (BCRAT)</strong> — Implementazione basata sui coefficienti pubblicati da Gail et al. (1989) e NSABP/NCI. Calcola il rischio assoluto a 5 anni e lifetime per donne di 35-85 anni. Non applicabile a portatrici BRCA1/2 note, pregresso K mammella o DCIS/LCIS.
         </div>
@@ -3897,6 +3905,7 @@ function calcTC() {
 
       <!-- TYRER-CUZICK PANEL -->
       <div id="brpanel-tc" style="display:none;">
+        <div id="br-guide-tc" style="margin-bottom:12px;"></div>
         <div class="br-disclaimer">
           <strong>⚠️ Versione semplificata — non certificata.</strong> Basata sui fattori principali del modello Tyrer-Cuzick v8 (Tyrer et al. 2004, aggiornato 2018). Fornisce una stima clinica del rischio lifetime. Per il calcolo certificato usare il software IBIS ufficiale o il calcolatore MagView.
         </div>
